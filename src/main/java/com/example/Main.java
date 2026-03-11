@@ -105,7 +105,6 @@ public class Main {
                 exchange.sendResponseHeaders(404, -1);
             }
         }
-        }
     }
     
     // Handler for API endpoints
