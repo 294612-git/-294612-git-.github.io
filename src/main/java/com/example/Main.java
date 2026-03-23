@@ -1,4 +1,6 @@
 package com.example;
+git pull --no-rebase origin maingit
+git push origin main
 
 import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.HttpHandler;
