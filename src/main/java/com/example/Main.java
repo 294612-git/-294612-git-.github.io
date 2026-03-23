@@ -1,5 +1,5 @@
 package com.example;
-
+javac -d out src/main/java/com/example/Main.java
 import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpExchange;
