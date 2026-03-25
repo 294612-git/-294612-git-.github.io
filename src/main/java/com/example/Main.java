@@ -92,7 +92,8 @@ public class Main {
                 } else {
                     exchange.sendResponseHeaders(404, -1);
                 }
-            } else {
+            } 
+            else {
                 // Fallback - not found
                 exchange.sendResponseHeaders(404, -1);
             }
@@ -101,7 +102,7 @@ public class Main {
     }
     
     // Handler for API endpoints
-    static class ApiHandler implements HttpHandler {
+    class ApiHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
             String response = "{\"message\": \"Hello from Java Backend!\", \"timestamp\": " + System.currentTimeMillis() + "}";
@@ -112,4 +113,3 @@ public class Main {
             os.close();
         }
     }
-}
