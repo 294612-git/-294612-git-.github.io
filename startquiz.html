@@ -123,7 +123,7 @@
                 <option value="math">Math</option>
                 <option value="science">Science</option>
                 <option value="history">History</option>
-                <option value="english">English</option>
+                <option value="reading">Reading</option>
             </select>
         </div>
 
@@ -144,6 +144,10 @@
             // Logical Check: If Grade 1 AND Math are selected
             if (grade === "1" && subject === "math") {
                 window.location.href = "grade1-math-topics.html";
+            } else if (grade === "1" && subject === "history") {
+                window.location.href = "grade1-history.html";
+            } else if (grade === "1" && subject === "reading") {
+                window.location.href = "grade1-reading.html";
             } else {
                 // For other combinations, just show an alert for now
                 alert("The Grade " + grade + " " + subject + " quiz is coming soon!");
