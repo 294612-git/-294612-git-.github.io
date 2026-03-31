@@ -69,17 +69,17 @@ public class Main {
                 try (OutputStream os = exchange.getResponseBody()) {
                     os.write(response);
                 }
-            } else if (path.equals("/grade1-counting.html")) {
-                // Serve the grade 1 counting page
-                byte[] response = Files.readAllBytes(Paths.get("grade1-counting.html"));
+            } else if (path.equals("/grade1-shapes.html")) {
+                // Serve the grade 1 shapes page
+                byte[] response = Files.readAllBytes(Paths.get("grade1-shapes.html"));
                 exchange.getResponseHeaders().set("Content-Type", "text/html");
                 exchange.sendResponseHeaders(200, response.length);
                 try (OutputStream os = exchange.getResponseBody()) {
                     os.write(response);
                 }
-            } else if (path.equals("/grade1-shapes.html")) {
-                // Serve the grade 1 shapes page
-                byte[] response = Files.readAllBytes(Paths.get("grade1-shapes.html"));
+            } else if (path.equals("/grade1-counting.html")) {
+                // Serve the grade 1 counting page
+                byte[] response = Files.readAllBytes(Paths.get("grade1-counting.html"));
                 exchange.getResponseHeaders().set("Content-Type", "text/html");
                 exchange.sendResponseHeaders(200, response.length);
                 try (OutputStream os = exchange.getResponseBody()) {
@@ -105,7 +105,6 @@ public class Main {
                 // Fallback - not found
                 exchange.sendResponseHeaders(404, -1);
             }
-        }
         }
     }
     
