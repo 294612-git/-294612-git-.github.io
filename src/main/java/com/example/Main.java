@@ -47,7 +47,7 @@ public class Main {
                 }
             } else if (path.equals("/grade1-math-topics.html")) {
                 // Serve the grade 1 math topics page
-                byte[] response = Files.readAllBytes(Paths.get("src/main/resources/grade1-math-topics.html"));
+                byte[] response = Files.readAllBytes(Paths.get("grade1-math-topics.html"));
                 exchange.getResponseHeaders().set("Content-Type", "text/html");
                 exchange.sendResponseHeaders(200, response.length);
                 try (OutputStream os = exchange.getResponseBody()) {
@@ -85,102 +85,6 @@ public class Main {
                 try (OutputStream os = exchange.getResponseBody()) {
                     os.write(response);
                 }
-            } else if (path.equals("/homepage.html")) {
-                // Serve the homepage
-                byte[] response = Files.readAllBytes(Paths.get("homepage.html"));
-                exchange.getResponseHeaders().set("Content-Type", "text/html");
-                exchange.sendResponseHeaders(200, response.length);
-                try (OutputStream os = exchange.getResponseBody()) {
-                    os.write(response);
-                }
-            } else if (path.equals("/startquiz.html")) {
-                // Serve the start quiz page
-                byte[] response = Files.readAllBytes(Paths.get("startquiz.html"));
-                exchange.getResponseHeaders().set("Content-Type", "text/html");
-                exchange.sendResponseHeaders(200, response.length);
-                try (OutputStream os = exchange.getResponseBody()) {
-                    os.write(response);
-                }
-            } else if (path.equals("/grade1-history.html")) {
-                // Serve the grade 1 history topics page
-                byte[] response = Files.readAllBytes(Paths.get("grade1-history.html"));
-                exchange.getResponseHeaders().set("Content-Type", "text/html");
-                exchange.sendResponseHeaders(200, response.length);
-                try (OutputStream os = exchange.getResponseBody()) {
-                    os.write(response);
-                }
-            } else if (path.equals("/grade1-history-symbols.html")) {
-                // Serve the grade 1 history symbols quiz
-                byte[] response = Files.readAllBytes(Paths.get("grade1-history-symbols.html"));
-                exchange.getResponseHeaders().set("Content-Type", "text/html");
-                exchange.sendResponseHeaders(200, response.length);
-                try (OutputStream os = exchange.getResponseBody()) {
-                    os.write(response);
-                }
-            } else if (path.equals("/grade1-history-known-people.html")) {
-                // Serve the grade 1 history known people quiz
-                byte[] response = Files.readAllBytes(Paths.get("grade1-history-known-people.html"));
-                exchange.getResponseHeaders().set("Content-Type", "text/html");
-                exchange.sendResponseHeaders(200, response.length);
-                try (OutputStream os = exchange.getResponseBody()) {
-                    os.write(response);
-                }
-            } else if (path.equals("/grade1-history-landmarks.html")) {
-                // Serve the grade 1 history landmarks quiz
-                byte[] response = Files.readAllBytes(Paths.get("grade1-history-landmarks.html"));
-                exchange.getResponseHeaders().set("Content-Type", "text/html");
-                exchange.sendResponseHeaders(200, response.length);
-                try (OutputStream os = exchange.getResponseBody()) {
-                    os.write(response);
-                }
-            } else if (path.equals("/grade1-history-maps.html")) {
-                // Serve the grade 1 history maps quiz
-                byte[] response = Files.readAllBytes(Paths.get("grade1-history-maps.html"));
-                exchange.getResponseHeaders().set("Content-Type", "text/html");
-                exchange.sendResponseHeaders(200, response.length);
-                try (OutputStream os = exchange.getResponseBody()) {
-                    os.write(response);
-                }
-            } else if (path.equals("/grade1-reading.html")) {
-                // Serve the grade 1 reading topics page
-                byte[] response = Files.readAllBytes(Paths.get("grade1-reading.html"));
-                exchange.getResponseHeaders().set("Content-Type", "text/html");
-                exchange.sendResponseHeaders(200, response.length);
-                try (OutputStream os = exchange.getResponseBody()) {
-                    os.write(response);
-                }
-            } else if (path.equals("/grade1-reading/reading/comp.html")) {
-                // Serve the grade 1 reading comprehension quiz
-                byte[] response = Files.readAllBytes(Paths.get("grade1-reading/reading/comp.html"));
-                exchange.getResponseHeaders().set("Content-Type", "text/html");
-                exchange.sendResponseHeaders(200, response.length);
-                try (OutputStream os = exchange.getResponseBody()) {
-                    os.write(response);
-                }
-            } else if (path.equals("/grade1-reading/reading/grade1-phonics.html")) {
-                // Serve the grade 1 reading phonics quiz
-                byte[] response = Files.readAllBytes(Paths.get("grade1-reading/reading/grade1-phonics.html"));
-                exchange.getResponseHeaders().set("Content-Type", "text/html");
-                exchange.sendResponseHeaders(200, response.length);
-                try (OutputStream os = exchange.getResponseBody()) {
-                    os.write(response);
-                }
-            } else if (path.equals("/grade1-reading/reading/grade1-vocabulary.html")) {
-                // Serve the grade 1 reading vocabulary quiz
-                byte[] response = Files.readAllBytes(Paths.get("grade1-reading/reading/grade1-vocabulary.html"));
-                exchange.getResponseHeaders().set("Content-Type", "text/html");
-                exchange.sendResponseHeaders(200, response.length);
-                try (OutputStream os = exchange.getResponseBody()) {
-                    os.write(response);
-                }
-            } else if (path.equals("/grade1-reading/reading/grade1-writing.html")) {
-                // Serve the grade 1 reading writing quiz
-                byte[] response = Files.readAllBytes(Paths.get("grade1-reading/reading/grade1-writing.html"));
-                exchange.getResponseHeaders().set("Content-Type", "text/html");
-                exchange.sendResponseHeaders(200, response.length);
-                try (OutputStream os = exchange.getResponseBody()) {
-                    os.write(response);
-                }
             } else if (path.endsWith(".css") || path.endsWith(".js")) {
                 // Serve static CSS/JS assets from resources
                 String filePath = "src/main/resources" + path;
@@ -196,7 +100,8 @@ public class Main {
                 } else {
                     exchange.sendResponseHeaders(404, -1);
                 }
-            } else {
+            } 
+            else {
                 // Fallback - not found
                 exchange.sendResponseHeaders(404, -1);
             }
@@ -204,7 +109,7 @@ public class Main {
     }
     
     // Handler for API endpoints
-    static class ApiHandler implements HttpHandler {
+    class ApiHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
             String response = "{\"message\": \"Hello from Java Backend!\", \"timestamp\": " + System.currentTimeMillis() + "}";
@@ -215,4 +120,3 @@ public class Main {
             os.close();
         }
     }
-}
