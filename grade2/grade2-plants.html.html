@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Animals Quiz - Study Buddy</title>
+    <title>Money Quiz - Study Buddy</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
         .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 500px; text-align: center; }
@@ -31,15 +31,15 @@
     <div class="quiz-container hidden" id="summary-box">
         <h2>Quiz Complete!</h2>
         <div id="results-list"></div>
-        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade1-science-topics.html'">Back to Topics</button>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='../grade2-math-topics.html'">Back to Topics</button>
     </div>
 
     <script>
         const quizData = [
-            { q: "Which animal lives in water?", a: "Fish", options: ["Dog", "Cat", "Fish"] },
-            { q: "Which animal says “moo”?", a: "Cow", options: ["Cow", "Pig"] },
-            { q: "What do birds have?", a: "Wings", options: ["Fur", "Scales", "Wings"] },
-            { q: "Which animal is a pet?", a: "Dog", options: ["Cat", "Tiger"] }
+            { q: "What do plants need to make food?", a: "Sunlight", options: ["Sunlight", "Rocks", "Plastic"] },
+            { q: "Which part of a plant makes seeds?", a: "Flower", options: ["Flower", "Root", "Stem"] },
+            { q: "The first stage of a plant’s life cycle is a ___.", a: "Seed", options: ["Seed", "Leaf", "Fruit"] },
+            { q: "Roots help a plant ___.", a: "Absorb water and nutrients", options: ["Absorb water and nutrients", "Make food", "Store energy"] }
         ];
 
         let currentIdx = 0;

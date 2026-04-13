@@ -3,6 +3,9 @@
 <head> 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Create a Quiz - Study Buddy</title>
     <style>
         body {
@@ -137,21 +140,21 @@
 
     <script>
         function handleStartQuiz() {
-            // Get the current selections
             const grade = document.getElementById('grade').value;
             const subject = document.getElementById('subject').value;
+            const quizPages = {
+                "1-math": "grade1/math/grade1-math-topics.html?v=20260331",
+                "1-history": "grade1/history/grade1-history.html?v=20260331",
+                "1-reading": "grade1/reading/grade1-reading.html?v=20260331",
+                "1-science": "grade1/science/grade1-science-topics.html?v=20260331",
+                "2-math": "grade2/grade2-math-topics.html?v=20260331"
+            };
 
-            // Logical Check: If Grade 1 AND Math are selected
-            if (grade === "1" && subject === "math") {
-                window.location.href = "grade1/math/grade1-math-topics.html";
-            } else if (grade === "1" && subject === "history") {
-                window.location.href = "grade1/history/grade1-history.html";
-            } else if (grade === "1" && subject === "reading") {
-                window.location.href = "grade1/reading/index.html";
-            } else if (grade === "1" && subject === "science") {
-                window.location.href = "grade1/science/grade1-science-topics.html";
+            const selectedQuiz = quizPages[`${grade}-${subject}`];
+
+            if (selectedQuiz) {
+                window.location.href = selectedQuiz;
             } else {
-                // For other combinations, just show an alert for now
                 alert("The Grade " + grade + " " + subject + " quiz is coming soon!");
             }
         }
