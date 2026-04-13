@@ -12,8 +12,8 @@ body {
 }
 
 header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+    background: linear-gradient(135deg, #025b11 0%, #149e42 100%);
+    color: rgb(223, 178, 27);
     padding: 2rem 1rem;
     text-align: center;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -47,7 +47,7 @@ nav a {
 }
 
 nav a:hover {
-    color: #667eea;
+    color: rgb(223, 178, 27);
 }
 
 .container {
