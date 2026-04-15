@@ -1,44 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-<head> 
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Create a Quiz - Study Buddy</title>
+    <title>Create a Quiz - Study Buddy Adventure</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Quicksand', sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f4f7f6;
-            color: #333;
+            background-color: #e8f5e9; /* Light jungle mist */
+            color: #2e4a2e;
         }
 
         .welcome-container {
             text-align: center;
-            background: white;
+            background: #F9F7F2; /* Soft sand background */
             padding: 3rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 25px; /* Extra rounded corners */
+            border: 6px solid #5d4037; /* Wooden brown border */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             max-width: 500px;
             width: 90%;
+            position: relative;
+        }
+
+        /* Fun Jungle Vines Decoration (Optional Flair) */
+        .welcome-container::before {
+            content: '🌿';
+            position: absolute;
+            top: -25px;
+            left: 20px;
+            font-size: 2rem;
         }
 
         h1 {
-            color: #667eea;
-            margin-bottom: 1rem;
-            font-size: 2.5rem;
+            font-family: 'Fredoka', cursive;
+            color: #2e7d32; /* Forest Green */
+            margin-bottom: 0.5rem;
+            font-size: 2.8rem;
+            text-shadow: 2px 2px 0px #fff176; /* Yellow highlight */
         }
 
         p {
             font-size: 1.2rem;
-            color: #666;
+            color: #5d4037;
+            font-weight: 600;
             margin-bottom: 2rem;
         }
 
@@ -49,9 +64,11 @@
 
         label {
             display: block;
+            font-family: 'Fredoka', sans-serif;
             font-weight: bold;
             margin-bottom: 0.5rem;
-            color: #555;
+            color: #2e7d32;
+            font-size: 1.1rem;
         }
 
         select {
@@ -59,59 +76,74 @@
             padding: 0.8rem;
             margin-bottom: 1.5rem;
             font-size: 1rem;
-            border: 2px solid #ddd;
-            border-radius: 6px;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            border: 3px solid #c8e6c9; /* Leafy green border */
+            border-radius: 12px;
             outline: none;
-            transition: border-color 0.3s;
+            background-color: white;
+            color: #3e2723;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
 
         select:focus {
-            border-color: #667eea;
+            border-color: #8bc34a;
+            box-shadow: 0 0 8px rgba(139, 195, 74, 0.4);
         }
 
         .start-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Fredoka', sans-serif;
+            background: linear-gradient(135deg, #ff9800 0%, #e65100 100%); /* Tiger Orange */
             color: white;
             border: none;
             padding: 1rem 2rem;
-            border-radius: 6px;
-            font-size: 1.1rem;
+            border-radius: 50px; /* Bubbly button shape */
+            font-size: 1.3rem;
             cursor: pointer;
             width: 100%;
             margin-bottom: 1.5rem;
-            transition: transform 0.2s;
+            box-shadow: 0 4px 0px #bf360c; /* 3D effect shadow */
+            transition: all 0.2s;
         }
 
         .start-btn:hover {
-            transform: scale(1.02);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0px #bf360c;
+        }
+
+        .start-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 0px 0px #bf360c;
         }
 
         .back-btn {
             display: inline-block;
             text-decoration: none;
-            color: #667eea;
+            color: #5d4037;
+            font-family: 'Fredoka', sans-serif;
             font-weight: bold;
-            border: 2px solid #667eea;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
+            border: 2px solid #5d4037;
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
             transition: all 0.3s;
             margin-top: 10px;
         }
 
         .back-btn:hover {
-            background-color: #667eea;
-            color: white;
+            background-color: #5d4037;
+            color: #ffecb3;
+            transform: scale(1.05);
         }
     </style>
 </head>
 <body>
 
     <div class="welcome-container">
-        <h1>Create a Quiz</h1>
-        <p>Select your level and subject to get started!</p>
-        
+        <h1>Quiz Safari</h1>
+        <p>Pick your level and gear up!</p>
+       
         <div class="selection-area">
-            <label for="grade">Grade Level</label>
+            <label for="grade">📍 Grade Level</label>
             <select id="grade">
                 <option value="1">Grade 1</option>
                 <option value="2">Grade 2</option>
@@ -121,7 +153,7 @@
                 <option value="6">Grade 6</option>
             </select>
 
-            <label for="subject">Subject</label>
+            <label for="subject">🗺️ Subject</label>
             <select id="subject">
                 <option value="math">Math</option>
                 <option value="science">Science</option>
@@ -131,11 +163,11 @@
         </div>
 
         <button class="start-btn" onclick="handleStartQuiz()">
-            Start Quiz
+            Start Adventure!
         </button>
-        
+       
         <br>
-        <a href="homepage.html" class="back-btn">← Back to Home</a>
+        <a href="homepage.html" class="back-btn">← Back to Camp</a>
     </div>
 
     <script>
@@ -167,7 +199,7 @@
             if (selectedQuiz) {
                 window.location.href = selectedQuiz;
             } else {
-                alert("The Grade " + grade + " " + subject + " quiz is coming soon!");
+                alert("The Grade " + grade + " " + subject + " quest is still being explored by our monkeys! (Coming Soon)");
             }
         }
     </script>
