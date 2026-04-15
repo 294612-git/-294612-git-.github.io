@@ -421,6 +421,150 @@ public class Main {
                 try (OutputStream os = exchange.getResponseBody()) {
                     os.write(response);
                 }
+            } else if (path.equals("/grade 4/grade4-math-topics.html")) {
+                // Serve the grade 4 math topics page
+                byte[] response = Files.readAllBytes(Paths.get("grade 4/grade4-math-topics.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
+            } else if (path.equals("/grade 4/grade4-mult-div.html")) {
+                // Serve the grade 4 multiplication and division page
+                byte[] response = Files.readAllBytes(Paths.get("grade 4/grade4-mult-div.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
+            } else if (path.equals("/grade 4/grade4-fractions.html")) {
+                // Serve the grade 4 fractions page
+                byte[] response = Files.readAllBytes(Paths.get("grade 4/grade4-fractions.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
+            } else if (path.equals("/grade 4/grade4-measurement.html")) {
+                // Serve the grade 4 measurement page
+                byte[] response = Files.readAllBytes(Paths.get("grade 4/grade4-measurement.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
+            } else if (path.equals("/grade 4/grade4-word-problems.html")) {
+                // Serve the grade 4 word problems page
+                byte[] response = Files.readAllBytes(Paths.get("grade 4/grade4-word-problems.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
+            } else if (path.equals("/grade 4/grade4-science-topics.html")) {
+                // Serve the grade 4 science topics page
+                byte[] response = Files.readAllBytes(Paths.get("grade 4/grade4-science-topics.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
+            } else if (path.equals("/grade 4/grade4-energy.html")) {
+                // Serve the grade 4 energy page
+                byte[] response = Files.readAllBytes(Paths.get("grade 4/grade4-energy.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
+            } else if (path.equals("/grade 4/grade4-earth-science.html")) {
+                // Serve the grade 4 earth science page
+                byte[] response = Files.readAllBytes(Paths.get("grade 4/grade4-earth-science.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
+            } else if (path.equals("/grade 4/grade4-plants-animals.html")) {
+                // Serve the grade 4 plants and animals page
+                byte[] response = Files.readAllBytes(Paths.get("grade 4/grade4-plants-animals.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
+            } else if (path.equals("/grade 4/grade4-water-cycle.html")) {
+                // Serve the grade 4 water cycle page
+                byte[] response = Files.readAllBytes(Paths.get("grade 4/grade4-water-cycle.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
+            } else if (path.equals("/grade 4/grade4-reading-topics.html")) {
+                // Serve the grade 4 reading topics page
+                byte[] response = Files.readAllBytes(Paths.get("grade 4/grade4-reading-topics.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
+            } else if (path.equals("/grade 4/grade4-reading.html")) {
+                // Serve the grade 4 reading page
+                byte[] response = Files.readAllBytes(Paths.get("grade 4/grade4-reading.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
+            } else if (path.equals("/grade 4/grade4-writing-grammar.html")) {
+                // Serve the grade 4 writing and grammar page
+                byte[] response = Files.readAllBytes(Paths.get("grade 4/grade4-writing-grammar.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
+            } else if (path.equals("/grade 4/grade4-vocabulary.html")) {
+                // Serve the grade 4 vocabulary page
+                byte[] response = Files.readAllBytes(Paths.get("grade 4/grade4-vocabulary.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
+            } else if (path.equals("/grade 4/grade4-history-topics.html")) {
+                // Serve the grade 4 history topics page
+                byte[] response = Files.readAllBytes(Paths.get("grade 4/grade4-history-topics.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
+            } else if (path.equals("/grade 4/grade4-geography.html")) {
+                // Serve the grade 4 geography page
+                byte[] response = Files.readAllBytes(Paths.get("grade 4/grade4-geography.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
+            } else if (path.equals("/grade 4/grade4-native-americans.html")) {
+                // Serve the grade 4 native americans page
+                byte[] response = Files.readAllBytes(Paths.get("grade 4/grade4-native-americans.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
+            } else if (path.equals("/grade 4/grade4-history.html")) {
+                // Serve the grade 4 history page
+                byte[] response = Files.readAllBytes(Paths.get("grade 4/grade4-history.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
             } else if (path.endsWith(".css") || path.endsWith(".js")) {
                 // Serve static CSS/JS assets from resources
                 String filePath = "src/main/resources" + path;
