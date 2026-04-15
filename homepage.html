@@ -2,53 +2,73 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Study Buddy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">zw    
+    <title>Study Buddy | Jungle Adventure</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Using Quicksand for clean but rounded body text */
+            font-family: 'Quicksand', sans-serif;
             line-height: 1.6;
-            color: #333;
+            color: #2e4a2e;
+            background-color: #e8f5e9; /* Very light jungle mist */
         }
 
         header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            /* Deep Forest to Leafy Green gradient */
+            background: linear-gradient(135deg, #1b5e20 0%, #4caf50 100%);
             color: white;
-            padding: 2rem 1rem;
+            padding: 3rem 1rem;
             text-align: center;
+            border-bottom: 8px solid #8bc34a; /* Vine green accent */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         header h1 {
-            font-size: 2.5rem;
+            /* Bubbly Font Styling */
+            font-family: 'Fredoka', cursive;
+            font-size: 4rem;
             margin-bottom: 0.5rem;
+            color: #fff176; /* Bright Banana Yellow */
+            text-shadow: 3px 3px 0px #2e7d32; /* Green shadow for "pop" */
+            letter-spacing: 2px;
         }
 
         header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
+            font-size: 1.3rem;
+            font-weight: 600;
+            opacity: 0.95;
+            color: #f1f8e9;
         }
 
         nav {
-            background-color: #333;
+            background-color: #5d4037; /* Mud/Wood Brown */
             padding: 1rem;
             text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 4px solid #3e2723;
         }
 
         nav a {
-            color: white;
+            font-family: 'Fredoka', sans-serif;
+            color: #ffecb3; /* Soft sand color */
             text-decoration: none;
             margin: 0 1.5rem;
-            font-size: 1rem;
-            transition: color 0.3s;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
         }
 
         nav a:hover {
-            color: #667eea;
+            color: #cddc39; /* Lime hover */
+            text-shadow: 0 0 10px rgba(205, 220, 57, 0.5);
         }
 
         .container {
@@ -59,71 +79,98 @@
 
         .section {
             margin: 2rem 0;
-            padding: 2rem;
-            background-color: #f9f9f9;
-            border-radius: 8px;
+            padding: 2.5rem;
+            background-color: #ffffff;
+            border-radius: 20px; /* More rounded/friendly */
+            border: 3px solid #c8e6c9;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.05);
         }
 
         .section h2 {
-            color: #667eea;
+            font-family: 'Fredoka', sans-serif;
+            color: #2e7d32;
+            font-size: 2rem;
             margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Adding a little leaf icon before headings */
+        .section h2::before {
+            content: '🌿';
+            font-size: 1.5rem;
         }
 
         .cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
+            gap: 2rem;
             margin: 1.5rem 0;
         }
 
         .card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
+            background: #fffde7; /* Soft Sunbeam Yellow */
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px dashed #8bc34a; /* Playful dashed border */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s, background 0.3s;
         }
 
         .card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px) rotate(1deg);
+            background: #f0f4c3;
         }
 
         .card h3 {
-            color: #667eea;
-            margin-bottom: 0.5rem;
+            font-family: 'Fredoka', sans-serif;
+            color: #5d4037;
+            margin-bottom: 0.7rem;
         }
 
         button {
-            background-color: #667eea;
+            background-color: #ff9800; /* Tiger Orange */
+            font-family: 'Fredoka', sans-serif;
             color: white;
             border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 4px;
+            padding: 1rem 2rem;
+            border-radius: 50px; /* Very bubbly buttons */
             cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 0px #e65100; /* 3D effect */
+            transition: all 0.2s;
+            margin: 1rem 0;
         }
 
         button:hover {
-            background-color: #764ba2;
+            background-color: #ffa726;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0px #e65100;
+        }
+
+        button:active {
+            transform: translateY(4px);
+            box-shadow: 0 0px 0px #e65100;
         }
 
         footer {
-            background-color: #333;
-            color: white;
+            background-color: #1b5e20;
+            color: #a5d6a7;
             text-align: center;
-            padding: 1.5rem;
-            margin-top: 2rem;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-top: 5px solid #fff176;
         }
 
         @media (max-width: 768px) {
             header h1 {
-                font-size: 1.8rem;
+                font-size: 2.5rem;
             }
 
             nav a {
                 display: block;
-                margin: 0.5rem 0;
+                margin: 0.8rem 0;
             }
         }
     </style>
@@ -131,7 +178,7 @@
 <body>
     <header>
         <h1>Study Buddy</h1>
-        <p>Your buddy for smarter studying</p>
+        <p>🐾 Let's go on a learning adventure! 🐾</p>
     </header>
 
     <nav>
@@ -144,55 +191,51 @@
 
     <div class="container">
         <section id="home" class="section">
-            <h2>Welcome</h2>
+            <h2>Welcome to the Jungle</h2>
             <p>Learning is easier with a buddy! Create quizzes, test yourself, and watch your progress grow. Study Buddy helps you practice what you know, learn from mistakes, and feel more confident in school.</p>
         </section>
 
         <section id="about" class="section">
-            <h2>About Us</h2>
-            <p>Welcome to Study Buddy!
-Study Buddy is a fun and friendly place where kids can learn, explore, and grow every day. We believe that learning doesn’t have to be boring—it can be exciting, creative, and something to look forward to!
-Our goal is to help students understand their school subjects better while building confidence and curiosity. Whether you’re practicing math, improving your reading, or learning something brand new, Study Buddy is here to support you every step of the way.
-We designed this website to be easy to use, safe, and enjoyable for kids of all ages. Think of us as your helpful study partner—always ready to guide you, cheer you on, and make learning a little more fun.
-Let’s learn together and make every day a smart day!</p>
+            <h2>Our Safari Story</h2>
+            <p>Welcome to Study Buddy! Study Buddy is a fun and friendly place where kids can learn, explore, and grow every day. We believe that learning doesn’t have to be boring—it can be exciting, creative, and something to look forward to! Let’s learn together and make every day a smart day!</p>
         </section>
 
         <section id="services" class="section">
-            <h2>What We Offer</h2>
+            <h2>Safari Gear</h2>
             <div class="cards">
                 <div class="card">
-                    <h3>Custom Quiz Creation</h3>
-                    <p>Create quizzes by subject and grade level. Choose between multiple choice or short answer questions and select how many questions you want.</p>
+                    <h3>Custom Quizzes 📝</h3>
+                    <p>Create quizzes by subject and grade level. Choose between multiple choice or short answer questions.</p>
                 </div>
                 <div class="card">
-                    <h3>Personalized Study Guides</h3>
-                    <p>Get recommended study guides based on your subject and grade. Explore quizzes created by others and discover new ways to practice.</p>
+                    <h3>Study Guides 🗺️</h3>
+                    <p>Get recommended study guides based on your subject. Explore quizzes created by other explorers!</p>
                 </div>
                 <div class="card">
-                    <h3>Score Tracking & Progress Review</h3>
-                    <p>Track your scores after every quiz and review incorrect answers to learn from your mistakes and improve.</p>
+                    <h3>Progress Tracker 📈</h3>
+                    <p>Track your scores after every adventure and review answers to become a jungle master.</p>
                 </div>
             </div>
         </section>
 
-        <section id="get-started" class="section"> 
-            <h2>Get Started</h2>
+        <section id="get-started" class="section">
+            <h2>Start Your Journey</h2>
             <p>Ready to begin your study journey? Create your first quiz or explore our recommended study guides.</p>
             <a href="startquiz.html?v=20260331" style="text-decoration: none;">
-                <button type="button" style="margin-top: 1rem;">Create your first quiz</button>
+                <button type="button">Create your first quiz</button>
             </a>
         </section>
 
         <section id="contact" class="section">
-            <h2>Get In Touch</h2>
+            <h2>Call the Rangers</h2>
             <p>Email: your.email@example.com</p>
             <p>Phone: (123) 456-7890</p>
-            <button onclick="alert('Contact form coming soon!')">Send Message</button>
+            <button onclick="alert('The monkeys are delivering your message! (Form coming soon)')">Send Message</button>
         </section>
     </div>
 
     <footer>
-        <p>&copy; 2026 Study Buddy. All rights reserved.</p>
+        <p>&copy; 2026 Study Buddy Explorer Club. All rights reserved. 🌴</p>
     </footer>
 
     <script>
