@@ -565,6 +565,126 @@ public class Main {
                 try (OutputStream os = exchange.getResponseBody()) {
                     os.write(response);
                 }
+            } else if (path.equals("/grade 5/grade5-math-topics.html")) {
+                // Serve the grade 5 math topics page
+                byte[] response = Files.readAllBytes(Paths.get("grade 5/grade5-math-topics.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
+            } else if (path.equals("/grade 5/grade5-decimals-fractions.html")) {
+                // Serve the grade 5 decimals and fractions page
+                byte[] response = Files.readAllBytes(Paths.get("grade 5/grade5-decimals-fractions.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
+            } else if (path.equals("/grade 5/grade5-volume-graphs.html")) {
+                // Serve the grade 5 volume and graphs page
+                byte[] response = Files.readAllBytes(Paths.get("grade 5/grade5-volume-graphs.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
+            } else if (path.equals("/grade 5/grade5-multi-step.html")) {
+                // Serve the grade 5 multi-step page
+                byte[] response = Files.readAllBytes(Paths.get("grade 5/grade5-multi-step.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
+            } else if (path.equals("/grade 5/grade5-science-topics.html")) {
+                // Serve the grade 5 science topics page
+                byte[] response = Files.readAllBytes(Paths.get("grade 5/grade5-science-topics.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
+            } else if (path.equals("/grade 5/grade5-matter-energy.html")) {
+                // Serve the grade 5 matter and energy page
+                byte[] response = Files.readAllBytes(Paths.get("grade 5/grade5-matter-energy.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
+            } else if (path.equals("/grade 5/grade5-earth-space.html")) {
+                // Serve the grade 5 earth and space page
+                byte[] response = Files.readAllBytes(Paths.get("grade 5/grade5-earth-space.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
+            } else if (path.equals("/grade 5/grade5-ecosystems.html")) {
+                // Serve the grade 5 ecosystems page
+                byte[] response = Files.readAllBytes(Paths.get("grade 5/grade5-ecosystems.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
+            } else if (path.equals("/grade 5/grade5-reading-topics.html")) {
+                // Serve the grade 5 reading topics page
+                byte[] response = Files.readAllBytes(Paths.get("grade 5/grade5-reading-topics.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
+            } else if (path.equals("/grade 5/grade5-reading.html")) {
+                // Serve the grade 5 reading page
+                byte[] response = Files.readAllBytes(Paths.get("grade 5/grade5-reading.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
+            } else if (path.equals("/grade 5/grade5-writing-grammar.html")) {
+                // Serve the grade 5 writing and grammar page
+                byte[] response = Files.readAllBytes(Paths.get("grade 5/grade5-writing-grammar.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
+            } else if (path.equals("/grade 5/grade5-vocabulary.html")) {
+                // Serve the grade 5 vocabulary page
+                byte[] response = Files.readAllBytes(Paths.get("grade 5/grade5-vocabulary.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
+            } else if (path.equals("/grade 5/grade5-history-topics.html")) {
+                // Serve the grade 5 history topics page
+                byte[] response = Files.readAllBytes(Paths.get("grade 5/grade5-history-topics.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
+            } else if (path.equals("/grade 5/grade5-early-america.html")) {
+                // Serve the grade 5 early america page
+                byte[] response = Files.readAllBytes(Paths.get("grade 5/grade5-early-america.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
+            } else if (path.equals("/grade 5/grade5-government-economy.html")) {
+                // Serve the grade 5 government and economy page
+                byte[] response = Files.readAllBytes(Paths.get("grade 5/grade5-government-economy.html"));
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
+                exchange.sendResponseHeaders(200, response.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(response);
+                }
             } else if (path.endsWith(".css") || path.endsWith(".js")) {
                 // Serve static CSS/JS assets from resources
                 String filePath = "src/main/resources" + path;

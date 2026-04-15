@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 5 English/Language Arts Topics - Study Buddy</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1 { color: #667eea; text-align: center; margin-bottom: 2rem; }
+        .topic-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+        .topic-card { background: #f8f9fa; border: 2px solid #e9ecef; border-radius: 8px; padding: 1.5rem; text-align: center; transition: 0.3s; cursor: pointer; }
+        .topic-card:hover { border-color: #667eea; background: #f0f2ff; transform: translateY(-2px); }
+        .topic-card h3 { color: #495057; margin: 0 0 0.5rem 0; }
+        .topic-card p { color: #6c757d; margin: 0; font-size: 0.9rem; }
+        .back-btn { display: block; margin: 2rem auto 0; background: #6c757d; color: white; border: none; padding: 10px 20px; border-radius: 6px; text-decoration: none; text-align: center; width: fit-content; }
+        .back-btn:hover { background: #5a6268; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Grade 5 English/Language Arts Topics</h1>
+        <div class="topic-grid">
+            <div class="topic-card" onclick="location.href='grade5-reading.html'">
+                <h3>Reading</h3>
+                <p>Novels, nonfiction, main idea, theme, and evidence</p>
+            </div>
+            <div class="topic-card" onclick="location.href='grade5-writing-grammar.html'">
+                <h3>Writing & Grammar</h3>
+                <p>Essays, reports, grammar, and vocabulary</p>
+            </div>
+            <div class="topic-card" onclick="location.href='grade5-vocabulary.html'">
+                <h3>Vocabulary</h3>
+                <p>Word meanings and roots</p>
+            </div>
+        </div>
+        <a href="startquiz.html" class="back-btn">Back to Grade Selection</a>
+    </div>
+</body>
+</html>
