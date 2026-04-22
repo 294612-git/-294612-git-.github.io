@@ -31,14 +31,32 @@
     <div class="quiz-container hidden" id="summary-box">
         <h2>Quiz Complete!</h2>
         <div id="results-list"></div>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
         <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade4-history-topics.html'">Back to Topics</button>
     </div>
 
     <script>
-        const quizData = [
-            { q: "History is the study of ___", a: "Past events", options: ["Past events", "Future events"] },
-            { q: "We learn from history to ___", a: "Make better choices", options: ["Make better choices", "Forget things"] }
+        const questionPool = [
+            { q: "What is history?", a: "Study of the past", options: ["Study of the past", "Study of the future"] },
+            { q: "What is a timeline?", a: "Shows events in order", options: ["Shows events in order", "Shows random events"] },
+            { q: "What is a primary source?", a: "First-hand account", options: ["First-hand account", "Second-hand account"] },
+            { q: "What is a secondary source?", a: "Interpretation of primary", options: ["Interpretation of primary", "Original document"] },
+            { q: "Who were the first Americans?", a: "Native Americans", options: ["Native Americans", "Europeans"] },
+            { q: "What is the Declaration of Independence?", a: "Document declaring freedom", options: ["Document declaring freedom", "Map of America"] },
+            { q: "What is the Constitution?", a: "Laws of the US", options: ["Laws of the US", "List of presidents"] },
+            { q: "What is democracy?", a: "Government by the people", options: ["Government by the people", "Government by one person"] },
+            { q: "What is a colony?", a: "Settlement controlled by another country", options: ["Settlement controlled by another country", "Independent country"] },
+            { q: "What is the American Revolution?", a: "War for independence", options: ["War for independence", "Civil war"] }
         ];
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        const quizData = shuffle(questionPool.slice()).slice(0, 5);
 
         let currentIdx = 0;
         let score = 0;

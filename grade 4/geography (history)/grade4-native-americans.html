@@ -31,15 +31,32 @@
     <div class="quiz-container hidden" id="summary-box">
         <h2>Quiz Complete!</h2>
         <div id="results-list"></div>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
         <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade4-history-topics.html'">Back to Topics</button>
     </div>
 
     <script>
-        const quizData = [
-            { q: "Native Americans lived in ___", a: "Tribes", options: ["Tribes", "Cities"] },
-            { q: "Christopher Columbus was an ___", a: "Explorer", options: ["Explorer", "President"] },
-            { q: "Native Americans used ___ for shelter", a: "Tepees", options: ["Tepees", "Houses"] }
+        const questionPool = [
+            { q: "What are Native American tribes?", a: "Groups of people with shared culture", options: ["Groups of people with shared culture", "Groups of animals"] },
+            { q: "What is a reservation?", a: "Land set aside for Native Americans", options: ["Land set aside for Native Americans", "Land for farming"] },
+            { q: "What is a totem pole?", a: "Carved pole with symbols", options: ["Carved pole with symbols", "Type of house"] },
+            { q: "What did Native Americans use for transportation?", a: "Canoes, horses", options: ["Canoes, horses", "Cars"] },
+            { q: "What is a powwow?", a: "Gathering with dance and music", options: ["Gathering with dance and music", "War meeting"] },
+            { q: "What crops did Native Americans grow?", a: "Corn, beans, squash", options: ["Corn, beans, squash", "Wheat"] },
+            { q: "What is a shaman?", a: "Spiritual leader", options: ["Spiritual leader", "Chief"] },
+            { q: "How did Native Americans adapt to their environment?", a: "Used available resources", options: ["Used available resources", "Moved often"] },
+            { q: "What is the Trail of Tears?", a: "Forced relocation of tribes", options: ["Forced relocation of tribes", "Path to gold"] },
+            { q: "What is cultural heritage?", a: "Traditions passed down", options: ["Traditions passed down", "New inventions"] }
         ];
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        const quizData = shuffle(questionPool.slice()).slice(0, 5);
 
         let currentIdx = 0;
         let score = 0;

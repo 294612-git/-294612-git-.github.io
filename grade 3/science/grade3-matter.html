@@ -31,16 +31,33 @@
     <div class="quiz-container hidden" id="summary-box">
         <h2>Quiz Complete!</h2>
         <div id="results-list"></div>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
         <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade3-science-topics.html'">Back to Topics</button>
     </div>
 
     <script>
-        const quizData = [
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        const questionPool = [
             { q: "Water freezing is a ___", a: "Solid", options: ["Solid", "Liquid", "Gas"] },
             { q: "Ice melting becomes ___", a: "Liquid", options: ["Solid", "Liquid", "Gas"] },
             { q: "Gas has ___ shape", a: "No definite", options: ["No definite", "Definite"] },
-            { q: "A solid has ___ shape", a: "Definite", options: ["Definite", "No shape"] }
+            { q: "A solid has ___ shape", a: "Definite", options: ["Definite", "No shape"] },
+            { q: "What is matter?", a: "Anything that has mass and takes up space", options: ["Only solids", "Anything that has mass and takes up space", "Only liquids"] },
+            { q: "What is evaporation?", a: "Liquid turning into gas", options: ["Gas turning into liquid", "Liquid turning into gas", "Solid turning into liquid"] },
+            { q: "What is condensation?", a: "Gas turning into liquid", options: ["Liquid turning into gas", "Gas turning into liquid", "Solid turning into gas"] },
+            { q: "What is the state of water vapor?", a: "Gas", options: ["Solid", "Liquid", "Gas"] },
+            { q: "What is the state of steam?", a: "Gas", options: ["Solid", "Liquid", "Gas"] },
+            { q: "What is the state of ice?", a: "Solid", options: ["Solid", "Liquid", "Gas"] }
         ];
+
+        shuffleArray(questionPool);
+        const quizData = questionPool.slice(0, 5);
 
         let currentIdx = 0;
         let score = 0;

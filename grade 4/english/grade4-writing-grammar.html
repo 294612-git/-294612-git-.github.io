@@ -31,16 +31,32 @@
     <div class="quiz-container hidden" id="summary-box">
         <h2>Quiz Complete!</h2>
         <div id="results-list"></div>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
         <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade4-reading-topics.html'">Back to Topics</button>
     </div>
 
     <script>
-        const quizData = [
-            { q: "A paragraph has ___", a: "Topic sentence", options: ["Topic sentence", "Random words"] },
-            { q: "Which is a complete sentence?", a: "The dog ran.", options: ["The dog ran.", "Running fast"] },
-            { q: "Which is spelled correctly?", a: "Because", options: ["Becaus", "Because"] },
-            { q: "Capital letters are used for ___", a: "Names", options: ["Names", "Nothing"] }
+        const questionPool = [
+            { q: "What is a complete sentence?", a: "Subject and predicate", options: ["Subject and predicate", "Fragment"] },
+            { q: "What is a noun?", a: "Person, place, thing", options: ["Person, place, thing", "Action"] },
+            { q: "What is a verb?", a: "Action word", options: ["Action word", "Describing word"] },
+            { q: "What is an adjective?", a: "Describes noun", options: ["Describes noun", "Action"] },
+            { q: "What is a topic sentence?", a: "Main idea of paragraph", options: ["Main idea of paragraph", "Detail"] },
+            { q: "What is punctuation?", a: "Marks in writing", options: ["Marks in writing", "Letters"] },
+            { q: "When to use a period?", a: "End sentence", options: ["End sentence", "Start sentence"] },
+            { q: "What is a comma?", a: "Separates items", options: ["Separates items", "Ends sentence"] },
+            { q: "What is proofreading?", a: "Check for errors", options: ["Check for errors", "Write first draft"] },
+            { q: "What is revising?", a: "Improve writing", options: ["Improve writing", "Copy writing"] }
         ];
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        const quizData = shuffle(questionPool.slice()).slice(0, 5);
 
         let currentIdx = 0;
         let score = 0;

@@ -31,16 +31,43 @@
     <div class="quiz-container hidden" id="summary-box">
         <h2>Quiz Complete!</h2>
         <div id="results-list"></div>
-        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade5-reading-topics.html'">Back to Topics</button>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>        <button class="next-btn" style="display:block; margin-top:10px;" onclick="location.href='grade5-reading-topics.html'">Back to Topics</button>
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "Theme is ___", a: "Lesson/message", options: ["Lesson/message", "Character"] },
             { q: "Evidence ___ your answer", a: "Supports", options: ["Supports", "Hides"] },
             { q: "Nonfiction text gives ___", a: "Facts", options: ["Facts", "Stories only"] },
-            { q: "Main idea + details = ___", a: "Understanding", options: ["Understanding", "Confusion"] }
+            { q: "Main idea + details = ___", a: "Understanding", options: ["Understanding", "Confusion"] },
+            { q: "What is the main idea?", a: "The most important point", options: ["The most important point", "A small detail"] },
+            { q: "A character's motivation is ___", a: "Why they do things", options: ["Why they do things", "What they look like"] },
+            { q: "Inference means ___", a: "Reading between the lines", options: ["Reading between the lines", "Reading the words exactly"] },
+            { q: "Fiction stories are ___", a: "Made up", options: ["Made up", "Real events"] },
+            { q: "Author's purpose can be to ___", a: "Inform or entertain", options: ["Inform or entertain", "Confuse the reader"] },
+            { q: "Summarize means ___", a: "Tell the main points briefly", options: ["Tell the main points briefly", "Repeat everything word for word"] },
+            { q: "A plot is ___", a: "The sequence of events", options: ["The sequence of events", "The setting only"] },
+            { q: "Conflict in a story is ___", a: "The problem", options: ["The problem", "The happy ending"] },
+            { q: "Point of view is ___", a: "Who is telling the story", options: ["Who is telling the story", "Where the story takes place"] },
+            { q: "Tone is the author's ___", a: "Attitude", options: ["Attitude", "Favorite color"] },
+            { q: "Nonfiction includes ___", a: "Biographies and articles", options: ["Biographies and articles", "Fairy tales"] }
         ];
+
+        // Function to shuffle array
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        // Select 5 random questions
+        const quizData = [];
+        const shuffledPool = [...questionPool];
+        shuffleArray(shuffledPool);
+        for (let i = 0; i < 5 && i < shuffledPool.length; i++) {
+            quizData.push(shuffledPool[i]);
+        }
 
         let currentIdx = 0;
         let score = 0;

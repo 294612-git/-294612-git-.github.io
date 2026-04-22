@@ -31,14 +31,41 @@
     <div class="quiz-container hidden" id="summary-box">
         <h2>Quiz Complete!</h2>
         <div id="results-list"></div>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
         <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade5-reading-topics.html'">Back to Topics</button>
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "\"bio\" means ___", a: "Life", options: ["Life", "Water"] },
-            { q: "\"tele\" means ___", a: "Far", options: ["Far", "Small"] }
+            { q: "\"tele\" means ___", a: "Far", options: ["Far", "Small"] },
+            { q: "\"graph\" means ___", a: "Write", options: ["Write", "Run"] },
+            { q: "\"phon\" means ___", a: "Sound", options: ["Sound", "Light"] },
+            { q: "\"photo\" means ___", a: "Light", options: ["Light", "Heat"] },
+            { q: "\"therm\" means ___", a: "Heat", options: ["Heat", "Cold"] },
+            { q: "\"scope\" means ___", a: "Look", options: ["Look", "Hear"] },
+            { q: "\"meter\" means ___", a: "Measure", options: ["Measure", "Count"] },
+            { q: "\"ped\" means ___", a: "Foot", options: ["Foot", "Hand"] },
+            { q: "\"dent\" means ___", a: "Tooth", options: ["Tooth", "Eye"] },
+            { q: "\"rupt\" means ___", a: "Break", options: ["Break", "Fix"] },
+            { q: "\"port\" means ___", a: "Carry", options: ["Carry", "Throw"] }
         ];
+
+        // Function to shuffle array
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        // Select 5 random questions
+        const quizData = [];
+        const shuffledPool = [...questionPool];
+        shuffleArray(shuffledPool);
+        for (let i = 0; i < 5 && i < shuffledPool.length; i++) {
+            quizData.push(shuffledPool[i]);
+        }
 
         let currentIdx = 0;
         let score = 0;

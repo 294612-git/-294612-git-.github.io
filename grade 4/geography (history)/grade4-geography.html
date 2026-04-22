@@ -31,15 +31,32 @@
     <div class="quiz-container hidden" id="summary-box">
         <h2>Quiz Complete!</h2>
         <div id="results-list"></div>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
         <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade4-history-topics.html'">Back to Topics</button>
     </div>
 
     <script>
-        const quizData = [
-            { q: "What is a map?", a: "A drawing of the Earth", options: ["A drawing of the Earth", "A type of car"] },
-            { q: "What are natural resources?", a: "Things from nature", options: ["Things from nature", "Man-made objects"] },
-            { q: "What is a region?", a: "An area with similar features", options: ["An area with similar features", "A type of food"] }
+        const questionPool = [
+            { q: "What is geography?", a: "Study of Earth's features", options: ["Study of Earth's features", "Study of stars"] },
+            { q: "What is a globe?", a: "Model of Earth", options: ["Model of Earth", "Model of moon"] },
+            { q: "What is a compass rose?", a: "Shows directions", options: ["Shows directions", "Shows time"] },
+            { q: "What is latitude?", a: "Lines running east-west", options: ["Lines running east-west", "Lines running north-south"] },
+            { q: "What is longitude?", a: "Lines running north-south", options: ["Lines running north-south", "Lines running east-west"] },
+            { q: "What is a mountain?", a: "High landform", options: ["High landform", "Flat land"] },
+            { q: "What is a valley?", a: "Low area between mountains", options: ["Low area between mountains", "High area"] },
+            { q: "What is a river?", a: "Flowing water", options: ["Flowing water", "Standing water"] },
+            { q: "What is climate?", a: "Weather over time", options: ["Weather over time", "Weather today"] },
+            { q: "What is a natural resource?", a: "Something from nature", options: ["Something from nature", "Something made by people"] }
         ];
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        const quizData = shuffle(questionPool.slice()).slice(0, 5);
 
         let currentIdx = 0;
         let score = 0;

@@ -31,16 +31,32 @@
     <div class="quiz-container hidden" id="summary-box">
         <h2>Quiz Complete!</h2>
         <div id="results-list"></div>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
         <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade4-reading-topics.html'">Back to Topics</button>
     </div>
 
     <script>
-        const quizData = [
-            { q: "The main idea is ___", a: "What the story is mostly about", options: ["What the story is mostly about", "A detail"] },
-            { q: "Details ___ the main idea", a: "Support", options: ["Support", "Ignore"] },
-            { q: "A long story is called a ___", a: "Novel", options: ["Novel", "List"] },
-            { q: "Nonfiction is ___", a: "True", options: ["True", "Made up"] }
+        const questionPool = [
+            { q: "What is fiction?", a: "Made up stories", options: ["Made up stories", "True stories"] },
+            { q: "What is nonfiction?", a: "True information", options: ["True information", "Imaginary"] },
+            { q: "What is the main idea?", a: "Most important point", options: ["Most important point", "Small detail"] },
+            { q: "What are supporting details?", a: "Facts that explain main idea", options: ["Facts that explain main idea", "Unrelated facts"] },
+            { q: "What is a summary?", a: "Short retelling", options: ["Short retelling", "Long version"] },
+            { q: "What is inference?", a: "Reading between lines", options: ["Reading between lines", "Reading words"] },
+            { q: "What is cause and effect?", a: "Why something happens", options: ["Why something happens", "What happens"] },
+            { q: "What is sequence?", a: "Order of events", options: ["Order of events", "Random order"] },
+            { q: "What is author's purpose?", a: "Why writer wrote", options: ["Why writer wrote", "What writer looks like"] },
+            { q: "What is point of view?", a: "Perspective of narrator", options: ["Perspective of narrator", "Font size"] }
         ];
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        const quizData = shuffle(questionPool.slice()).slice(0, 5);
 
         let currentIdx = 0;
         let score = 0;
