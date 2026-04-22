@@ -31,16 +31,33 @@
     <div class="quiz-container hidden" id="summary-box">
         <h2>Quiz Complete!</h2>
         <div id="results-list"></div>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
         <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade3-math-topics.html'">Back to Topics</button>
     </div>
 
     <script>
-        const quizData = [
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        const questionPool = [
             { q: "What is 134 + 25?", a: "159", options: ["149", "159", "169"] },
             { q: "What is 300 − 120?", a: "180", options: ["180", "190", "200"] },
             { q: "What is 456 + 100?", a: "556", options: ["556", "546", "566"] },
-            { q: "What is 900 − 450?", a: "450", options: ["350", "450", "550"] }
+            { q: "What is 900 − 450?", a: "450", options: ["350", "450", "550"] },
+            { q: "What is 67 + 23?", a: "90", options: ["80", "90", "100"] },
+            { q: "What is 500 - 200?", a: "300", options: ["200", "300", "400"] },
+            { q: "What is 78 + 12?", a: "90", options: ["88", "90", "92"] },
+            { q: "What is 600 - 150?", a: "450", options: ["450", "550", "350"] },
+            { q: "What is 234 + 66?", a: "300", options: ["290", "300", "310"] },
+            { q: "What is 800 - 300?", a: "500", options: ["400", "500", "600"] }
         ];
+
+        shuffleArray(questionPool);
+        const quizData = questionPool.slice(0, 5);
 
         let currentIdx = 0;
         let score = 0;

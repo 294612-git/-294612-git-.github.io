@@ -31,14 +31,32 @@
     <div class="quiz-container hidden" id="summary-box">
         <h2>Quiz Complete!</h2>
         <div id="results-list"></div>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
         <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade4-reading-topics.html'">Back to Topics</button>
     </div>
 
     <script>
-        const quizData = [
-            { q: "What does the prefix 'un-' mean?", a: "Not", options: ["Not", "Again"] },
-            { q: "What does the suffix '-ful' mean?", a: "Full of", options: ["Full of", "Without"] }
+        const questionPool = [
+            { q: "What is a synonym?", a: "Word with same meaning", options: ["Word with same meaning", "Opposite meaning"] },
+            { q: "What is an antonym?", a: "Word with opposite meaning", options: ["Word with opposite meaning", "Same meaning"] },
+            { q: "What is a prefix?", a: "Letters added to beginning", options: ["Letters added to beginning", "End"] },
+            { q: "What is a suffix?", a: "Letters added to end", options: ["Letters added to end", "Beginning"] },
+            { q: "What is a root word?", a: "Base word", options: ["Base word", "Prefix"] },
+            { q: "What is context clues?", a: "Words around to help meaning", options: ["Words around to help meaning", "Pictures"] },
+            { q: "What is a homonym?", a: "Words that sound same but different meaning", options: ["Words that sound same but different meaning", "Rhyming words"] },
+            { q: "What is a compound word?", a: "Two words combined", options: ["Two words combined", "One word"] },
+            { q: "What is figurative language?", a: "Not literal", options: ["Not literal", "Exact"] },
+            { q: "What is denotation?", a: "Dictionary meaning", options: ["Dictionary meaning", "Implied meaning"] }
         ];
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        const quizData = shuffle(questionPool.slice()).slice(0, 5);
 
         let currentIdx = 0;
         let score = 0;

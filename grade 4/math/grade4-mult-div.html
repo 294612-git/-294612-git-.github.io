@@ -31,16 +31,32 @@
     <div class="quiz-container hidden" id="summary-box">
         <h2>Quiz Complete!</h2>
         <div id="results-list"></div>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
         <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade4-math-topics.html'">Back to Topics</button>
     </div>
 
     <script>
-        const quizData = [
-            { q: "What is 24 × 3?", a: "72", options: ["72", "64", "84"] },
-            { q: "What is 144 ÷ 12?", a: "12", options: ["10", "12", "14"] },
-            { q: "What is 35 × 2?", a: "70", options: ["60", "70", "80"] },
-            { q: "What is 81 ÷ 9?", a: "9", options: ["7", "8", "9"] }
+        const questionPool = [
+            { q: "What is multiplication?", a: "Repeated addition", options: ["Repeated addition", "Repeated subtraction"] },
+            { q: "What is division?", a: "Sharing equally", options: ["Sharing equally", "Adding numbers"] },
+            { q: "What is 5 x 4?", a: "20", options: ["20", "24"] },
+            { q: "What is 30 ÷ 5?", a: "6", options: ["6", "5"] },
+            { q: "What is the product?", a: "Result of multiplication", options: ["Result of multiplication", "Result of division"] },
+            { q: "What is the quotient?", a: "Result of division", options: ["Result of division", "Result of multiplication"] },
+            { q: "What is 0 times any number?", a: "0", options: ["0", "1"] },
+            { q: "What is any number times 1?", a: "The number", options: ["The number", "0"] },
+            { q: "How to check division?", a: "Multiply quotient by divisor", options: ["Multiply quotient by divisor", "Add"] },
+            { q: "What is a factor?", a: "Number multiplied", options: ["Number multiplied", "Result"] }
         ];
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        const quizData = shuffle(questionPool.slice()).slice(0, 5);
 
         let currentIdx = 0;
         let score = 0;

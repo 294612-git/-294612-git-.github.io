@@ -31,15 +31,32 @@
     <div class="quiz-container hidden" id="summary-box">
         <h2>Quiz Complete!</h2>
         <div id="results-list"></div>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
         <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade4-science-topics.html'">Back to Topics</button>
     </div>
 
     <script>
-        const quizData = [
-            { q: "Energy is the ability to ___", a: "Do work", options: ["Do work", "Sleep"] },
-            { q: "The sun gives us ___ energy", a: "Heat and light", options: ["Heat and light", "Sound"] },
-            { q: "Moving objects have ___ energy", a: "Kinetic", options: ["Kinetic", "Stored"] }
+        const questionPool = [
+            { q: "What is energy?", a: "Ability to do work", options: ["Ability to do work", "Ability to rest"] },
+            { q: "What type of energy does a moving car have?", a: "Kinetic", options: ["Kinetic", "Potential"] },
+            { q: "What type of energy is stored in a battery?", a: "Chemical", options: ["Chemical", "Mechanical"] },
+            { q: "What is potential energy?", a: "Stored energy", options: ["Stored energy", "Moving energy"] },
+            { q: "What is the main source of energy for Earth?", a: "Sun", options: ["Sun", "Moon"] },
+            { q: "What is renewable energy?", a: "Energy that can be replenished", options: ["Energy that can be replenished", "Energy that runs out"] },
+            { q: "What is non-renewable energy?", a: "Energy that cannot be replenished easily", options: ["Energy that cannot be replenished easily", "Energy from the sun"] },
+            { q: "What is heat energy?", a: "Energy that makes things warm", options: ["Energy that makes things warm", "Energy that makes sound"] },
+            { q: "What is sound energy?", a: "Energy from vibrations", options: ["Energy from vibrations", "Energy from light"] },
+            { q: "How can we save energy?", a: "Turn off lights", options: ["Turn off lights", "Leave lights on"] }
         ];
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        const quizData = shuffle(questionPool.slice()).slice(0, 5);
 
         let currentIdx = 0;
         let score = 0;

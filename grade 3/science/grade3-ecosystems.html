@@ -31,16 +31,33 @@
     <div class="quiz-container hidden" id="summary-box">
         <h2>Quiz Complete!</h2>
         <div id="results-list"></div>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
         <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade3-science-topics.html'">Back to Topics</button>
     </div>
 
     <script>
-        const quizData = [
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        const questionPool = [
             { q: "Plants are ___", a: "Producers", options: ["Producers", "Consumers"] },
             { q: "Animals that eat plants are ___", a: "Herbivores", options: ["Carnivores", "Herbivores"] },
             { q: "Energy in a food chain comes from ___", a: "Sun", options: ["Sun", "Soil"] },
-            { q: "A food web shows ___", a: "Many connections", options: ["One chain", "Many connections"] }
+            { q: "A food web shows ___", a: "Many connections", options: ["One chain", "Many connections"] },
+            { q: "What is an ecosystem?", a: "A community of living things and their environment", options: ["A type of food", "A community of living things and their environment", "A kind of animal"] },
+            { q: "What do decomposers do?", a: "Break down dead plants and animals", options: ["Make food", "Break down dead plants and animals", "Eat other animals"] },
+            { q: "What are omnivores?", a: "Animals that eat both plants and animals", options: ["Only plants", "Only animals", "Animals that eat both plants and animals"] },
+            { q: "What is a habitat?", a: "The place where an animal lives", options: ["A type of plant", "The place where an animal lives", "A food chain"] },
+            { q: "What is biodiversity?", a: "The variety of life in an area", options: ["A single species", "The variety of life in an area", "Only plants"] },
+            { q: "What happens in a food chain?", a: "Energy is passed from one organism to another", options: ["Animals eat plants", "Energy is passed from one organism to another", "Plants make energy"] }
         ];
+
+        shuffleArray(questionPool);
+        const quizData = questionPool.slice(0, 5);
 
         let currentIdx = 0;
         let score = 0;

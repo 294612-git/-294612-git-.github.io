@@ -31,16 +31,32 @@
     <div class="quiz-container hidden" id="summary-box">
         <h2>Quiz Complete!</h2>
         <div id="results-list"></div>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
         <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade4-science-topics.html'">Back to Topics</button>
     </div>
 
     <script>
-        const quizData = [
-            { q: "Plants make food using ___", a: "Sunlight", options: ["Sunlight", "Water only"] },
-            { q: "Animals depend on plants for ___", a: "Food", options: ["Food", "Rocks"] },
-            { q: "A consumer is ___", a: "Eats food", options: ["Eats food", "Makes food"] },
-            { q: "A food chain shows ___", a: "Energy flow", options: ["Energy flow", "Colors"] }
+        const questionPool = [
+            { q: "How do plants make their own food?", a: "Photosynthesis", options: ["Photosynthesis", "Eating other plants"] },
+            { q: "What do animals need to survive?", a: "Food, water, air", options: ["Food, water, air", "Rocks"] },
+            { q: "What is a herbivore?", a: "Eats plants", options: ["Eats plants", "Eats meat"] },
+            { q: "What is a carnivore?", a: "Eats meat", options: ["Eats meat", "Eats plants"] },
+            { q: "What is an omnivore?", a: "Eats both plants and meat", options: ["Eats both plants and meat", "Eats only meat"] },
+            { q: "What is a producer?", a: "Makes its own food", options: ["Makes its own food", "Eats other organisms"] },
+            { q: "What is a habitat?", a: "Place where an organism lives", options: ["Place where an organism lives", "Place where food is made"] },
+            { q: "What is adaptation?", a: "Change to survive", options: ["Change to survive", "Change in color"] },
+            { q: "What do plants need to grow?", a: "Sunlight, water, air", options: ["Sunlight, water, air", "Rocks"] },
+            { q: "What is pollination?", a: "Transfer of pollen", options: ["Transfer of pollen", "Making seeds"] }
         ];
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        const quizData = shuffle(questionPool.slice()).slice(0, 5);
 
         let currentIdx = 0;
         let score = 0;

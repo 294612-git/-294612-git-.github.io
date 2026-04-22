@@ -31,16 +31,33 @@
     <div class="quiz-container hidden" id="summary-box">
         <h2>Quiz Complete!</h2>
         <div id="results-list"></div>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
         <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade3-science-topics.html'">Back to Topics</button>
     </div>
 
     <script>
-        const quizData = [
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        const questionPool = [
             { q: "Weather is ___", a: "Day-to-day conditions", options: ["Day-to-day conditions", "Long-term patterns"] },
             { q: "Climate is ___", a: "Long-term", options: ["Short-term", "Long-term"] },
             { q: "A thermometer measures ___", a: "Temperature", options: ["Temperature", "Wind"] },
-            { q: "Hot and dry describes a ___", a: "Climate", options: ["Climate", "Storm"] }
+            { q: "Hot and dry describes a ___", a: "Climate", options: ["Climate", "Storm"] },
+            { q: "What is precipitation?", a: "Rain, snow, hail", options: ["Only rain", "Rain, snow, hail", "Wind and clouds"] },
+            { q: "What is humidity?", a: "The amount of water vapor in the air", options: ["The amount of rain", "The amount of water vapor in the air", "The temperature"] },
+            { q: "What tool measures wind speed?", a: "Anemometer", options: ["Thermometer", "Anemometer", "Barometer"] },
+            { q: "What is a hurricane?", a: "A large storm with strong winds", options: ["A type of cloud", "A large storm with strong winds", "A sunny day"] },
+            { q: "What is fog?", a: "Clouds at ground level", options: ["Rain", "Clouds at ground level", "Snow"] },
+            { q: "What is the weather like in a desert?", a: "Hot and dry", options: ["Cold and wet", "Hot and dry", "Windy"] }
         ];
+
+        shuffleArray(questionPool);
+        const quizData = questionPool.slice(0, 5);
 
         let currentIdx = 0;
         let score = 0;

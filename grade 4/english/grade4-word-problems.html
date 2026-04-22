@@ -31,14 +31,32 @@
     <div class="quiz-container hidden" id="summary-box">
         <h2>Quiz Complete!</h2>
         <div id="results-list"></div>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
         <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade4-math-topics.html'">Back to Topics</button>
     </div>
 
     <script>
-        const quizData = [
-            { q: "A box has 5 rows of 6 apples. Total apples?", a: "30", options: ["30", "25", "35"] },
-            { q: "You have 20 candies and give away 8. How many left?", a: "12", options: ["10", "12", "14"] }
+        const questionPool = [
+            { q: "What is a word problem?", a: "Math in words", options: ["Math in words", "Math in numbers"] },
+            { q: "How to solve word problems?", a: "Read carefully, identify operation", options: ["Read carefully, identify operation", "Guess"] },
+            { q: "If John has 10 apples and gives 3 to Mary, how many left?", a: "7", options: ["7", "13"] },
+            { q: "There are 4 groups of 5 students. Total students?", a: "20", options: ["20", "9"] },
+            { q: "A train travels 100 miles in 2 hours. Speed?", a: "50 mph", options: ["50 mph", "200 mph"] },
+            { q: "What operation for 'altogether'?", a: "Addition", options: ["Addition", "Subtraction"] },
+            { q: "What operation for 'left' or 'remaining'?", a: "Subtraction", options: ["Subtraction", "Multiplication"] },
+            { q: "What operation for 'each' or 'groups of'?", a: "Multiplication", options: ["Multiplication", "Division"] },
+            { q: "What operation for 'shared equally'?", a: "Division", options: ["Division", "Addition"] },
+            { q: "Why use keywords?", a: "Identify operation", options: ["Identify operation", "Ignore them"] }
         ];
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        const quizData = shuffle(questionPool.slice()).slice(0, 5);
 
         let currentIdx = 0;
         let score = 0;

@@ -31,16 +31,32 @@
     <div class="quiz-container hidden" id="summary-box">
         <h2>Quiz Complete!</h2>
         <div id="results-list"></div>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
         <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade4-math-topics.html'">Back to Topics</button>
     </div>
 
     <script>
-        const quizData = [
-            { q: "A rectangle has length 6 and width 4. Area = ?", a: "24", options: ["10", "24", "20"] },
-            { q: "Perimeter of that rectangle = ?", a: "20", options: ["20", "24", "18"] },
-            { q: "There are 12 inches in a ___", a: "Foot", options: ["Foot", "Yard"] },
-            { q: "Which is longer?", a: "1 meter", options: ["1 meter", "1 centimeter"] }
+        const questionPool = [
+            { q: "What is the perimeter of a square with side 5?", a: "20", options: ["20", "25"] },
+            { q: "What is the area of a rectangle 3x4?", a: "12", options: ["12", "7"] },
+            { q: "What unit for length?", a: "Meter", options: ["Meter", "Gram"] },
+            { q: "What unit for weight?", a: "Gram", options: ["Gram", "Liter"] },
+            { q: "What unit for volume?", a: "Liter", options: ["Liter", "Meter"] },
+            { q: "How many centimeters in a meter?", a: "100", options: ["100", "10"] },
+            { q: "How many millimeters in a centimeter?", a: "10", options: ["10", "100"] },
+            { q: "What is capacity?", a: "Amount a container holds", options: ["Amount a container holds", "Weight"] },
+            { q: "What is elapsed time?", a: "Time passed", options: ["Time passed", "Current time"] },
+            { q: "How to measure temperature?", a: "Thermometer", options: ["Thermometer", "Ruler"] }
         ];
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        const quizData = shuffle(questionPool.slice()).slice(0, 5);
 
         let currentIdx = 0;
         let score = 0;
