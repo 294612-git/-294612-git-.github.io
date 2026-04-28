@@ -3,65 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Animals Quiz - Study Buddy</title>
+    <title>Dolphin Animals Quiz - Study Buddy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 500px; text-align: center; }
-        h2 { color: #667eea; }
+        body { 
+            font-family: 'Quicksand', sans-serif; 
+            background-color: #e3f2fd; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0; 
+        }
+        .quiz-container { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 20px; 
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1); 
+            width: 90%; 
+            max-width: 500px; 
+            text-align: center; 
+            border: 4px dashed #1976d2;
+        }
+        h2 { font-family: 'Fredoka', cursive; color: #1565c0; }
         .options-container { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
-        .option-btn { padding: 12px; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; font-size: 1.1rem; transition: 0.2s; }
-        .option-btn:hover { border-color: #667eea; background: #f0f2ff; }
+        .option-btn { 
+            padding: 12px; 
+            border: 3px solid #bbdefb; 
+            border-radius: 50px; 
+            background: white; 
+            cursor: pointer; 
+            font-size: 1.1rem; 
+            font-weight: 600;
+            transition: 0.2s; 
+            color: #1565c0;
+        }
+        .option-btn:hover { border-color: #1976d2; background: #e3f2fd; }
         .feedback { margin: 15px 0; font-weight: bold; min-height: 24px; }
-        .correct { color: #28a745; }
-        .wrong { color: #dc3545; }
-        .next-btn { background: #667eea; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; display: none; margin: 0 auto; }
-        .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #eee; }
+        .correct { color: #1b5e20; }
+        .wrong { color: #b71c1c; }
+        .next-btn { 
+            background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%); 
+            color: white; 
+            border: none; 
+            padding: 12px 25px; 
+            border-radius: 50px; 
+            cursor: pointer; 
+            display: none; 
+            margin: 0 auto; 
+            font-weight: bold;
+            box-shadow: 0 4px 0px #0d47a1;
+        }
+        .next-btn:active { transform: translateY(4px); box-shadow: none; }
+        .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #bbdefb; }
         .hidden { display: none; }
     </style>
 </head>
 <body>
-
     <div class="quiz-container" id="quiz-box">
-        <h2 id="question-text">Question</h2>
+        <h2>🐬 Dolphin Animals Quiz</h2>
+        <h2 id="question-text" style="color: #333;">Question</h2>
         <div class="options-container" id="options"></div>
         <div id="feedback" class="feedback"></div>
-        <button id="next-button" class="next-btn" onclick="loadNextQuestion()">Next Question</button>
+        <button id="next-button" class="next-btn" onclick="loadNextQuestion()">Dive to Next</button>
     </div>
 
     <div class="quiz-container hidden" id="summary-box">
-        <h2>Quiz Complete!</h2>
+        <h2>You're a Whale of a Scientist!</h2>
         <div id="results-list"></div>
-        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
-        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade1-science-topics.html'">Back to Topics</button>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade1-science-topics.html'">Back to Dolphin Science</button>
     </div>
 
     <script>
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-        }
-
-        const questionPool = [
+        const quizData = [
             { q: "Which animal lives in water?", a: "Fish", options: ["Dog", "Cat", "Fish"] },
             { q: "Which animal says “moo”?", a: "Cow", options: ["Cow", "Pig"] },
             { q: "What do birds have?", a: "Wings", options: ["Fur", "Scales", "Wings"] },
-            { q: "Which animal is a pet?", a: "Dog", options: ["Cat", "Tiger"] },
-            { q: "What sound does a cat make?", a: "Meow", options: ["Woof", "Meow", "Quack"] },
-            { q: "Which animal has a long trunk?", a: "Elephant", options: ["Lion", "Elephant", "Monkey"] },
-            { q: "What do animals need to drink?", a: "Water", options: ["Milk", "Water", "Juice"] },
-            { q: "Which animal can fly?", a: "Bird", options: ["Fish", "Bird", "Dog"] },
-            { q: "What do lions have?", a: "Mane", options: ["Wings", "Mane", "Fins"] },
-            { q: "Which animal lives in the jungle?", a: "Monkey", options: ["Penguin", "Monkey", "Polar bear"] }
+            { q: "Which animal is a pet?", a: "Dog", options: ["Cat", "Tiger"] }
         ];
-
-        shuffleArray(questionPool);
-        const quizData = questionPool.slice(0, 5);
-
-        let currentIdx = 0;
-        let score = 0;
-        let userResults = [];
+        let currentIdx = 0; let score = 0; let userResults = [];
 
         function loadQuestion() {
             const current = quizData[currentIdx];
@@ -70,7 +90,6 @@
             optionsDiv.innerHTML = "";
             document.getElementById("feedback").innerText = "";
             document.getElementById("next-button").style.display = "none";
-
             current.options.forEach(opt => {
                 const btn = document.createElement("button");
                 btn.innerText = opt;
@@ -84,12 +103,9 @@
             const current = quizData[currentIdx];
             const feedback = document.getElementById("feedback");
             const btns = document.querySelectorAll(".option-btn");
-            
-            // Disable buttons after answer
             btns.forEach(b => b.disabled = true);
-
             if (selected === current.a) {
-                feedback.innerText = "Correct! Well done.";
+                feedback.innerText = "Flipper-tastic! Correct.";
                 feedback.className = "feedback correct";
                 score++;
                 userResults.push({ q: current.q, res: "Correct", class: "correct" });
@@ -103,21 +119,15 @@
 
         function loadNextQuestion() {
             currentIdx++;
-            if (currentIdx < quizData.length) {
-                loadQuestion();
-            } else {
-                showSummary();
-            }
+            if (currentIdx < quizData.length) { loadQuestion(); } 
+            else { showSummary(); }
         }
 
         function showSummary() {
             document.getElementById("quiz-box").classList.add("hidden");
-            const summaryBox = document.getElementById("summary-box");
-            summaryBox.classList.remove("hidden");
-            
+            document.getElementById("summary-box").classList.remove("hidden");
             const list = document.getElementById("results-list");
             list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
-            
             userResults.forEach(item => {
                 const div = document.createElement("div");
                 div.className = "summary-item";
@@ -125,8 +135,6 @@
                 list.appendChild(div);
             });
         }
-
-        // Start the quiz
         loadQuestion();
     </script>
 </body>
