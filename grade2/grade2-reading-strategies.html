@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Money Quiz - Study Buddy</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reading Strategies Quiz - Study Buddy</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
         .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 500px; text-align: center; }
@@ -20,7 +20,6 @@
     </style>
 </head>
 <body>
-
     <div class="quiz-container" id="quiz-box">
         <h2 id="question-text">Question</h2>
         <div class="options-container" id="options"></div>
@@ -32,15 +31,15 @@
         <h2>Quiz Complete!</h2>
         <div id="results-list"></div>
         <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
-        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='../grade2-math-topics.html'">Back to Topics</button>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade2-english-topics.html'">Back to English Topics</button>
     </div>
 
     <script>
         const quizData = [
-            { q: "What do plants need to make food?", a: "Sunlight", options: ["Sunlight", "Rocks", "Plastic"] },
-            { q: "Which part of a plant makes seeds?", a: "Flower", options: ["Flower", "Root", "Stem"] },
-            { q: "The first stage of a plant’s life cycle is a ___.", a: "Seed", options: ["Seed", "Leaf", "Fruit"] },
-            { q: "Roots help a plant ___.", a: "Absorb water and nutrients", options: ["Absorb water and nutrients", "Make food", "Store energy"] }
+            { q: "What comes first in a story?", a: "Beginning", options: ["Beginning", "Ending"] },
+            { q: "If it rains, the ground gets wet. Rain is the ___.", a: "Cause", options: ["Cause", "Effect"] },
+            { q: "The main idea tells what the story is mostly about.", a: "True", options: ["True", "False"] },
+            { q: "If a character shares toys, we can infer they are ___.", a: "Kind", options: ["Kind", "Mean"] }
         ];
 
         let currentIdx = 0;
@@ -54,7 +53,6 @@
             optionsDiv.innerHTML = "";
             document.getElementById("feedback").innerText = "";
             document.getElementById("next-button").style.display = "none";
-
             current.options.forEach(opt => {
                 const btn = document.createElement("button");
                 btn.innerText = opt;
@@ -68,17 +66,14 @@
             const current = quizData[currentIdx];
             const feedback = document.getElementById("feedback");
             const btns = document.querySelectorAll(".option-btn");
-            
-            // Disable buttons after answer
             btns.forEach(b => b.disabled = true);
-
             if (selected === current.a) {
-                feedback.innerText = "Correct! Well done.";
+                feedback.innerText = "Correct! Great job.";
                 feedback.className = "feedback correct";
                 score++;
                 userResults.push({ q: current.q, res: "Correct", class: "correct" });
             } else {
-                feedback.innerText = "Oops! The correct answer was " + current.a;
+                feedback.innerText = "Oops! The correct answer was " + current.a + ".";
                 feedback.className = "feedback wrong";
                 userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
             }
@@ -98,10 +93,8 @@
             document.getElementById("quiz-box").classList.add("hidden");
             const summaryBox = document.getElementById("summary-box");
             summaryBox.classList.remove("hidden");
-            
             const list = document.getElementById("results-list");
             list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
-            
             userResults.forEach(item => {
                 const div = document.createElement("div");
                 div.className = "summary-item";
@@ -110,7 +103,6 @@
             });
         }
 
-        // Start the quiz
         loadQuestion();
     </script>
 </body>
