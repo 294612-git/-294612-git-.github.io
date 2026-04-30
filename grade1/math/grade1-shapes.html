@@ -98,6 +98,7 @@
             document.getElementById("quiz-box").classList.add("hidden");
             const summaryBox = document.getElementById("summary-box");
             summaryBox.classList.remove("hidden");
+            ensureTryAgainButton();
             
             const list = document.getElementById("results-list");
             list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
@@ -111,7 +112,7 @@
         }
 
         // Start the quiz
-        loadQuestion();
+        initializeQuiz();
     </script>
 </body>
 </html>

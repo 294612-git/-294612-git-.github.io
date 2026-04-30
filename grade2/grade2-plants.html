@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Economics Quiz - Study Buddy</title>
+    <title>Plants Quiz - Study Buddy</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
         .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 500px; text-align: center; }
@@ -32,14 +32,15 @@
         <h2>Quiz Complete!</h2>
         <div id="results-list"></div>
         <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
-        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade3-history-topics.html'">Back to Topics</button>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade2-science-topics.html'">Back to Topics</button>
     </div>
 
     <script>
         const quizData = [
-            { q: "A need is something you ___", a: "Must have", options: ["Must have", "Want"] },
-            { q: "A want is something you ___", a: "Would like", options: ["Need", "Would like"] },
-            { q: "Buying and selling is called ___", a: "Trade", options: ["Trade", "Sleeping"] }
+            { q: "What do plants need to make food?", a: "Sunlight", options: ["Sunlight", "Rocks", "Plastic"] },
+            { q: "Which part of a plant makes seeds?", a: "Flower", options: ["Flower", "Root", "Stem"] },
+            { q: "The first stage of a plant’s life cycle is a ___.", a: "Seed", options: ["Seed", "Leaf", "Fruit"] },
+            { q: "Roots help a plant ___.", a: "Absorb water and nutrients", options: ["Absorb water and nutrients", "Make food", "Store energy"] }
         ];
 
         let currentIdx = 0;
@@ -93,8 +94,6 @@
             const current = quizData[currentIdx];
             const feedback = document.getElementById("feedback");
             const btns = document.querySelectorAll(".option-btn");
-            
-            // Disable buttons after answer
             btns.forEach(b => b.disabled = true);
 
             if (selected === current.a) {
@@ -124,10 +123,9 @@
             const summaryBox = document.getElementById("summary-box");
             summaryBox.classList.remove("hidden");
             ensureTryAgainButton();
-            
+
             const list = document.getElementById("results-list");
             list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
-            
             userResults.forEach(item => {
                 const div = document.createElement("div");
                 div.className = "summary-item";
@@ -136,7 +134,6 @@
             });
         }
 
-        // Start the quiz
         initializeQuiz();
     </script>
 </body>
