@@ -11,6 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.concurrent.Executors;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -21,7 +22,7 @@ public class Main {
         server.createContext("/", new StaticFileHandler());
         server.createContext("/api/data", new ApiHandler());
         
-        server.setExecutor(null); // Creates a default executor
+        server.setExecutor(Executors.newFixedThreadPool(10));
         server.start();
         System.out.println("Server running on http://localhost:8080");
     }
@@ -30,6 +31,12 @@ public class Main {
     static class StaticFileHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
+            if (!"GET".equalsIgnoreCase(exchange.getRequestMethod())) {
+                exchange.sendResponseHeaders(405, -1);
+                exchange.close();
+                return;
+            }
+
             String rawPath = exchange.getRequestURI().getPath();
             if (rawPath == null || rawPath.isEmpty()) {
                 rawPath = "/";
@@ -37,11 +44,14 @@ public class Main {
             rawPath = URLDecoder.decode(rawPath, StandardCharsets.UTF_8.name());
             if (rawPath.equals("/")) {
                 rawPath = "/index.html";
+            } else if (rawPath.endsWith("/")) {
+                rawPath += "index.html";
             }
 
             Path filePath = resolveStaticPath(rawPath);
             if (filePath == null || !Files.exists(filePath) || Files.isDirectory(filePath)) {
                 exchange.sendResponseHeaders(404, -1);
+                exchange.close();
                 return;
             }
 
@@ -60,18 +70,26 @@ public class Main {
                 return null;
             }
 
-            Path resourcePath = Paths.get("src/main/resources").resolve(normalized);
+            Path projectRoot = Paths.get("").toAbsolutePath().normalize();
+            Path resourcePath = projectRoot.resolve("src/main/resources").resolve(normalized).normalize();
             if (Files.exists(resourcePath) && !Files.isDirectory(resourcePath)) {
                 return resourcePath;
             }
 
-            Path rootPath = Paths.get(".").resolve(normalized).normalize();
+            Path rootPath = projectRoot.resolve(normalized).normalize();
             if (Files.exists(rootPath) && !Files.isDirectory(rootPath)) {
                 return rootPath;
             }
 
+            if (!trimmed.contains(".") || trimmed.endsWith(".html")) {
+                Path alt = projectRoot.resolve(trimmed + ".html").normalize();
+                if (Files.exists(alt) && !Files.isDirectory(alt)) {
+                    return alt;
+                }
+            }
+
             if ("grade2/grade2-plants.html".equals(trimmed)) {
-                Path alt = Paths.get("grade2/grade2-plants.html.html");
+                Path alt = projectRoot.resolve("grade2/grade2-plants.html.html").normalize();
                 if (Files.exists(alt) && !Files.isDirectory(alt)) {
                     return alt;
                 }
@@ -111,11 +129,12 @@ public class Main {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
             String response = "{\"message\": \"Hello from Java Backend!\", \"timestamp\": " + System.currentTimeMillis() + "}";
-            exchange.getResponseHeaders().set("Content-Type", "application/json");
-            exchange.sendResponseHeaders(200, response.length());
-            OutputStream os = exchange.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
+            byte[] responseBytes = response.getBytes(StandardCharsets.UTF_8);
+            exchange.getResponseHeaders().set("Content-Type", "application/json; charset=utf-8");
+            exchange.sendResponseHeaders(200, responseBytes.length);
+            try (OutputStream os = exchange.getResponseBody()) {
+                os.write(responseBytes);
+            }
         }
     }
 }
