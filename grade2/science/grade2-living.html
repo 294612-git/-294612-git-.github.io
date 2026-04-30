@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Addition and Subtraction Quiz - Study Buddy</title>
+    <title>Living vs. Non-Living Things Quiz - Study Buddy</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
         .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 500px; text-align: center; }
@@ -32,15 +32,31 @@
         <h2>Quiz Complete!</h2>
         <div id="results-list"></div>
         <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
-        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade2-math-topics.html'">Back to Topics</button>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade2-science-topics.html'">Back to Topics</button>
     </div>
 
     <script>
         const quizData = [
-            { q: "What is 23 + 15?", a: "38", options: ["38", "37", "48"] },
-            { q: "What is 45 − 12?", a: "33", options: ["33", "32", "34"] },
-            { q: "What is 56 + 10?", a: "66", options: ["65", "66", "60"] },
-            { q: "What is 72 − 20?", a: "52", options: ["50", "52", "62"] }
+            { q: "Which of these is a living thing?", a: "A tree", options: ["A rock", "A tree", "A car"] },
+            { q: "What is one thing all living things need?", a: "Energy (Food/Sun)", options: ["Toys", "Energy (Food/Sun)", "A computer"] },
+            { q: "Can non-living things grow on their own?", a: "No", options: ["Yes", "No"] },
+            { q: "A teddy bear is non-living because...", a: "It does not breathe or grow", options: ["It is soft", "It does not breathe or grow", "It is brown"] },
+            { q: "Which of these is a non-living thing found in nature?", a: "A river", options: ["A flower", "A river", "A bird"] },
+            { q: "Do living things move on their own?", a: "Yes", options: ["Yes", "No"] },
+            { q: "A cloud moves in the sky. Is it living?", a: "No, because it does not eat or reproduce", options: ["Yes, because it moves", "No, because it does not eat or reproduce"] },
+            { q: "What do we call it when living things make babies or seeds?", a: "Reproduction", options: ["Reproduction", "Breathing", "Growing"] },
+            { q: "Is a seed living or non-living?", a: "Living (it is dormant)", options: ["Living (it is dormant)", "Non-living"] },
+            { q: "Which of these is NOT a characteristic of living things?", a: "Staying the same size forever", options: ["Reacting to the environment", "Staying the same size forever", "Needing water"] },
+            { q: "Is fire living or non-living?", a: "Non-living (it does not have cells)", options: ["Living (it grows and moves)", "Non-living (it does not have cells)"] },
+            { q: "Living things are made of tiny building blocks called...", a: "Cells", options: ["Bricks", "Cells", "Atoms"] },
+            { q: "Which of these is a man-made non-living thing?", a: "A bicycle", options: ["A mountain", "A bicycle", "A fish"] },
+            { q: "Why is a volcano non-living?", a: "It does not breathe or need food", options: ["It is too hot", "It does not breathe or need food", "It is made of rock"] },
+            { q: "All living things need ___ to breathe.", a: "Air", options: ["Air", "Dirt", "Sunlight"] },
+            { q: "Which of these can reproduce?", a: "A mushroom", options: ["A mushroom", "A pencil", "A shoe"] },
+            { q: "What happens to a living thing if it has no water?", a: "It will die", options: ["It grows bigger", "It will die", "It turns into a rock"] },
+            { q: "A robot can move and talk. Is it living?", a: "No, it is a machine", options: ["Yes", "No, it is a machine"] },
+            { q: "Which sense helps living things react to a loud noise?", a: "Hearing", options: ["Sight", "Hearing", "Smell"] },
+            { q: "Is a dead leaf living or non-living?", a: "Non-living (it was once living)", options: ["Living", "Non-living (it was once living)"] }
         ];
 
         let currentIdx = 0;

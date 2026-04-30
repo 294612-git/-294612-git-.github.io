@@ -43,12 +43,54 @@
             { q: "How many sides does a triangle have?", a: "3", options: ["3", "4", "5"] },
             { q: "How many sides does a square have?", a: "4", options: ["3", "4", "5"] },
             { q: "How many sides does a circle have?", a: "0", options: ["0", "1", "many"] },
-            { q: "Which shape has 5 sides?", a: "pentagon", options: ["triangle", "square", "pentagon"] }
+            { q: "Which shape has 5 sides?", a: "pentagon", options: ["triangle", "square", "pentagon"] },
+            { q: "What shape is a ball?", a: "sphere", options: ["cube", "sphere", "cylinder"] },
+            { q: "What shape is a box?", a: "cube", options: ["sphere", "cube", "cone"] },
+            { q: "How many corners does a triangle have?", a: "3", options: ["3", "4", "5"] },
+            { q: "How many corners does a square have?", a: "4", options: ["3", "4", "5"] },
+            { q: "What shape looks like a stop sign?", a: "octagon", options: ["hexagon", "octagon", "circle"] },
+            { q: "What shape is a pizza?", a: "circle", options: ["square", "triangle", "circle"] },
+            { q: "How many sides does a hexagon have?", a: "6", options: ["5", "6", "7"] },
+            { q: "What shape is a can of soup?", a: "cylinder", options: ["cube", "sphere", "cylinder"] },
+            { q: "How many faces does a cube have?", a: "6", options: ["4", "6", "8"] },
+            { q: "What shape is a wheel?", a: "circle", options: ["square", "triangle", "circle"] },
+            { q: "How many sides does a rectangle have?", a: "4", options: ["3", "4", "5"] },
+            { q: "What shape is a door?", a: "rectangle", options: ["circle", "rectangle", "triangle"] },
+            { q: "How many vertices does a triangle have?", a: "3", options: ["3", "4", "5"] },
+            { q: "What shape is a cone?", a: "cone", options: ["cube", "sphere", "cone"] },
+            { q: "How many sides does an octagon have?", a: "8", options: ["6", "7", "8"] },
+            { q: "What shape is a pyramid?", a: "pyramid", options: ["cube", "pyramid", "cylinder"] }
         ];
 
         let currentIdx = 0;
         let score = 0;
         let userResults = [];
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function ensureTryAgainButton() {
+            const summaryBox = document.getElementById("summary-box");
+            if (summaryBox && !summaryBox.querySelector('button[onclick="location.reload()"]')) {
+                const button = document.createElement('button');
+                button.className = 'next-btn';
+                button.style.display = 'block';
+                button.style.marginTop = '20px';
+                button.innerText = 'Try Again';
+                button.onclick = function() { location.reload(); };
+                const backButton = summaryBox.querySelector('button[onclick^="location.href"]');
+                summaryBox.insertBefore(button, backButton || null);
+            }
+        }
+
+        function initializeQuiz() {
+            shuffleArray(quizData);
+            loadQuestion();
+        }
 
         function loadQuestion() {
             const current = quizData[currentIdx];
@@ -71,14 +113,15 @@
         function checkAnswer(selected) {
             const current = quizData[currentIdx];
             const feedback = document.getElementById("feedback");
-            
+            const btns = document.querySelectorAll(".option-btn");
+            btns.forEach(b => b.disabled = true);
             if (selected === current.a) {
-                feedback.innerText = "Correct! 🎉";
+                feedback.innerText = "Splashtastic! Correct.";
                 feedback.className = "feedback correct";
                 score++;
                 userResults.push({ q: current.q, res: "Correct", class: "correct" });
             } else {
-                feedback.innerText = "Oops! The correct answer was " + current.a;
+                feedback.innerText = "Glub! The correct answer was " + current.a;
                 feedback.className = "feedback wrong";
                 userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
             }
@@ -87,11 +130,8 @@
 
         function loadNextQuestion() {
             currentIdx++;
-            if (currentIdx < quizData.length) {
-                loadQuestion();
-            } else {
-                showSummary();
-            }
+            if (currentIdx < quizData.length) { loadQuestion(); } 
+            else { showSummary(); }
         }
 
         function showSummary() {

@@ -36,10 +36,26 @@
 
     <script>
         const quizData = [
-            { q: "Who is the leader of our country?", a: "President", options: ["President", "Coach"] },
-            { q: "Who was the first president?", a: "George Washington", options: ["George Washington", "Abraham Lincoln"] },
-            { q: "Who helps make laws?", a: "Government leaders", options: ["Government leaders", "Students"] },
-            { q: "Who helped end slavery in America?", a: "Abraham Lincoln", options: ["Abraham Lincoln", "Farmers"] }
+            { q: "Who is the president?", a: "leader of country", options: ["teacher", "leader of country", "doctor"] },
+            { q: "Who was George Washington?", a: "first president", options: ["last president", "first president", "soldier"] },
+            { q: "Who was Abraham Lincoln?", a: "ended slavery", options: ["started slavery", "ended slavery", "invented car"] },
+            { q: "Who was Martin Luther King?", a: "civil rights leader", options: ["soldier", "civil rights leader", "teacher"] },
+            { q: "Who was Christopher Columbus?", a: "explorer", options: ["farmer", "explorer", "doctor"] },
+            { q: "Who were the Pilgrims?", a: "early settlers", options: ["native people", "early settlers", "soldiers"] },
+            { q: "Who was Sacagawea?", a: "guide for explorers", options: ["cook", "guide for explorers", "teacher"] },
+            { q: "Who was Harriet Tubman?", a: "helped slaves escape", options: ["slave owner", "helped slaves escape", "soldier"] },
+            { q: "Who was Rosa Parks?", a: "refused bus seat", options: ["bus driver", "refused bus seat", "teacher"] },
+            { q: "Who was Susan B. Anthony?", a: "women's rights", options: ["men's rights", "women's rights", "children's rights"] },
+            { q: "Who was Thomas Jefferson?", a: "wrote Declaration", options: ["wrote Constitution", "wrote Declaration", "wrote Bible"] },
+            { q: "Who was Benjamin Franklin?", a: "inventor statesman", options: ["farmer", "inventor statesman", "soldier"] },
+            { q: "Who was John Adams?", a: "second president", options: ["first president", "second president", "third president"] },
+            { q: "Who was Theodore Roosevelt?", a: "conservation president", options: ["war president", "conservation president", "peace president"] },
+            { q: "Who was Franklin D. Roosevelt?", a: "WWII president", options: ["WWI president", "WWII president", "Cold War president"] },
+            { q: "Who was John F. Kennedy?", a: "young president", options: ["old president", "young president", "tall president"] },
+            { q: "Who was Ronald Reagan?", a: "actor president", options: ["singer president", "actor president", "dancer president"] },
+            { q: "Who was Barack Obama?", a: "first black president", options: ["first white president", "first black president", "first woman president"] },
+            { q: "Who was Donald Trump?", a: "businessman president", options: ["lawyer president", "businessman president", "doctor president"] },
+            { q: "Who is Joe Biden?", a: "current president", options: ["past president", "current president", "future president"] }
         ];
 
         let currentIdx = 0;
@@ -96,12 +112,12 @@
             btns.forEach(b => b.disabled = true);
 
             if (selected === current.a) {
-                feedback.innerText = "Correct! Well done.";
+                feedback.innerText = "Splashtastic! Correct.";
                 feedback.className = "feedback correct";
                 score++;
                 userResults.push({ q: current.q, res: "Correct", class: "correct" });
             } else {
-                feedback.innerText = "Oops! The correct answer was " + current.a + ".";
+                feedback.innerText = "Glub! Incorrect.";
                 feedback.className = "feedback wrong";
                 userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
             }

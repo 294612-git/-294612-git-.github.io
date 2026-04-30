@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Money Quiz - Study Buddy</title>
+    <title>Physical Geography Quiz - Study Buddy</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
         .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 500px; text-align: center; }
@@ -32,15 +32,31 @@
         <h2>Quiz Complete!</h2>
         <div id="results-list"></div>
         <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
-        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade2-math-topics.html'">Back to Topics</button>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade2-history-topics.html'">Back to Topics</button>
     </div>
 
     <script>
         const quizData = [
-            { q: "How much is one quarter worth?", a: "25¢", options: ["10¢", "25¢", "50¢"] },
-            { q: "How much is 2 dimes worth?", a: "20¢", options: ["10¢", "20¢", "30¢"] },
-            { q: "Which coin is worth 5¢?", a: "Nickel", options: ["Nickel", "Penny", "Quarter"] },
-            { q: "If you have 3 quarters, how much money do you have?", a: "75¢", options: ["50¢", "75¢", "$1.00"] }
+            { q: "What is a giant area of land on Earth called?", a: "Continent", options: ["Ocean", "Continent", "Island"] },
+            { q: "How many continents are there on Earth?", a: "7", options: ["5", "7", "10"] },
+            { q: "Which is the largest body of salt water on Earth?", a: "Ocean", options: ["Lake", "River", "Ocean"] },
+            { q: "What do we call a landform that is very high with steep sides and a peak?", a: "Mountain", options: ["Mountain", "Valley", "Plain"] },
+            { q: "What is the low land found between mountains or hills?", a: "Valley", options: ["Plateau", "Valley", "Island"] },
+            { q: "A piece of land completely surrounded by water is a/an...", a: "Island", options: ["Peninsula", "Continent", "Island"] },
+            { q: "What is a large, flat area of land with very few trees?", a: "Plain", options: ["Plain", "Hill", "Mountain"] },
+            { q: "Which landform is surrounded by water on only three sides?", a: "Peninsula", options: ["Island", "Peninsula", "Valley"] },
+            { q: "What is a very dry area of land with little rain?", a: "Desert", options: ["Rainforest", "Desert", "Swamp"] },
+            { q: "A large body of water surrounded by land on all sides is a...", a: "Lake", options: ["Lake", "Ocean", "River"] },
+            { q: "What do we call a flowing body of water that goes into an ocean?", a: "River", options: ["Pond", "River", "Lake"] },
+            { q: "Which continent do we live on?", a: "North America", options: ["Africa", "North America", "Europe"] },
+            { q: "What is a high area of land that is flat on top?", a: "Plateau", options: ["Plateau", "Mountain", "Canyon"] },
+            { q: "What is a deep valley with very steep sides, often carved by a river?", a: "Canyon", options: ["Hill", "Canyon", "Plain"] },
+            { q: "Which of these is the smallest continent?", a: "Australia", options: ["Asia", "Australia", "Antarctica"] },
+            { q: "What is the imaginary line that divides Earth into North and South?", a: "Equator", options: ["Prime Meridian", "Equator", "North Pole"] },
+            { q: "Which ocean is the largest in the world?", a: "Pacific", options: ["Atlantic", "Indian", "Pacific"] },
+            { q: "A 'Coast' is where the land meets the...", a: "Ocean", options: ["Desert", "Ocean", "Mountain"] },
+            { q: "Which landform is raised but usually smaller and more rounded than a mountain?", a: "Hill", options: ["Hill", "Valley", "Plateau"] },
+            { q: "What is the coldest continent on Earth?", a: "Antarctica", options: ["South America", "Antarctica", "Australia"] }
         ];
 
         let currentIdx = 0;

@@ -37,10 +37,26 @@
 
     <script>
         const quizData = [
-            { q: "A rectangle has sides 4 and 3. What is the area?", a: "12", options: ["7", "12", "14"] },
-            { q: "A square has sides of 5. What is the perimeter?", a: "20", options: ["20", "15", "25"] },
-            { q: "Perimeter means ___", a: "Distance around", options: ["Inside space", "Distance around"] },
-            { q: "Area means ___", a: "Inside space", options: ["Inside space", "Outside edge"] }
+            { q: "What is the perimeter of a square with 4-inch sides?", a: "16 in", options: ["8 in", "16 in", "12 in", "20 in"] },
+            { q: "A rectangle has a length of 5 cm and a width of 3 cm. What is the area?", a: "15 sq cm", options: ["8 sq cm", "15 sq cm", "16 sq cm", "10 sq cm"] },
+            { q: "Perimeter is the distance...", a: "Around a shape", options: ["Inside a shape", "Around a shape", "Through a shape"] },
+            { q: "What is the area of a square with a 6-foot side?", a: "36 sq ft", options: ["12 sq ft", "24 sq ft", "36 sq ft", "48 sq ft"] },
+            { q: "A triangle has sides of 3, 3, and 3 inches. What is the perimeter?", a: "9 in", options: ["6 in", "9 in", "12 in", "3 in"] },
+            { q: "How do you find the area of a rectangle?", a: "Length × Width", options: ["Side + Side", "Length × Width", "Length + Width"] },
+            { q: "Find the perimeter of a rectangle with length 10 and width 2.", a: "24", options: ["12", "20", "24", "22"] },
+            { q: "If a square's area is 25 square units, what is the length of one side?", a: "5", options: ["10", "5", "25", "4"] },
+            { q: "Perimeter is measured in ___ units.", a: "Linear (Straight)", options: ["Square", "Linear (Straight)", "Cubic"] },
+            { q: "Area is measured in ___ units.", a: "Square", options: ["Linear", "Square", "Heavy"] },
+            { q: "Find the perimeter of a hexagon where every side is 2 cm.", a: "12 cm", options: ["8 cm", "10 cm", "12 cm", "6 cm"] },
+            { q: "A garden is 4 meters wide and 4 meters long. What is its area?", a: "16 sq m", options: ["8 sq m", "16 sq m", "12 sq m", "20 sq m"] },
+            { q: "What is the perimeter of a rectangle with length 8 and width 5?", a: "26", options: ["13", "26", "40", "21"] },
+            { q: "If the perimeter of a square is 20, what is the length of one side?", a: "5", options: ["4", "5", "10", "2"] },
+            { q: "Find the area of a rectangle with length 9 and width 2.", a: "18", options: ["11", "18", "22", "20"] },
+            { q: "A shape has 3 sides. To find its perimeter you...", a: "Add the 3 sides together", options: ["Multiply the sides", "Add the 3 sides together", "Divide by 3"] },
+            { q: "If a rectangle has an area of 24 and a width of 4, what is the length?", a: "6", options: ["20", "6", "10", "8"] },
+            { q: "What is the perimeter of a triangle with sides 5, 12, and 13?", a: "30", options: ["30", "25", "60", "17"] },
+            { q: "Which shape has 4 equal sides?", a: "Square", options: ["Rectangle", "Circle", "Square", "Triangle"] },
+            { q: "Area of a square with side s is...", a: "s × s", options: ["s+s", "s × s", "4 × s", "s ÷ 4"] }
         ];
 
         let currentIdx = 0;
@@ -99,12 +115,12 @@
             btns.forEach(b => b.disabled = true);
 
             if (selected === current.a) {
-                feedback.innerText = "Correct! Well done.";
+                feedback.innerText = "Splashtastic! Correct.";
                 feedback.className = "feedback correct";
                 score++;
                 userResults.push({ q: current.q, res: "Correct", class: "correct" });
             } else {
-                feedback.innerText = "Oops! The correct answer was " + current.a;
+                feedback.innerText = "Glub! The correct answer was " + current.a;
                 feedback.className = "feedback wrong";
                 userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
             }

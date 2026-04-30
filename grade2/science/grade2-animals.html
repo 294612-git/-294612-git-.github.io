@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grade 1 History - Symbols</title>
+    <title>Animals Quiz - Study Buddy</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 540px; text-align: center; }
+        .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 500px; text-align: center; }
         h2 { color: #667eea; }
         .options-container { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
         .option-btn { padding: 12px; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; font-size: 1.1rem; transition: 0.2s; }
@@ -31,31 +31,32 @@
     <div class="quiz-container hidden" id="summary-box">
         <h2>Quiz Complete!</h2>
         <div id="results-list"></div>
-        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade1-history.html'">Back to History Topics</button>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade2-science-topics.html'">Back to Topics</button>
     </div>
 
     <script>
         const quizData = [
-            { q: "What is the American flag?", a: "symbol of country", options: ["toy", "symbol of country", "game"] },
-            { q: "What colors are on the flag?", a: "red white blue", options: ["green yellow red", "red white blue", "blue black white"] },
-            { q: "What is the bald eagle?", a: "national bird", options: ["pet bird", "national bird", "farm bird"] },
-            { q: "What is the Statue of Liberty?", a: "symbol of freedom", options: ["statue of war", "symbol of freedom", "statue of peace"] },
-            { q: "What does the torch represent?", a: "light of freedom", options: ["light of darkness", "light of freedom", "light of fire"] },
-            { q: "What is the Liberty Bell?", a: "symbol of independence", options: ["symbol of slavery", "symbol of independence", "symbol of war"] },
-            { q: "What is the White House?", a: "president's home", options: ["king's home", "president's home", "soldier's home"] },
-            { q: "What is the Capitol building?", a: "law making place", options: ["school", "law making place", "hospital"] },
-            { q: "What are stars on the flag?", a: "states", options: ["cities", "states", "countries"] },
-            { q: "What are stripes on the flag?", a: "original colonies", options: ["roads", "original colonies", "rivers"] },
-            { q: "What is the Pledge of Allegiance?", a: "promise to country", options: ["song", "promise to country", "dance"] },
-            { q: "What is patriotism?", a: "love for country", options: ["hate for country", "love for country", "fear of country"] },
-            { q: "What is a monument?", a: "memorial structure", options: ["play structure", "memorial structure", "living structure"] },
-            { q: "What is a holiday?", a: "special day", options: ["work day", "special day", "sleep day"] },
-            { q: "What is Independence Day?", a: "July 4th", options: ["Christmas", "July 4th", "Halloween"] },
-            { q: "What is Thanksgiving?", a: "harvest festival", options: ["birthday party", "harvest festival", "wedding"] },
-            { q: "What is Veterans Day?", a: "honor soldiers", options: ["honor teachers", "honor soldiers", "honor doctors"] },
-            { q: "What is Memorial Day?", a: "remember dead", options: ["remember alive", "remember dead", "remember sick"] },
-            { q: "What is Columbus Day?", a: "explorer day", options: ["farmer day", "explorer day", "teacher day"] },
-            { q: "What is Martin Luther King Day?", a: "civil rights leader", options: ["president day", "civil rights leader", "soldier day"] }
+            { q: "What do fish use to breathe underwater?", a: "Gills", options: ["Lungs", "Gills", "Noses"] },
+            { q: "Which animal group has feathers and lays eggs?", a: "Birds", options: ["Mammals", "Birds", "Reptiles"] },
+            { q: "What is an animal with a backbone called?", a: "Vertebrate", options: ["Invertebrate", "Vertebrate", "Insect"] },
+            { q: "What does a carnivore eat?", a: "Only meat", options: ["Only plants", "Only meat", "Both plants and meat"] },
+            { q: "Which animal group has cold blood and dry, scaly skin?", a: "Reptiles", options: ["Amphibians", "Reptiles", "Mammals"] },
+            { q: "What is it called when an animal sleeps through the cold winter?", a: "Hibernation", options: ["Migration", "Hibernation", "Evolution"] },
+            { q: "Where does a camel live?", a: "The desert", options: ["The ocean", "The desert", "The rainforest"] },
+            { q: "How many legs does an insect have?", a: "6", options: ["4", "6", "8"] },
+            { q: "What is a 'habitat'?", a: "An animal's home", options: ["An animal's home", "An animal's name", "A type of food"] },
+            { q: "Which animal lives in the Arctic Tundra?", a: "Polar Bear", options: ["Lion", "Polar Bear", "Monkey"] },
+            { q: "What is it called when an animal blends in with its environment?", a: "Camouflage", options: ["Camouflage", "Communication", "Adaptation"] },
+            { q: "Which group of animals feeds their babies milk?", a: "Mammals", options: ["Fish", "Mammals", "Insects"] },
+            { q: "A tadpole grows up to be a...", a: "Frog", options: ["Fish", "Frog", "Lizard"] },
+            { q: "What do herbivores eat?", a: "Plants", options: ["Plants", "Meat", "Rocks"] },
+            { q: "Which animal is an invertebrate (no backbone)?", a: "Butterfly", options: ["Dog", "Butterfly", "Snake"] },
+            { q: "Why do birds migrate south in the winter?", a: "To find food and warmth", options: ["To play", "To find food and warmth", "To learn to fly"] },
+            { q: "What is the hard outer shell of an insect called?", a: "Exoskeleton", options: ["Backbone", "Exoskeleton", "Fur"] },
+            { q: "Which animal group spends half its life in water and half on land?", a: "Amphibians", options: ["Amphibians", "Birds", "Reptiles"] },
+            { q: "What is a 'predator'?", a: "An animal that hunts other animals", options: ["An animal that is eaten", "An animal that hunts other animals", "A plant eater"] },
+            { q: "Which of these is a nocturnal animal?", a: "Owl", options: ["Squirrel", "Owl", "Horse"] }
         ];
 
         let currentIdx = 0;
@@ -109,6 +110,8 @@
             const current = quizData[currentIdx];
             const feedback = document.getElementById("feedback");
             const btns = document.querySelectorAll(".option-btn");
+            
+            // Disable buttons after answer
             btns.forEach(b => b.disabled = true);
 
             if (selected === current.a) {
@@ -117,7 +120,7 @@
                 score++;
                 userResults.push({ q: current.q, res: "Correct", class: "correct" });
             } else {
-                feedback.innerText = "Oops! The correct answer was " + current.a + ".";
+                feedback.innerText = "Oops! The correct answer was " + current.a;
                 feedback.className = "feedback wrong";
                 userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
             }
@@ -138,8 +141,10 @@
             const summaryBox = document.getElementById("summary-box");
             summaryBox.classList.remove("hidden");
             ensureTryAgainButton();
+            
             const list = document.getElementById("results-list");
             list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
+            
             userResults.forEach(item => {
                 const div = document.createElement("div");
                 div.className = "summary-item";
@@ -148,6 +153,7 @@
             });
         }
 
+        // Start the quiz
         initializeQuiz();
     </script>
 </body>

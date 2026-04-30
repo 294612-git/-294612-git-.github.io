@@ -37,10 +37,31 @@
 
     <script>
         const quizData = [
-            { q: "Who is the main character?", a: "Character", options: ["Setting", "Character"] },
-            { q: "The setting tells ___", a: "Where/when", options: ["Where/when", "Problem"] },
-            { q: "A poem may have ___", a: "Rhythm", options: ["Rhythm", "Maps"] },
-            { q: "Words like \"as\" or \"like\" show a ___", a: "Simile", options: ["Simile", "Fact"] }
+            { q: "The \"Main Idea\" is...", a: "What the text is mostly about", options: ["A character's name", "What the text is mostly about", "The last sentence"] },
+            { q: "Supporting details ___ the main idea.", a: "Describe or explain", options: ["Oppose", "Describe or explain", "Hide"] },
+            { q: "When you \"predict,\" you guess what will happen...", a: "Next", options: ["In the past", "Next", "In another book"] },
+            { q: "An \"inference\" is a guess based on clues and...", a: "What you already know", options: ["The title", "What you already know", "The pictures only"] },
+            { q: "The \"Setting\" of a story is...", a: "The time and place", options: ["The people", "The time and place", "The problem"] },
+            { q: "The \"Theme\" is the ___ of the story.", a: "Lesson or message", options: ["Lesson or message", "Main event", "List of items"] },
+            { q: "Characters are the ___ in a story.", a: "People or animals", options: ["Places", "People or animals", "Problems"] },
+            { q: "A \"Summary\" should be...", a: "Short", options: ["Long", "Short", "The whole book"] },
+            { q: "Point of View tells us...", a: "Who is telling the story", options: ["Who is telling the story", "Where the book was made"] },
+            { q: "\"First person\" point of view uses the word...", a: "I", options: ["He", "I", "They", "She"] },
+            { q: "The \"Plot\" is the ___ of a story.", a: "Sequence of events", options: ["Sequence of events", "Character's favorite food"] },
+            { q: "The \"Conflict\" is the...", a: "Problem", options: ["Solution", "Problem", "Ending"] },
+            { q: "Comparing two things using \"like\" or \"as\" is a...", a: "Simile", options: ["Simile", "Metaphor", "Verb"] },
+            { q: "\"The snow was a white blanket\" is a...", a: "Metaphor", options: ["Simile", "Metaphor", "Question"] },
+            { q: "Context clues help you find a word's...", a: "Meaning", options: ["Spelling", "Meaning", "Page"] },
+            { q: "Informational text often has...", a: "Captions and diagrams", options: ["Magic", "Captions and diagrams", "Rhymes"] },
+            { q: "A \"Cause\" is...", a: "Why it happened", options: ["What happened", "Why it happened", "The result"] },
+            { q: "An \"Effect\" is...", a: "What happened as a result", options: ["Why it happened", "What happened as a result"] },
+            { q: "Chronological order means...", a: "In time order", options: ["Alphabetical", "In time order", "Most important first"] },
+            { q: "An \"Author's Purpose\" can be to...", a: "Entertain", options: ["Persuade", "Inform", "Entertain", "All of these"] },
+            { q: "Fiction is...", a: "Made up", options: ["Real", "Made up", "A dictionary"] },
+            { q: "A \"Table of Contents\" is found at the ___ of a book.", a: "Front", options: ["Front", "Back", "Middle"] },
+            { q: "An \"Index\" helps you find...", a: "Specific topics", options: ["Specific topics", "The author's name", "The title"] },
+            { q: "\"Visualizing\" means making a ___ in your mind.", a: "Picture", options: ["List", "Picture", "Sound"] },
+            { q: "A \"Biography\" is a story about...", a: "A real person's life", options: ["A fake animal", "A real person's life", "How to cook"] }
         ];
 
         let currentIdx = 0;
@@ -99,12 +120,12 @@
             btns.forEach(b => b.disabled = true);
 
             if (selected === current.a) {
-                feedback.innerText = "Correct! Well done.";
+                feedback.innerText = "Splashtastic! Correct.";
                 feedback.className = "feedback correct";
                 score++;
                 userResults.push({ q: current.q, res: "Correct", class: "correct" });
             } else {
-                feedback.innerText = "Oops! The correct answer was " + current.a;
+                feedback.innerText = "Glub! The correct answer was " + current.a;
                 feedback.className = "feedback wrong";
                 userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
             }

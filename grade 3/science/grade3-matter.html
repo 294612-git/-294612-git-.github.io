@@ -44,20 +44,30 @@
         }
 
         const questionPool = [
-            { q: "Water freezing is a ___", a: "Solid", options: ["Solid", "Liquid", "Gas"] },
-            { q: "Ice melting becomes ___", a: "Liquid", options: ["Solid", "Liquid", "Gas"] },
-            { q: "Gas has ___ shape", a: "No definite", options: ["No definite", "Definite"] },
-            { q: "A solid has ___ shape", a: "Definite", options: ["Definite", "No shape"] },
-            { q: "What is matter?", a: "Anything that has mass and takes up space", options: ["Only solids", "Anything that has mass and takes up space", "Only liquids"] },
-            { q: "What is evaporation?", a: "Liquid turning into gas", options: ["Gas turning into liquid", "Liquid turning into gas", "Solid turning into liquid"] },
-            { q: "What is condensation?", a: "Gas turning into liquid", options: ["Liquid turning into gas", "Gas turning into liquid", "Solid turning into gas"] },
-            { q: "What is the state of water vapor?", a: "Gas", options: ["Solid", "Liquid", "Gas"] },
-            { q: "What is the state of steam?", a: "Gas", options: ["Solid", "Liquid", "Gas"] },
-            { q: "What is the state of ice?", a: "Solid", options: ["Solid", "Liquid", "Gas"] }
+            { q: "Which state of matter has a fixed shape?", a: "Solid", options: ["Solid", "Liquid", "Gas"] },
+            { q: "If you pour a liquid into a bowl, it changes its...", a: "Shape", options: ["Weight", "Volume", "Shape"] },
+            { q: "Which of these is a gas?", a: "Oxygen", options: ["Ice", "Oxygen", "Milk", "Wood"] },
+            { q: "What happens to water at 212°F (100°C)?", a: "It boils", options: ["It freezes", "It boils", "It turns to ice"] },
+            { q: "Matter is anything that has mass and...", a: "Takes up space", options: ["Color", "Takes up space", "Is heavy"] },
+            { q: "Which state of matter spreads out to fill a whole room?", a: "Gas", options: ["Solid", "Liquid", "Gas"] },
+            { q: "Melting is a change from ___ to ___.", a: "Solid to liquid", options: ["Gas to liquid", "Solid to liquid", "Liquid to solid"] },
+            { q: "Tiny particles that make up all matter are called...", a: "Atoms", options: ["Cells", "Atoms", "Crumbs"] },
+            { q: "Ice cubes are water in which state?", a: "Solid", options: ["Liquid", "Solid", "Gas"] },
+            { q: "When a gas turns back into a liquid, it is called...", a: "Condensation", options: ["Evaporation", "Condensation", "Melting"] },
+            { q: "Which has more mass: a bowling ball or a balloon?", a: "Bowling ball", options: ["Bowling ball", "Balloon"] },
+            { q: "A \"property\" of matter is something you can...", a: "Observe or measure", options: ["Eat", "Observe or measure", "Buy"] },
+            { q: "Is air matter?", a: "Yes", options: ["Yes", "No"] },
+            { q: "What tool measures mass?", a: "Balance or scale", options: ["Ruler", "Balance or scale", "Thermometer"] },
+            { q: "Which state of matter can you pour?", a: "Liquid", options: ["Solid", "Liquid", "Rock"] },
+            { q: "Sublimation is when a solid turns directly into a...", a: "Gas", options: ["Liquid", "Gas", "Metal"] },
+            { q: "Which is a physical change?", a: "Cutting paper", options: ["Burning wood", "Cutting paper", "Rusting metal"] },
+            { q: "A mixture where one substance dissolves in another is a...", a: "Solution", options: ["Solid", "Solution", "Gas"] },
+            { q: "What state of matter is the sun made of?", a: "Plasma", options: ["Solid", "Plasma", "Liquid"] },
+            { q: "Can matter change its state?", a: "Yes", options: ["Yes", "No"] }
         ];
 
         shuffleArray(questionPool);
-        const quizData = questionPool.slice(0, 5);
+        const quizData = questionPool.slice(0, 20);
 
         let currentIdx = 0;
         let score = 0;
@@ -89,12 +99,12 @@
             btns.forEach(b => b.disabled = true);
 
             if (selected === current.a) {
-                feedback.innerText = "Correct! Well done.";
+                feedback.innerText = "Splashtastic! Correct.";
                 feedback.className = "feedback correct";
                 score++;
                 userResults.push({ q: current.q, res: "Correct", class: "correct" });
             } else {
-                feedback.innerText = "Oops! The correct answer was " + current.a;
+                feedback.innerText = "Glub! The correct answer was " + current.a;
                 feedback.className = "feedback wrong";
                 userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
             }

@@ -44,20 +44,30 @@
         }
 
         const questionPool = [
-            { q: "Weather is ___", a: "Day-to-day conditions", options: ["Day-to-day conditions", "Long-term patterns"] },
-            { q: "Climate is ___", a: "Long-term", options: ["Short-term", "Long-term"] },
-            { q: "A thermometer measures ___", a: "Temperature", options: ["Temperature", "Wind"] },
-            { q: "Hot and dry describes a ___", a: "Climate", options: ["Climate", "Storm"] },
-            { q: "What is precipitation?", a: "Rain, snow, hail", options: ["Only rain", "Rain, snow, hail", "Wind and clouds"] },
-            { q: "What is humidity?", a: "The amount of water vapor in the air", options: ["The amount of rain", "The amount of water vapor in the air", "The temperature"] },
-            { q: "What tool measures wind speed?", a: "Anemometer", options: ["Thermometer", "Anemometer", "Barometer"] },
-            { q: "What is a hurricane?", a: "A large storm with strong winds", options: ["A type of cloud", "A large storm with strong winds", "A sunny day"] },
-            { q: "What is fog?", a: "Clouds at ground level", options: ["Rain", "Clouds at ground level", "Snow"] },
-            { q: "What is the weather like in a desert?", a: "Hot and dry", options: ["Cold and wet", "Hot and dry", "Windy"] }
+            { q: "Which instrument measures wind speed?", a: "Anemometer", options: ["Thermometer", "Anemometer", "Ruler", "Scale"] },
+            { q: "\"Climate\" describes weather over a ___ period of time.", a: "Long", options: ["Short", "Long", "1-hour"] },
+            { q: "Which of these is a type of cloud that looks like gray blankets?", a: "Stratus", options: ["Cumulus", "Stratus", "Cirrus"] },
+            { q: "What is the process of water turning into vapor called?", a: "Evaporation", options: ["Condensation", "Evaporation", "Freezing"] },
+            { q: "A \"drought\" is a long period with very little...", a: "Rain", options: ["Sun", "Rain", "Wind", "Cold"] },
+            { q: "Where is the air temperature usually the coldest?", a: "Near the North Pole", options: ["Near the Equator", "Near the North Pole", "In a Rainforest"] },
+            { q: "What comes after condensation in the water cycle?", a: "Precipitation", options: ["Evaporation", "Precipitation", "Collection"] },
+            { q: "Which season usually has the longest days?", a: "Summer", options: ["Winter", "Summer", "Spring", "Fall"] },
+            { q: "A person who predicts the weather is a...", a: "Meteorologist", options: ["Geologist", "Meteorologist", "Biologist"] },
+            { q: "Thunder is the sound made by...", a: "Lightning", options: ["Clouds bumping", "Lightning", "Rain hitting the ground"] },
+            { q: "Which tool tells us which way the wind is blowing?", a: "Weather Vane", options: ["Rain Gauge", "Weather Vane", "Clock"] },
+            { q: "Snow and hail are examples of...", a: "Precipitation", options: ["Gases", "Precipitation", "Wind"] },
+            { q: "Air pressure is measured with a...", a: "Barometer", options: ["Barometer", "Thermometer", "Ruler"] },
+            { q: "Tropical climates are usually...", a: "Hot and wet", options: ["Cold and dry", "Hot and wet", "Frozen"] },
+            { q: "What is a \"forecast\"?", a: "A weather prediction", options: ["A weather history", "A weather prediction", "A type of cloud"] },
+            { q: "Hurricanes form over...", a: "Warm ocean water", options: ["Cold land", "Warm ocean water", "Mountains"] },
+            { q: "The \"eye\" of a hurricane is usually...", a: "Calm", options: ["Very windy", "Calm", "The rainiest part"] },
+            { q: "Fog is actually a cloud that is...", a: "Near the ground", options: ["Very high", "Near the ground", "Made of ice"] },
+            { q: "What is the main energy source for the water cycle?", a: "The Sun", options: ["The Moon", "The Sun", "Electricity"] },
+            { q: "The temperature at which water freezes is ___ Fahrenheit.", a: "32", options: ["0", "32", "100", "212"] }
         ];
 
         shuffleArray(questionPool);
-        const quizData = questionPool.slice(0, 5);
+        const quizData = questionPool.slice(0, 20);
 
         let currentIdx = 0;
         let score = 0;
@@ -89,12 +99,12 @@
             btns.forEach(b => b.disabled = true);
 
             if (selected === current.a) {
-                feedback.innerText = "Correct! Well done.";
+                feedback.innerText = "Splashtastic! Correct.";
                 feedback.className = "feedback correct";
                 score++;
                 userResults.push({ q: current.q, res: "Correct", class: "correct" });
             } else {
-                feedback.innerText = "Oops! The correct answer was " + current.a;
+                feedback.innerText = "Glub! The correct answer was " + current.a;
                 feedback.className = "feedback wrong";
                 userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
             }

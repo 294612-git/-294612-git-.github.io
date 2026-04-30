@@ -44,20 +44,30 @@
         }
 
         const questionPool = [
-            { q: "Plants are ___", a: "Producers", options: ["Producers", "Consumers"] },
-            { q: "Animals that eat plants are ___", a: "Herbivores", options: ["Carnivores", "Herbivores"] },
-            { q: "Energy in a food chain comes from ___", a: "Sun", options: ["Sun", "Soil"] },
-            { q: "A food web shows ___", a: "Many connections", options: ["One chain", "Many connections"] },
-            { q: "What is an ecosystem?", a: "A community of living things and their environment", options: ["A type of food", "A community of living things and their environment", "A kind of animal"] },
-            { q: "What do decomposers do?", a: "Break down dead plants and animals", options: ["Make food", "Break down dead plants and animals", "Eat other animals"] },
-            { q: "What are omnivores?", a: "Animals that eat both plants and animals", options: ["Only plants", "Only animals", "Animals that eat both plants and animals"] },
-            { q: "What is a habitat?", a: "The place where an animal lives", options: ["A type of plant", "The place where an animal lives", "A food chain"] },
-            { q: "What is biodiversity?", a: "The variety of life in an area", options: ["A single species", "The variety of life in an area", "Only plants"] },
-            { q: "What happens in a food chain?", a: "Energy is passed from one organism to another", options: ["Animals eat plants", "Energy is passed from one organism to another", "Plants make energy"] }
+            { q: "An organism that makes its own food is a...", a: "Producer", options: ["Consumer", "Producer", "Decomposer"] },
+            { q: "What do we call a consumer that only eats meat?", a: "Carnivore", options: ["Herbivore", "Carnivore", "Omnivore"] },
+            { q: "The place where an animal lives is its...", a: "Habitat", options: ["Niche", "Habitat", "Food chain"] },
+            { q: "In a food chain, arrows show the flow of...", a: "Energy", options: ["Water", "Energy", "Wind"] },
+            { q: "Fungi and bacteria that break down dead things are...", a: "Decomposers", options: ["Producers", "Decomposers", "Predators"] },
+            { q: "Which of these is a producer?", a: "Grass", options: ["Grass", "Grasshopper", "Frog", "Hawk"] },
+            { q: "An animal that is hunted for food is called...", a: "Prey", options: ["Predator", "Prey", "Producer"] },
+            { q: "Humans are usually considered...", a: "Omnivores", options: ["Herbivores", "Carnivores", "Omnivores"] },
+            { q: "What starts almost every food chain?", a: "Sunlight", options: ["Rain", "Sunlight", "Soil"] },
+            { q: "If one part of a food web is removed, what happens?", a: "Other parts are affected", options: ["Nothing", "Other parts are affected", "Everything grows"] },
+            { q: "Camouflage is an ___ that helps animals survive.", a: "Adaptation", options: ["Accident", "Adaptation", "Illness"] },
+            { q: "A group of the same kind of animals living together is a...", a: "Population", options: ["Community", "Population", "Ecosystem"] },
+            { q: "Which ecosystem is very dry and hot?", a: "Desert", options: ["Rainforest", "Desert", "Tundra"] },
+            { q: "Plants need ___ from the air to make food.", a: "Carbon Dioxide", options: ["Oxygen", "Carbon Dioxide", "Nitrogen"] },
+            { q: "The process plants use to make food is...", a: "Photosynthesis", options: ["Digestion", "Photosynthesis", "Respiration"] },
+            { q: "Animals that eat both plants and animals are...", a: "Omnivores", options: ["Carnivores", "Herbivores", "Omnivores"] },
+            { q: "Which animal is a \"scavenger\"?", a: "Vulture", options: ["Vulture", "Lion", "Rabbit"] },
+            { q: "Pollution is ___ to an ecosystem.", a: "Harmful", options: ["Helpful", "Harmful", "Necessary"] },
+            { q: "A \"niche\" is an animal's ___ in its habitat.", a: "Job/Role", options: ["House", "Job/Role", "Color"] },
+            { q: "Coral reefs are found in ___ ecosystems.", a: "Saltwater", options: ["Freshwater", "Saltwater", "Land"] }
         ];
 
         shuffleArray(questionPool);
-        const quizData = questionPool.slice(0, 5);
+        const quizData = questionPool.slice(0, 20);
 
         let currentIdx = 0;
         let score = 0;
@@ -89,12 +99,12 @@
             btns.forEach(b => b.disabled = true);
 
             if (selected === current.a) {
-                feedback.innerText = "Correct! Well done.";
+                feedback.innerText = "Splashtastic! Correct.";
                 feedback.className = "feedback correct";
                 score++;
                 userResults.push({ q: current.q, res: "Correct", class: "correct" });
             } else {
-                feedback.innerText = "Oops! The correct answer was " + current.a;
+                feedback.innerText = "Glub! The correct answer was " + current.a;
                 feedback.className = "feedback wrong";
                 userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
             }

@@ -37,10 +37,31 @@
 
     <script>
         const quizData = [
-            { q: "How many syllables in \"elephant\"?", a: "3", options: ["2", "3", "4"] },
-            { q: "Which has a long vowel sound?", a: "Cake", options: ["Cake", "Cat"] },
-            { q: "Which is a blend?", a: "bl", options: ["bl", "sh"] },
-            { q: "Which word has an r-controlled vowel?", a: "Car", options: ["Car", "Cap"] }
+            { q: "What is the root word of \"unhelpful\"?", a: "Help", options: ["Un", "Help", "Ful", "Helpful"] },
+            { q: "Which word has a suffix?", a: "Joyful", options: ["Prepay", "Joyful", "Dislike", "Under"] },
+            { q: "What does the prefix \"re-\" mean?", a: "Again", options: ["Not", "Again", "Before", "After"] },
+            { q: "A compound word is made of...", a: "Two smaller words", options: ["One word", "Two smaller words", "A prefix and suffix"] },
+            { q: "Which is a compound word?", a: "Butterfly", options: ["Running", "Butterfly", "Happier", "Purple"] },
+            { q: "What does the suffix \"-er\" usually mean?", a: "One who", options: ["One who", "Without", "Full of"] },
+            { q: "How many syllables in \"Conversation\"?", a: "4", options: ["2", "3", "4", "5"] },
+            { q: "Which word has a long \"a\" sound?", a: "Cake", options: ["Cat", "Cake", "Apple", "Bath"] },
+            { q: "\"Pre-\" in \"Preview\" means...", a: "Before", options: ["During", "After", "Before"] },
+            { q: "Which word is plural?", a: "Cats", options: ["Dog", "Cats", "Bird", "Fish (singular)"] },
+            { q: "What is the prefix in \"Disappear\"?", a: "Dis", options: ["Appear", "Dis", "Ear"] },
+            { q: "A synonym for \"Fast\" is...", a: "Quick", options: ["Slow", "Quick", "Loud", "Big"] },
+            { q: "An antonym for \"Hot\" is...", a: "Cold", options: ["Warm", "Cold", "Spicy", "Wet"] },
+            { q: "\"Knight\" and \"Night\" are...", a: "Homophones", options: ["Synonyms", "Antonyms", "Homophones"] },
+            { q: "What does \"non-fiction\" mean?", a: "Real/True information", options: ["Fake story", "Real/True information", "A poem"] },
+            { q: "In \"Bi-weekly,\" what does \"bi-\" mean?", a: "Two", options: ["One", "Two", "Three"] },
+            { q: "Which is a silent letter in \"Knife\"?", a: "k", options: ["n", "k", "f"] },
+            { q: "\"Bark\" (tree) and \"Bark\" (dog) are...", a: "Homographs", options: ["Homophones", "Homographs", "Synonyms"] },
+            { q: "What does the suffix \"-less\" mean?", a: "Without", options: ["More", "Without", "Full of"] },
+            { q: "Which word has 1 syllable?", a: "Jump", options: ["Apple", "Jump", "Table", "Banana"] },
+            { q: "The base word of \"happiest\" is...", a: "Happy", options: ["Hap", "Happy", "Est"] },
+            { q: "\"Un-\" in \"Unkind\" means...", a: "Not", options: ["Very", "Not", "Again"] },
+            { q: "Which word starts with a blend?", a: "Dog", options: ["Cat", "Blue", "Dog", "Apple"] },
+            { q: "What is a \"contraction\"?", a: "Two words shortened with an apostrophe", options: ["A long word", "Two words shortened with an apostrophe", "A suffix"] },
+            { q: "\"Don't\" is a contraction for...", a: "Do not", options: ["Do not", "Does not", "Did not"] }
         ];
 
         let currentIdx = 0;
@@ -99,12 +120,12 @@
             btns.forEach(b => b.disabled = true);
 
             if (selected === current.a) {
-                feedback.innerText = "Correct! Well done.";
+                feedback.innerText = "Splashtastic! Correct.";
                 feedback.className = "feedback correct";
                 score++;
                 userResults.push({ q: current.q, res: "Correct", class: "correct" });
             } else {
-                feedback.innerText = "Oops! The correct answer was " + current.a;
+                feedback.innerText = "Glub! The correct answer was " + current.a;
                 feedback.className = "feedback wrong";
                 userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
             }

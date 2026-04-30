@@ -37,10 +37,26 @@
 
     <script>
         const quizData = [
-            { q: "Which is a complete sentence?", a: "The dog ran fast.", options: ["The dog ran fast.", "Ran fast.", "The dog."] },
-            { q: "What should a sentence start with?", a: "A capital letter", options: ["A lowercase letter", "A capital letter", "A number"] },
-            { q: "What should you put at the end of a question?", a: "A question mark", options: ["A period", "A question mark", "An exclamation mark"] },
-            { q: "Fix the sentence: i like school.", a: "I like school.", options: ["I like school.", "i like school."] }
+            { q: "What is a sentence?", a: "group of words", options: ["single word", "group of words", "letter"] },
+            { q: "What starts a sentence?", a: "capital letter", options: ["lowercase letter", "capital letter", "number"] },
+            { q: "What ends a sentence?", a: "period", options: ["comma", "period", "question mark"] },
+            { q: "What is a noun?", a: "person place thing", options: ["action word", "person place thing", "describing word"] },
+            { q: "What is a verb?", a: "action word", options: ["person place thing", "action word", "describing word"] },
+            { q: "What is an adjective?", a: "describing word", options: ["action word", "person place thing", "describing word"] },
+            { q: "What is a pronoun?", a: "replaces noun", options: ["action word", "replaces noun", "describing word"] },
+            { q: "What is a question?", a: "asks something", options: ["tells something", "asks something", "commands"] },
+            { q: "What is an exclamation?", a: "shows strong feeling", options: ["asks something", "shows strong feeling", "tells something"] },
+            { q: "What is a capital letter?", a: "big letter", options: ["small letter", "big letter", "number"] },
+            { q: "What is a lowercase letter?", a: "small letter", options: ["big letter", "small letter", "symbol"] },
+            { q: "What is punctuation?", a: "marks in writing", options: ["letters", "marks in writing", "spaces"] },
+            { q: "What is a period?", a: "ends sentence", options: ["starts sentence", "ends sentence", "separates words"] },
+            { q: "What is a question mark?", a: "ends question", options: ["ends sentence", "ends question", "ends exclamation"] },
+            { q: "What is an exclamation point?", a: "ends exclamation", options: ["ends question", "ends exclamation", "ends sentence"] },
+            { q: "What is a comma?", a: "separates items", options: ["ends sentence", "separates items", "starts sentence"] },
+            { q: "What is a space?", a: "between words", options: ["between letters", "between words", "between sentences"] },
+            { q: "What is handwriting?", a: "writing by hand", options: ["writing on computer", "writing by hand", "writing on phone"] },
+            { q: "What is printing?", a: "writing on computer", options: ["writing by hand", "writing on computer", "writing on paper"] },
+            { q: "What is editing?", a: "fixing writing", options: ["creating writing", "fixing writing", "reading writing"] }
         ];
 
         let currentIdx = 0;
@@ -99,12 +115,12 @@
             btns.forEach(b => b.disabled = true);
 
             if (selected === current.a) {
-                feedback.innerText = "Correct! Well done.";
+                feedback.innerText = "Splashtastic! Correct.";
                 feedback.className = "feedback correct";
                 score++;
                 userResults.push({ q: current.q, res: "Correct", class: "correct" });
             } else {
-                feedback.innerText = "Oops! The correct answer was " + current.a;
+                feedback.innerText = "Glub! Incorrect.";
                 feedback.className = "feedback wrong";
                 userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
             }

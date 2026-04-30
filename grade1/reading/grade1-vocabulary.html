@@ -37,10 +37,26 @@
 
     <script>
         const quizData = [
-            { q: "Which word means big?", a: "Large", options: ["Large", "Small", "Happy"] },
-            { q: "Which word means small?", a: "Small", options: ["Large", "Small", "Happy"] },
-            { q: "Which word means happy?", a: "Happy", options: ["Large", "Small", "Happy"] },
-            { q: "Which word means sad?", a: "Sad", options: ["Large", "Small", "Happy"] }
+            { q: "What does 'big' mean?", a: "large", options: ["small", "large", "medium"] },
+            { q: "What does 'small' mean?", a: "little", options: ["big", "little", "tall"] },
+            { q: "What does 'happy' mean?", a: "joyful", options: ["sad", "joyful", "angry"] },
+            { q: "What does 'sad' mean?", a: "unhappy", options: ["happy", "unhappy", "excited"] },
+            { q: "What does 'fast' mean?", a: "quick", options: ["slow", "quick", "steady"] },
+            { q: "What does 'slow' mean?", a: "not fast", options: ["quick", "not fast", "loud"] },
+            { q: "What does 'hot' mean?", a: "warm", options: ["cold", "warm", "wet"] },
+            { q: "What does 'cold' mean?", a: "chilly", options: ["hot", "chilly", "dry"] },
+            { q: "What does 'run' mean?", a: "move fast", options: ["walk", "move fast", "jump"] },
+            { q: "What does 'walk' mean?", a: "move slowly", options: ["run", "move slowly", "sit"] },
+            { q: "What does 'eat' mean?", a: "have food", options: ["drink", "have food", "sleep"] },
+            { q: "What does 'drink' mean?", a: "have liquid", options: ["eat", "have liquid", "play"] },
+            { q: "What does 'sleep' mean?", a: "rest", options: ["wake", "rest", "work"] },
+            { q: "What does 'play' mean?", a: "have fun", options: ["work", "have fun", "study"] },
+            { q: "What does 'read' mean?", a: "look at words", options: ["write", "look at words", "draw"] },
+            { q: "What does 'write' mean?", a: "make words", options: ["read", "make words", "erase"] },
+            { q: "What does 'sing' mean?", a: "make music", options: ["dance", "make music", "talk"] },
+            { q: "What does 'dance' mean?", a: "move to music", options: ["sing", "move to music", "listen"] },
+            { q: "What does 'laugh' mean?", a: "show joy", options: ["cry", "show joy", "yell"] },
+            { q: "What does 'cry' mean?", a: "show sadness", options: ["laugh", "show sadness", "smile"] }
         ];
 
         let currentIdx = 0;
@@ -99,12 +115,12 @@
             btns.forEach(b => b.disabled = true);
 
             if (selected === current.a) {
-                feedback.innerText = "Correct! Well done.";
+                feedback.innerText = "Splashtastic! Correct.";
                 feedback.className = "feedback correct";
                 score++;
                 userResults.push({ q: current.q, res: "Correct", class: "correct" });
             } else {
-                feedback.innerText = "Oops! The correct answer was " + current.a;
+                feedback.innerText = "Glub! Incorrect.";
                 feedback.className = "feedback wrong";
                 userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
             }

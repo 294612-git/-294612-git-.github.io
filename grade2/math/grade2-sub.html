@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shapes Quiz - Study Buddy</title>
+    <title>Addition and Subtraction Quiz - Study Buddy</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
         .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 500px; text-align: center; }
@@ -37,10 +37,26 @@
 
     <script>
         const quizData = [
-            { q: "How many sides does a hexagon have?", a: "6", options: ["5", "6", "7"] },
-            { q: "Which shape has 4 equal sides and 4 corners?", a: "Square", options: ["Rectangle", "Square", "Triangle"] },
-            { q: "A cylinder looks like a ___.", a: "Can", options: ["Can", "Ball", "Box"] },
-            { q: "A sphere looks like a ___.", a: "Ball", options: ["Cube", "Ball", "Rectangle"] }
+            { q: "What is 45 + 32?", a: "77", options: ["77", "87", "67"] },
+            { q: "What is 89 - 44?", a: "45", options: ["35", "45", "55"] },
+            { q: "Solve: 125 + 50", a: "175", options: ["165", "175", "185"] },
+            { q: "What is 64 - 28?", a: "36", options: ["36", "44", "38"] },
+            { q: "If you have 15 apples and buy 27 more, how many do you have?", a: "42", options: ["32", "42", "43"] },
+            { q: "What is 100 - 35?", a: "65", options: ["65", "75", "55"] },
+            { q: "Fill in the blank: 14 + ___ = 30", a: "16", options: ["16", "26", "14"] },
+            { q: "What is 250 + 110?", a: "360", options: ["350", "360", "340"] },
+            { q: "Subtract 52 from 90.", a: "38", options: ["38", "48", "42"] },
+            { q: "What is 12 + 12 + 12?", a: "36", options: ["24", "36", "48"] },
+            { q: "Solve: 76 - 19", a: "57", options: ["57", "67", "55"] },
+            { q: "What is 400 + 500?", a: "900", options: ["800", "900", "1000"] },
+            { q: "If a bus has 42 people and 15 get off, how many are left?", a: "27", options: ["27", "33", "25"] },
+            { q: "What is 88 + 11?", a: "99", options: ["77", "99", "89"] },
+            { q: "Solve: 55 - 0", a: "55", options: ["0", "55", "50"] },
+            { q: "What is 15 + 15 + 5?", a: "35", options: ["30", "35", "40"] },
+            { q: "Fill in the blank: 50 - ___ = 25", a: "25", options: ["25", "30", "15"] },
+            { q: "What is 130 - 20?", a: "110", options: ["100", "110", "120"] },
+            { q: "If you find 18 pennies and already had 22, how many do you have?", a: "40", options: ["30", "40", "50"] },
+            { q: "What is 99 + 1?", a: "100", options: ["100", "101", "90"] }
         ];
 
         let currentIdx = 0;
