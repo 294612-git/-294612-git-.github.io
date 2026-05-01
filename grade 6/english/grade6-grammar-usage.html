@@ -3,24 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Money Quiz - Study Buddy</title>
+    <title>Grammar & Usage Quiz - Grade 6</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 500px; text-align: center; }
-        h2 { color: #667eea; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f3e5f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .quiz-container { background: white; padding: 2rem; border-radius: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 520px; text-align: center; }
+        h2 { color: #6a1b9a; }
         .options-container { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
-        .option-btn { padding: 12px; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; font-size: 1.1rem; transition: 0.2s; }
-        .option-btn:hover { border-color: #667eea; background: #f0f2ff; }
+        .option-btn { padding: 12px; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; font-size: 1rem; transition: 0.2s; }
+        .option-btn:hover { border-color: #6a1b9a; background: #f3e5f5; }
         .feedback { margin: 15px 0; font-weight: bold; min-height: 24px; }
-        .correct { color: #28a745; }
-        .wrong { color: #dc3545; }
-        .next-btn { background: #667eea; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; display: none; margin: 0 auto; }
+        .correct { color: #2e7d32; }
+        .wrong { color: #c62828; }
+        .next-btn { background: #6a1b9a; color: white; border: none; padding: 11px 20px; border-radius: 8px; cursor: pointer; display: none; margin: 0 auto; }
         .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #eee; }
         .hidden { display: none; }
     </style>
 </head>
 <body>
-
     <div class="quiz-container" id="quiz-box">
         <h2 id="question-text">Question</h2>
         <div class="options-container" id="options"></div>
@@ -32,46 +31,19 @@
         <h2>Quiz Complete!</h2>
         <div id="results-list"></div>
         <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
-        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='../grade2-math-topics.html'">Back to Topics</button>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade6-english-topics.html'">Back to Topics</button>
     </div>
 
     <script>
         const quizData = [
-            { q: "What do plants need to make food?", a: "Sunlight", options: ["Sunlight", "Rocks", "Plastic"] },
-            { q: "Which part of a plant makes seeds?", a: "Flower", options: ["Flower", "Root", "Stem"] },
-            { q: "The first stage of a plant’s life cycle is a ___.", a: "Seed", options: ["Seed", "Leaf", "Fruit"] },
-            { q: "Roots help a plant ___.", a: "Absorb water and nutrients", options: ["Absorb water and nutrients", "Make food", "Store energy"] }
+            { q: "Which word is a noun in the sentence: 'The dog chased the ball'?", a: "dog", options: ["chased", "dog", "the"] },
+            { q: "Choose the sentence with correct punctuation.", a: "She will arrive at 3:00 p.m.", options: ["She will arrive at 3:00 p.m.", "She will arrive at 3 00 p.m", "She will arrive at 300 p.m."] },
+            { q: "Which word is an adjective?", a: "colorful", options: ["colorful", "jump", "quickly"] }
         ];
 
         let currentIdx = 0;
         let score = 0;
         let userResults = [];
-
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-        }
-
-        function ensureTryAgainButton() {
-            const summaryBox = document.getElementById("summary-box");
-            if (summaryBox && !summaryBox.querySelector('button[onclick="location.reload()"]')) {
-                const button = document.createElement('button');
-                button.className = 'next-btn';
-                button.style.display = 'block';
-                button.style.marginTop = '20px';
-                button.innerText = 'Try Again';
-                button.onclick = function() { location.reload(); };
-                const backButton = summaryBox.querySelector('button[onclick^="location.href"]');
-                summaryBox.insertBefore(button, backButton || null);
-            }
-        }
-
-        function initializeQuiz() {
-            shuffleArray(quizData);
-            loadQuestion();
-        }
 
         function loadQuestion() {
             const current = quizData[currentIdx];
@@ -80,7 +52,6 @@
             optionsDiv.innerHTML = "";
             document.getElementById("feedback").innerText = "";
             document.getElementById("next-button").style.display = "none";
-
             current.options.forEach(opt => {
                 const btn = document.createElement("button");
                 btn.innerText = opt;
@@ -94,17 +65,14 @@
             const current = quizData[currentIdx];
             const feedback = document.getElementById("feedback");
             const btns = document.querySelectorAll(".option-btn");
-            
-            // Disable buttons after answer
             btns.forEach(b => b.disabled = true);
-
             if (selected === current.a) {
-                feedback.innerText = "Correct! Well done.";
+                feedback.innerText = "Correct! Great job.";
                 feedback.className = "feedback correct";
                 score++;
                 userResults.push({ q: current.q, res: "Correct", class: "correct" });
             } else {
-                feedback.innerText = "Oops! The correct answer was " + current.a;
+                feedback.innerText = "Oops! The correct answer was " + current.a + ".";
                 feedback.className = "feedback wrong";
                 userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
             }
@@ -122,13 +90,9 @@
 
         function showSummary() {
             document.getElementById("quiz-box").classList.add("hidden");
-            const summaryBox = document.getElementById("summary-box");
-            summaryBox.classList.remove("hidden");
-            ensureTryAgainButton();
-            
+            document.getElementById("summary-box").classList.remove("hidden");
             const list = document.getElementById("results-list");
             list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
-            
             userResults.forEach(item => {
                 const div = document.createElement("div");
                 div.className = "summary-item";
@@ -137,8 +101,7 @@
             });
         }
 
-        // Start the quiz
-        initializeQuiz();
+        loadQuestion();
     </script>
 </body>
 </html>
