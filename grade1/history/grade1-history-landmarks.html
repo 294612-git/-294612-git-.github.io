@@ -31,11 +31,12 @@
     <div class="quiz-container hidden" id="summary-box">
         <h2>Quiz Complete!</h2>
         <div id="results-list"></div>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
         <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade1-history.html'">Back to History Topics</button>
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "What is the Statue of Liberty?", a: "freedom statue", options: ["war statue", "freedom statue", "peace statue"] },
             { q: "Where is the Statue of Liberty?", a: "New York Harbor", options: ["Los Angeles", "New York Harbor", "Chicago"] },
             { q: "What is the White House?", a: "president's house", options: ["king's house", "president's house", "soldier's house"] },
@@ -58,6 +59,8 @@
             { q: "Where is the Golden Gate Bridge?", a: "San Francisco", options: ["Los Angeles", "San Francisco", "Seattle"] }
         ];
 
+        const quizData = shuffleArray(questionPool.slice()).slice(0, 5);
+
         let currentIdx = 0;
         let score = 0;
         let userResults = [];
@@ -69,24 +72,7 @@
             }
         }
 
-        function ensureTryAgainButton() {
-            const summaryBox = document.getElementById("summary-box");
-            if (summaryBox && !summaryBox.querySelector('button[onclick="location.reload()"]')) {
-                const button = document.createElement('button');
-                button.className = 'next-btn';
-                button.style.display = 'block';
-                button.style.marginTop = '20px';
-                button.innerText = 'Try Again';
-                button.onclick = function() { location.reload(); };
-                const backButton = summaryBox.querySelector('button[onclick^="location.href"]');
-                summaryBox.insertBefore(button, backButton || null);
-            }
-        }
 
-        function initializeQuiz() {
-            shuffleArray(quizData);
-            loadQuestion();
-        }
 
         function loadQuestion() {
             const current = quizData[currentIdx];
@@ -137,7 +123,6 @@
             document.getElementById("quiz-box").classList.add("hidden");
             const summaryBox = document.getElementById("summary-box");
             summaryBox.classList.remove("hidden");
-            ensureTryAgainButton();
             const list = document.getElementById("results-list");
             list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
             userResults.forEach(item => {
@@ -148,7 +133,7 @@
             });
         }
 
-        initializeQuiz();
+        loadQuestion();
     </script>
 </body>
 </html>

@@ -66,8 +66,7 @@
             { q: "Coral reefs are found in ___ ecosystems.", a: "Saltwater", options: ["Freshwater", "Saltwater", "Land"] }
         ];
 
-        shuffleArray(questionPool);
-        const quizData = questionPool.slice(0, 20);
+        const quizData = shuffleArray(questionPool.slice()).slice(0, 5);
 
         let currentIdx = 0;
         let score = 0;

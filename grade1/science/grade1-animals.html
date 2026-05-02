@@ -71,11 +71,12 @@
     <div class="quiz-container hidden" id="summary-box">
         <h2>You're a Whale of a Scientist!</h2>
         <div id="results-list"></div>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
         <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade1-science-topics.html'">Back to Dolphin Science</button>
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "What is a dolphin?", a: "mammal", options: ["fish", "mammal", "bird"] },
             { q: "Where do fish live?", a: "water", options: ["land", "water", "air"] },
             { q: "What do sharks have?", a: "fins", options: ["wings", "fins", "legs"] },
@@ -97,6 +98,7 @@
             { q: "What is a coral?", a: "animal", options: ["plant", "animal", "rock"] },
             { q: "Where do penguins live?", a: "water", options: ["desert", "water", "mountain"] }
         ];
+        const quizData = shuffleArray(questionPool.slice()).slice(0, 5);
         let currentIdx = 0; let score = 0; let userResults = [];
 
         function shuffleArray(array) {
@@ -106,22 +108,7 @@
             }
         }
 
-        function ensureTryAgainButton() {
-            const summaryBox = document.getElementById("summary-box");
-            if (summaryBox && !summaryBox.querySelector('button[onclick="location.reload()"]')) {
-                const button = document.createElement('button');
-                button.className = 'next-btn';
-                button.style.display = 'block';
-                button.style.marginTop = '20px';
-                button.innerText = 'Try Again';
-                button.onclick = function() { location.reload(); };
-                const backButton = summaryBox.querySelector('button[onclick^="location.href"]');
-                summaryBox.insertBefore(button, backButton || null);
-            }
-        }
-
         function initializeQuiz() {
-            shuffleArray(quizData);
             loadQuestion();
         }
 
@@ -169,7 +156,6 @@
             document.getElementById("quiz-box").classList.add("hidden");
             const summaryBox = document.getElementById("summary-box");
             summaryBox.classList.remove("hidden");
-            ensureTryAgainButton();
             const list = document.getElementById("results-list");
             list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
             userResults.forEach(item => {

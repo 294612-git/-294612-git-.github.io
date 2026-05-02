@@ -66,8 +66,7 @@
             { q: "Can matter change its state?", a: "Yes", options: ["Yes", "No"] }
         ];
 
-        shuffleArray(questionPool);
-        const quizData = questionPool.slice(0, 20);
+        const quizData = shuffleArray(questionPool.slice()).slice(0, 5);
 
         let currentIdx = 0;
         let score = 0;

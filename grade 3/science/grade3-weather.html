@@ -66,8 +66,7 @@
             { q: "The temperature at which water freezes is ___ Fahrenheit.", a: "32", options: ["0", "32", "100", "212"] }
         ];
 
-        shuffleArray(questionPool);
-        const quizData = questionPool.slice(0, 20);
+        const quizData = shuffleArray(questionPool.slice()).slice(0, 5);
 
         let currentIdx = 0;
         let score = 0;
