@@ -36,7 +36,7 @@
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "Things that people make or grow to sell are called...", a: "Goods", options: ["Services", "Goods", "Wants"] },
             { q: "Work that someone does for someone else is called a...", a: "Service", options: ["Good", "Service", "Natural Resource"] },
             { q: "Which of these is a 'Need'?", a: "Food", options: ["Video games", "Food", "Candy"] },
@@ -58,6 +58,7 @@
             { q: "What do we call the tools and buildings used to make goods?", a: "Capital Resources", options: ["Human Resources", "Capital Resources", "Natural Resources"] },
             { q: "A person who works is called a...", a: "Human Resource", options: ["Natural Resource", "Human Resource", "Good"] }
         ];
+        const quizData = shuffleArray(questionPool.slice()).slice(0, 5);
 
         let currentIdx = 0;
         let score = 0;
@@ -70,22 +71,7 @@
             }
         }
 
-        function ensureTryAgainButton() {
-            const summaryBox = document.getElementById("summary-box");
-            if (summaryBox && !summaryBox.querySelector('button[onclick="location.reload()"]')) {
-                const button = document.createElement('button');
-                button.className = 'next-btn';
-                button.style.display = 'block';
-                button.style.marginTop = '20px';
-                button.innerText = 'Try Again';
-                button.onclick = function() { location.reload(); };
-                const backButton = summaryBox.querySelector('button[onclick^="location.href"]');
-                summaryBox.insertBefore(button, backButton || null);
-            }
-        }
-
         function initializeQuiz() {
-            shuffleArray(quizData);
             loadQuestion();
         }
 
@@ -140,7 +126,6 @@
             document.getElementById("quiz-box").classList.add("hidden");
             const summaryBox = document.getElementById("summary-box");
             summaryBox.classList.remove("hidden");
-            ensureTryAgainButton();
             
             const list = document.getElementById("results-list");
             list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
