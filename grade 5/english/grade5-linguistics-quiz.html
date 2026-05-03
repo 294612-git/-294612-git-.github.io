@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 5 Elite: Linguistics & Rhetorical Structure Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #ddd;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: #4CAF50;
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.3s;
+        }
+        .question {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+        .options li {
+            margin-bottom: 10px;
+        }
+        .options button {
+            width: 100%;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .options button:hover {
+            background-color: #e9e9e9;
+        }
+        .feedback {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .wrong {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .round-info {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .summary {
+            display: none;
+            text-align: center;
+        }
+        .summary h2 {
+            color: #333;
+        }
+        .summary p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+            font-size: 16px;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Grade 5 Elite: Linguistics & Rhetorical Structure Quiz</h1>
+        <div id="active-quiz">
+            <div class="round-info" id="round-info">Round 1</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="question" id="question"></div>
+            <ul class="options" id="options"></ul>
+            <div class="feedback" id="feedback"></div>
+        </div>
+        <div class="summary" id="summary">
+            <h2>Quiz Complete!</h2>
+            <p id="final-score"></p>
+            <p id="round-scores"></p>
+            <a href="../grade5-reading-topics.html" class="back-link">Back to Reading Topics</a>
+        </div>
+    </div>
+
+    <script>
+        const allQuestions = [
+            { q: "A \"Thesis Statement\" must be arguable and specific. Which of the following is the strongest thesis for a persuasive essay about school lunches?", options: ["A) School lunches are served every day at noon in the cafeteria.", "B) I think that pizza is the best thing they serve for school lunch.", "C) Replacing processed snacks with fresh, local produce would improve student focus and long-term health.", "D) Many students eat school lunch, but some students bring a bag from home."], a: 2 },
+            { q: "What is the primary difference between \"Active Voice\" and \"Passive Voice\"?", options: ["A) Active voice is for stories, and passive voice is for science reports.", "B) In active voice, the subject performs the action; in passive voice, the subject receives the action.", "C) Active voice uses more adjectives than passive voice.", "D) There is no difference as long as the spelling is correct."], a: 1 },
+            { q: "Identify the sentence written in the \"Passive Voice\":", options: ["A) The architect designed a futuristic skyscraper.", "B) The skyscraper was designed by a famous architect.", "C) The architect is drawing the blueprints right now.", "D) We visited the skyscraper last summer."], a: 1 },
+            { q: "A \"Semicolon\" (;) is most commonly used to:", options: ["A) Start a list of items after a complete sentence.", "B) Connect two closely related independent clauses (complete thoughts) without using a conjunction.", "C) Show that a character is very excited.", "D) Separate a prefix from a root word."], a: 1 },
+            { q: "Which sentence uses a \"Colon\" (:) correctly?", options: ["A) I went to: the store to buy milk.", "B) She had three favorite hobbies: hiking, painting, and reading.", "C) Because: it was cold, I wore a coat.", "D) The dog: barked at the mailman."], a: 1 },
+            { q: "In persuasive writing, what is a \"Counter-Argument\"?", options: ["A) An argument that has no evidence to support it.", "B) The final sentence of the conclusion paragraph.", "C) Acknowledging the opposing point of view before proving why your own argument is stronger.", "D) A list of reasons why you like the topic you are writing about."], a: 2 },
+            { q: "Identify the \"Correlative Conjunctions\" in the following sentence: \"Neither the captain nor the crew expected the storm to hit so quickly.\"", options: ["A) Expected / Hit", "B) Neither / Nor", "C) Captain / Crew", "D) So / Quickly"], a: 1 },
+            { q: "A \"Participle\" is a verb form that functions as an adjective. Identify the participle in this sentence: \"The freezing water caused the pipes to burst.\"", options: ["A) Water", "B) Caused", "C) Freezing", "D) Pipes"], a: 2 },
+            { q: "Which of the following is a \"Complex Sentence\" (contains one independent clause and at least one dependent clause)?", options: ["A) The cat slept on the rug.", "B) The cat slept on the rug, and the dog slept in the chair.", "C) Although the cat was tired, it refused to sleep on the rug.", "D) The cat and the dog slept soundly all night."], a: 2 },
+            { q: "What is the \"Antecedent\" of the pronoun in this sentence? \"When the students finished the exam, they handed them to the teacher.\"", options: ["A) Exam", "B) Finished", "C) Students", "D) Teacher"], a: 2 },
+            { q: "\"Diction\" in writing refers to:", options: ["A) The speed at which the author writes.", "B) The author's specific choice of words to create a certain tone or effect.", "C) The number of pages in a chapter.", "D) Using a dictionary to check every third word."], a: 1 },
+            { q: "Which sentence uses the \"Subjunctive Mood\" (used for wishes, possibilities, or requirements)?", options: ["A) I am going to the store.", "B) If I were you, I would study for the test tonight.", "C) He went to the park yesterday.", "D) Please close the door quietly."], a: 1 },
+            { q: "An \"Appositive\" is a noun or phrase that renames another noun right next to it. Identify the appositive: \"My brother, a talented chef, made dinner.\"", options: ["A) My brother", "B) A talented chef", "C) Made dinner", "D) Talented"], a: 1 },
+            { q: "What is the difference between a \"Primary Source\" and a \"Secondary Source\" in research writing?", options: ["A) Primary sources are longer than secondary sources.", "B) Primary sources are original records (diaries, photos); secondary sources analyze those records (textbooks).", "C) Primary sources are only found in libraries.", "D) Secondary sources are always written by the main character of the story."], a: 1 },
+            { q: "Which word is the \"Interjection\" in this sentence? \"Wow, that was the most incredible sunset I have ever seen!\"", options: ["A) Incredible", "B) Sunset", "C) Wow", "D) Seen"], a: 2 },
+            { q: "To \"Synthesize\" information from two different articles means to:", options: ["A) Read both articles and choose the one you like better.", "B) Combine parts of both texts to form a new, deeper understanding of the topic.", "C) Copy the first paragraph of both articles into your essay.", "D) Find the spelling errors in both texts."], a: 1 },
+            { q: "Which sentence shows correct \"Parallel Structure\"?", options: ["A) I like swimming, to hike, and running.", "B) I like to swim, hiking, and to run.", "C) I like swimming, hiking, and running.", "D) I like to swim, hike, and running."], a: 2 },
+            { q: "In an argumentative essay, \"Citing your sources\" is necessary because:", options: ["A) It makes the essay look longer.", "B) It gives credit to the original authors and proves your facts are reliable.", "C) Your teacher told you to do it.", "D) It helps you practice your typing skills."], a: 1 },
+            { q: "The \"Narrative Arc\" of a story includes which five elements in order?", options: ["A) Title, Intro, Middle, End, Credits", "B) Exposition, Rising Action, Climax, Falling Action, Resolution", "C) Character, Setting, Problem, Solution, Moral", "D) Beginning, Dialogue, Pictures, Climax, Ending"], a: 1 },
+            { q: "\"Ethos,\" \"Pathos,\" and \"Logos\" are rhetorical appeals. If an author uses a lot of statistics and facts, which appeal are they using?", options: ["A) Ethos (Credibility)", "B) Pathos (Emotion)", "C) Logos (Logic)", "D) Chronos (Time)"], a: 2 }
+        ];
+
+        let currentRound = 1;
+        let currentQuestionIndex = 0;
+        let userResults = [];
+        let roundScores = [0, 0];
+
+        function loadRound(round) {
+            currentRound = round;
+            currentQuestionIndex = (round - 1) * 10;
+            document.getElementById('round-info').textContent = `Round ${round}`;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const question = allQuestions[currentQuestionIndex];
+            document.getElementById('question').textContent = question.q;
+            const optionsUl = document.getElementById('options');
+            optionsUl.innerHTML = '';
+            question.options.forEach((option, index) => {
+                const li = document.createElement('li');
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.onclick = () => checkAnswer(index);
+                li.appendChild(button);
+                optionsUl.appendChild(li);
+            });
+            document.getElementById('feedback').style.display = 'none';
+            updateProgress();
+        }
+
+        function checkAnswer(selectedIndex) {
+            const correctIndex = allQuestions[currentQuestionIndex].a;
+            const feedback = document.getElementById('feedback');
+            if (selectedIndex === correctIndex) {
+                feedback.textContent = 'Correct!';
+                feedback.className = 'feedback correct';
+                roundScores[currentRound - 1]++;
+            } else {
+                feedback.textContent = `Wrong! The correct answer is: ${allQuestions[currentQuestionIndex].options[correctIndex]}`;
+                feedback.className = 'feedback wrong';
+            }
+            feedback.style.display = 'block';
+            userResults.push(selectedIndex === correctIndex);
+            setTimeout(() => {
+                nextQuestion();
+            }, 2000);
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < allQuestions.length) {
+                if (currentQuestionIndex % 10 === 0) {
+                    // End of round
+                    if (currentRound < 2) {
+                        loadRound(currentRound + 1);
+                    } else {
+                        showSummary();
+                    }
+                } else {
+                    loadQuestion();
+                }
+            } else {
+                showSummary();
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestionIndex % 10) + 1) / 10 * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+        }
+
+        function showSummary() {
+            document.getElementById('active-quiz').style.display = 'none';
+            document.getElementById('summary').style.display = 'block';
+            const totalCorrect = roundScores[0] + roundScores[1];
+            document.getElementById('final-score').textContent = `You got ${totalCorrect} out of 20 questions correct.`;
+            document.getElementById('round-scores').textContent = `Round 1: ${roundScores[0]}/10, Round 2: ${roundScores[1]}/10`;
+        }
+
+        loadRound(1);
+    </script>
+</body>
+</html>

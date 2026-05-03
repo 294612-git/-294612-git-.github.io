@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 4 Earth Science Quiz - Study Buddy</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 600px; }
+        h2 { color: #667eea; text-align: center; }
+        .progress-bar { background: #e0e0e0; height: 10px; border-radius: 5px; margin: 15px 0; overflow: hidden; }
+        .progress-fill { background: #667eea; height: 100%; transition: width 0.3s; }
+        .options-container { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+        .option-btn { padding: 12px; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; text-align: left; font-size: 0.95rem; transition: 0.2s; }
+        .option-btn:hover { border-color: #667eea; background: #f0f2ff; }
+        .feedback { margin: 15px 0; font-weight: bold; min-height: 24px; text-align: center; }
+        .correct { color: #28a745; }
+        .wrong { color: #dc3545; }
+        .next-btn { background: #667eea; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; display: none; margin: 0 auto; }
+        .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #eee; }
+        .hidden { display: none; }
+        .round-indicator { text-align: center; color: #667eea; font-weight: bold; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-container" id="quiz-box">
+        <div class="round-indicator" id="round-indicator"></div>
+        <h2 id="question-text">Question</h2>
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+        <div class="options-container" id="options"></div>
+        <div id="feedback" class="feedback"></div>
+        <button id="next-button" class="next-btn" onclick="loadNextQuestion()">Next Question</button>
+    </div>
+
+    <div class="quiz-container hidden" id="summary-box">
+        <h2>Quiz Complete!</h2>
+        <div id="results-list"></div>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="loadNewRound()">Try Again (New Round)</button>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade4-science-topics.html'">Back to Topics</button>
+    </div>
+
+    <script>
+        const allQuestions = [
+            // Round 1: Questions 1-10
+            { q: "Rocks, soil, and the solid land we walk on are all part of which layer of the Earth?", options: ["The Atmosphere", "The Crust", "The Outer Core", "The Sky"], a: "The Crust" },
+            { q: "The Earth is made of distinct layers. Which layer is located at the very center and is thought to be a solid ball of iron and nickel?", options: ["The Mantle", "The Crust", "The Inner Core", "The Atmosphere"], a: "The Inner Core" },
+            { q: "A volcano erupts when molten rock from underground reaches the surface. What is this molten rock called while it is still underground?", options: ["Lava", "Magma", "Ash", "Sediment"], a: "Magma" },
+            { q: "Which layer of the Earth is the thickest and contains hot, melted rock that flows slowly like thick syrup?", options: ["The Crust", "The Mantle", "The Inner Core", "The Ocean"], a: "The Mantle" },
+            { q: "'Weathering' is a process that ____.", options: ["Builds new mountains", "Breaks rocks down into smaller pieces over time", "Causes volcanoes to erupt", "Creates wind in the sky"], a: "Breaks rocks down into smaller pieces over time" },
+            { q: "The movement of weathered rock and soil from one place to another by water, wind, or ice is called ____.", options: ["Deposition", "Erosion", "Compaction", "Eruption"], a: "Erosion" },
+            { q: "Which type of rock is formed from cooling magma or lava?", options: ["Sedimentary", "Metamorphic", "Igneous", "Fossil"], a: "Igneous" },
+            { q: "'Sedimentary' rocks are usually formed by ____.", options: ["Intense heat and pressure", "Layers of sand, mud, and pebbles pressing together over millions of years", "Cooling lava from a volcano", "The freezing of water in a lake"], a: "Layers of sand, mud, and pebbles pressing together over millions of years" },
+            { q: "What is a 'Fossil'?", options: ["A type of shiny crystal", "The preserved remains or traces of a living thing from long ago", "A rock that fell from space", "A layer of soil found in a garden"], a: "The preserved remains or traces of a living thing from long ago" },
+            { q: "Earthquakes are caused by the sudden movement of ____.", options: ["Ocean waves", "Tectonic plates in the Earth's crust", "Large groups of animals", "The moon's gravity"], a: "Tectonic plates in the Earth's crust" },
+            // Round 2: Questions 11-20
+            { q: "Which of these is a 'Renewable' Earth resource?", options: ["Coal", "Natural Gas", "Fresh water", "Oil"], a: "Fresh water" },
+            { q: "What do we call the process where wind or water drops tired sediment in a new location, building up the land?", options: ["Erosion", "Deposition", "Weathering", "Melting"], a: "Deposition" },
+            { q: "Metamorphic rocks are created when existing rocks are changed by ____.", options: ["Extreme heat and pressure", "Falling into the ocean", "Being eaten by bacteria", "Floating in space"], a: "Extreme heat and pressure" },
+            { q: "Most of the Earth's surface is covered by ____.", options: ["Mountains", "Forests", "Oceans (Water)", "Deserts"], a: "Oceans (Water)" },
+            { q: "A 'Landform' that is high, flat land is known as a ____.", options: ["Valley", "Plateau", "Canyon", "Island"], a: "Plateau" },
+            { q: "Which of these can cause 'Physical Weathering'?", options: ["Water freezing in the cracks of a rock", "A plant's roots growing into a rock", "Wind blowing sand against a rock", "All of the above"], a: "All of the above" },
+            { q: "Which mineral is the hardest and can scratch almost any other surface?", options: ["Talc", "Quartz", "Diamond", "Gold"], a: "Diamond" },
+            { q: "The 'Rock Cycle' describes ____.", options: ["How rocks fall down a hill", "How rocks slowly change from one type to another over time", "How the moon was made of rock", "How fast a rock can sink in water"], a: "How rocks slowly change from one type to another over time" },
+            { q: "What is the name of the giant 'supercontinent' that scientists believe existed millions of years ago?", options: ["Atlantis", "Pangea", "Eurasia", "Oceania"], a: "Pangea" },
+            { q: "Which soil layer contains the most 'humus' (decayed plants and animals) and is best for growing plants?", options: ["Bedrock", "Subsoil", "Topsoil", "The Core"], a: "Topsoil" }
+        ];
+
+        let currentRound = 1;
+        let currentIdx = 0;
+        let score = 0;
+        let userResults = [];
+        let quizData = [];
+
+        function loadRound(roundNum) {
+            const startIdx = (roundNum - 1) * 10;
+            const endIdx = startIdx + 10;
+            quizData = allQuestions.slice(startIdx, endIdx);
+            currentIdx = 0;
+            score = 0;
+            userResults = [];
+            document.getElementById("quiz-box").classList.remove("hidden");
+            document.getElementById("summary-box").classList.add("hidden");
+            document.getElementById("round-indicator").innerText = `Round ${roundNum}`;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const current = quizData[currentIdx];
+            document.getElementById("question-text").innerText = `Q${currentIdx + 1}: ${current.q}`;
+            
+            const progress = ((currentIdx + 1) / quizData.length) * 100;
+            document.getElementById("progress-fill").style.width = progress + "%";
+            
+            const optionsDiv = document.getElementById("options");
+            optionsDiv.innerHTML = "";
+            document.getElementById("feedback").innerText = "";
+            document.getElementById("next-button").style.display = "none";
+
+            current.options.forEach((opt, idx) => {
+                const btn = document.createElement("button");
+                btn.innerText = String.fromCharCode(65 + idx) + ") " + opt;
+                btn.className = "option-btn";
+                btn.onclick = () => checkAnswer(opt);
+                optionsDiv.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selected) {
+            const current = quizData[currentIdx];
+            const feedback = document.getElementById("feedback");
+            const btns = document.querySelectorAll(".option-btn");
+            
+            btns.forEach(b => b.disabled = true);
+
+            if (selected === current.a) {
+                feedback.innerText = "✓ Correct! Well done.";
+                feedback.className = "feedback correct";
+                score++;
+                userResults.push({ q: current.q, res: "Correct", class: "correct" });
+            } else {
+                feedback.innerText = "✗ Oops! The correct answer was: " + current.a;
+                feedback.className = "feedback wrong";
+                userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
+            }
+            document.getElementById("next-button").style.display = "block";
+        }
+
+        function loadNextQuestion() {
+            currentIdx++;
+            if (currentIdx < quizData.length) {
+                loadQuestion();
+            } else {
+                showSummary();
+            }
+        }
+
+        function showSummary() {
+            document.getElementById("quiz-box").classList.add("hidden");
+            const summaryBox = document.getElementById("summary-box");
+            summaryBox.classList.remove("hidden");
+            
+            const list = document.getElementById("results-list");
+            list.innerHTML = `<h3>Round ${currentRound} - Final Score: ${score}/10</h3>`;
+            
+            userResults.forEach((item, idx) => {
+                const div = document.createElement("div");
+                div.className = "summary-item";
+                div.innerHTML = `<strong>Q${idx + 1}: ${item.q}</strong><br/><span class="${item.class}">${item.res}</span>`;
+                list.appendChild(div);
+            });
+        }
+
+        function loadNewRound() {
+            currentRound++;
+            if (currentRound <= 2) {
+                loadRound(currentRound);
+            } else {
+                alert("No more rounds available. You've completed all questions!");
+                location.href = "grade4-science-topics.html";
+            }
+        }
+
+        // Start with Round 1
+        loadRound(1);
+    </script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 4 Geography Quiz - Study Buddy</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 600px; }
+        h2 { color: #667eea; text-align: center; }
+        .progress-bar { background: #e0e0e0; height: 10px; border-radius: 5px; margin: 15px 0; overflow: hidden; }
+        .progress-fill { background: #667eea; height: 100%; transition: width 0.3s; }
+        .options-container { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+        .option-btn { padding: 12px; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; text-align: left; font-size: 0.95rem; transition: 0.2s; }
+        .option-btn:hover { border-color: #667eea; background: #f0f2ff; }
+        .feedback { margin: 15px 0; font-weight: bold; min-height: 24px; text-align: center; }
+        .correct { color: #28a745; }
+        .wrong { color: #dc3545; }
+        .next-btn { background: #667eea; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; display: none; margin: 0 auto; }
+        .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #eee; }
+        .hidden { display: none; }
+        .round-indicator { text-align: center; color: #667eea; font-weight: bold; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-container" id="quiz-box">
+        <div class="round-indicator" id="round-indicator"></div>
+        <h2 id="question-text">Question</h2>
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+        <div class="options-container" id="options"></div>
+        <div id="feedback" class="feedback"></div>
+        <button id="next-button" class="next-btn" onclick="loadNextQuestion()">Next Question</button>
+    </div>
+
+    <div class="quiz-container hidden" id="summary-box">
+        <h2>Quiz Complete!</h2>
+        <div id="results-list"></div>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="loadNewRound()">Try Again (New Round)</button>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade4-history-topics.html'">Back to Topics</button>
+    </div>
+
+    <script>
+        const allQuestions = [
+            // Round 1: Questions 1-10
+            { q: "A map is a symbolic representation of a place. Which type of map shows the boundaries between countries or states?", options: ["A Physical Map", "A Political Map", "A Topographic Map", "A Climate Map"], a: "A Political Map" },
+            { q: "Natural resources are materials from the Earth that people use. Which is 'Non-renewable'?", options: ["Wind energy", "Sunlight", "Natural Gas", "Timber (Trees)"], a: "Natural Gas" },
+            { q: "In geography, a 'Region' is best defined as ____.", options: ["A group of people who all speak different languages", "An area of land that shares common features, such as climate or culture", "The exact address of a single house", "A map that shows the depth of the ocean"], a: "An area of land that shares common features, such as climate or culture" },
+            { q: "The 'Equator' is an imaginary line that divides the Earth into which two halves?", options: ["Eastern and Western Hemispheres", "Northern and Southern Hemispheres", "The Crust and the Mantle", "The Land and the Sea"], a: "Northern and Southern Hemispheres" },
+            { q: "Which map feature explains what the symbols, colors, and lines represent?", options: ["The Compass Rose", "The Map Key (or Legend)", "The Scale", "The Title"], a: "The Map Key (or Legend)" },
+            { q: "A 'Landform' is a natural feature of Earth's surface. Which is surrounded by water on all sides?", options: ["Peninsula", "Plateau", "Island", "Valley"], a: "Island" },
+            { q: "What is the difference between 'Absolute Location' and 'Relative Location'?", options: ["Absolute location uses latitude and longitude; relative location describes a place in relation to others.", "Absolute location changes every day; relative location never changes.", "They are exactly the same thing.", "Absolute location only refers to the stars."], a: "Absolute location uses latitude and longitude; relative location describes a place in relation to others." },
+            { q: "Human-Environment Interaction describes how people change the Earth. Which is an example?", options: ["Wearing a heavy coat in winter", "Building a dam across a river to create electricity", "Moving to a warmer climate", "Planting a small garden in a backyard"], a: "Building a dam across a river to create electricity" },
+            { q: "Which of the following is considered a 'Capital Resource' (tools or machines)?", options: ["Iron Ore", "A factory building", "A worker's skills", "A forest"], a: "A factory building" },
+            { q: "The 'Prime Meridian' is the starting point for measuring distance ____.", options: ["North and South (Latitude)", "East and West (Longitude)", "Up and Down (Altitude)", "Under the water"], a: "East and West (Longitude)" },
+            // Round 2: Questions 11-20
+            { q: "Which continent is located entirely in the Southern and Eastern Hemispheres?", options: ["North America", "Europe", "Australia", "Africa"], a: "Australia" },
+            { q: "A 'Peninsula' is a piece of land that is ____.", options: ["Completely surrounded by water", "Surrounded by water on three sides", "Located at the top of a mountain", "Always covered in ice"], a: "Surrounded by water on three sides" },
+            { q: "Why do most large cities develop near bodies of water?", options: ["Because the water makes the air colder", "For transportation, trade, and access to fresh water", "Because fish are the only food people eat", "To prevent forest fires"], a: "For transportation, trade, and access to fresh water" },
+            { q: "What does a 'Map Scale' help you determine?", options: ["The height of a mountain", "The direction of North", "The distance between two places compared to real life", "The population of a city"], a: "The distance between two places compared to real life" },
+            { q: "Which of these is a 'Physical Feature' of the Earth?", options: ["A highway", "A mountain range", "A state border", "A city park"], a: "A mountain range" },
+            { q: "The movement of people from one place to another to live permanently is called ____.", options: ["Interaction", "Migration", "Region", "Location"], a: "Migration" },
+            { q: "Which climate zone is located near the Equator and stays warm all year?", options: ["The Polar Zone", "The Temperate Zone", "The Tropical Zone", "The Tundra"], a: "The Tropical Zone" },
+            { q: "A 'Compass Rose' is used on a map to show ____.", options: ["How many miles are in an inch", "The cardinal directions (North, South, East, West)", "The names of all the rivers", "Where the mountains are located"], a: "The cardinal directions (North, South, East, West)" },
+            { q: "If a country has many 'Human Resources,' it means they have ____.", options: ["Lots of gold and silver", "A large number of skilled and healthy workers", "Many tractors and computers", "Plenty of rain for crops"], a: "A large number of skilled and healthy workers" },
+            { q: "'Irrigation' is a way that humans ____.", options: ["Predict the weather", "Bring water to dry land to help crops grow", "Build houses out of stone", "Travel across the ocean"], a: "Bring water to dry land to help crops grow" }
+        ];
+
+        let currentRound = 1;
+        let currentIdx = 0;
+        let score = 0;
+        let userResults = [];
+        let quizData = [];
+
+        function loadRound(roundNum) {
+            const startIdx = (roundNum - 1) * 10;
+            const endIdx = startIdx + 10;
+            quizData = allQuestions.slice(startIdx, endIdx);
+            currentIdx = 0;
+            score = 0;
+            userResults = [];
+            document.getElementById("quiz-box").classList.remove("hidden");
+            document.getElementById("summary-box").classList.add("hidden");
+            document.getElementById("round-indicator").innerText = `Round ${roundNum}`;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const current = quizData[currentIdx];
+            document.getElementById("question-text").innerText = `Q${currentIdx + 1}: ${current.q}`;
+            
+            const progress = ((currentIdx + 1) / quizData.length) * 100;
+            document.getElementById("progress-fill").style.width = progress + "%";
+            
+            const optionsDiv = document.getElementById("options");
+            optionsDiv.innerHTML = "";
+            document.getElementById("feedback").innerText = "";
+            document.getElementById("next-button").style.display = "none";
+
+            current.options.forEach((opt, idx) => {
+                const btn = document.createElement("button");
+                btn.innerText = String.fromCharCode(65 + idx) + ") " + opt;
+                btn.className = "option-btn";
+                btn.onclick = () => checkAnswer(opt);
+                optionsDiv.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selected) {
+            const current = quizData[currentIdx];
+            const feedback = document.getElementById("feedback");
+            const btns = document.querySelectorAll(".option-btn");
+            
+            btns.forEach(b => b.disabled = true);
+
+            if (selected === current.a) {
+                feedback.innerText = "✓ Correct! Well done.";
+                feedback.className = "feedback correct";
+                score++;
+                userResults.push({ q: current.q, res: "Correct", class: "correct" });
+            } else {
+                feedback.innerText = "✗ Oops! The correct answer was: " + current.a;
+                feedback.className = "feedback wrong";
+                userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
+            }
+            document.getElementById("next-button").style.display = "block";
+        }
+
+        function loadNextQuestion() {
+            currentIdx++;
+            if (currentIdx < quizData.length) {
+                loadQuestion();
+            } else {
+                showSummary();
+            }
+        }
+
+        function showSummary() {
+            document.getElementById("quiz-box").classList.add("hidden");
+            const summaryBox = document.getElementById("summary-box");
+            summaryBox.classList.remove("hidden");
+            
+            const list = document.getElementById("results-list");
+            list.innerHTML = `<h3>Round ${currentRound} - Final Score: ${score}/10</h3>`;
+            
+            userResults.forEach((item, idx) => {
+                const div = document.createElement("div");
+                div.className = "summary-item";
+                div.innerHTML = `<strong>Q${idx + 1}: ${item.q}</strong><br/><span class="${item.class}">${item.res}</span>`;
+                list.appendChild(div);
+            });
+        }
+
+        function loadNewRound() {
+            currentRound++;
+            if (currentRound <= 2) {
+                loadRound(currentRound);
+            } else {
+                alert("No more rounds available. You've completed all questions!");
+                location.href = "grade4-history-topics.html";
+            }
+        }
+
+        // Start with Round 1
+        loadRound(1);
+    </script>
+</body>
+</html>

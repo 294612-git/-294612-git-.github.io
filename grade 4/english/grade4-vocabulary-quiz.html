@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 4 Vocabulary Quiz - Study Buddy</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 600px; }
+        h2 { color: #667eea; text-align: center; }
+        .progress-bar { background: #e0e0e0; height: 10px; border-radius: 5px; margin: 15px 0; overflow: hidden; }
+        .progress-fill { background: #667eea; height: 100%; transition: width 0.3s; }
+        .options-container { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+        .option-btn { padding: 12px; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; text-align: left; font-size: 0.95rem; transition: 0.2s; }
+        .option-btn:hover { border-color: #667eea; background: #f0f2ff; }
+        .feedback { margin: 15px 0; font-weight: bold; min-height: 24px; text-align: center; }
+        .correct { color: #28a745; }
+        .wrong { color: #dc3545; }
+        .next-btn { background: #667eea; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; display: none; margin: 0 auto; }
+        .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #eee; }
+        .hidden { display: none; }
+        .round-indicator { text-align: center; color: #667eea; font-weight: bold; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-container" id="quiz-box">
+        <div class="round-indicator" id="round-indicator"></div>
+        <h2 id="question-text">Question</h2>
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+        <div class="options-container" id="options"></div>
+        <div id="feedback" class="feedback"></div>
+        <button id="next-button" class="next-btn" onclick="loadNextQuestion()">Next Question</button>
+    </div>
+
+    <div class="quiz-container hidden" id="summary-box">
+        <h2>Quiz Complete!</h2>
+        <div id="results-list"></div>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="loadNewRound()">Try Again (New Round)</button>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade4-reading-topics.html'">Back to Topics</button>
+    </div>
+
+    <script>
+        const allQuestions = [
+            // Round 1: Questions 1-10
+            { q: "The prefix 'dis-' is added to mean 'not' or 'opposite of.' Which sentence uses a 'dis-' word correctly?", options: ["I had to disappear the laundry before dinner.", "If you do not follow the rules, you disobey the teacher.", "The magician was very dis-happy with his performance.", "I need to dis-read this book again to understand it."], a: "If you do not follow the rules, you disobey the teacher." },
+            { q: "When you change 'Happy' to 'Happiness,' you are adding a 'Suffix.' What is its primary job?", options: ["To tell the reader how to spell the word backwards", "To be added to the end of a root word to change its meaning or part of speech", "To show that the word is a proper noun", "To act as a placeholder for a punctuation mark"], a: "To be added to the end of a root word to change its meaning or part of speech" },
+            { q: "If the prefix 'pre-' means 'before,' what does it mean to 'preheat' an oven?", options: ["To heat the oven after the food is already finished cooking", "To heat the oven to a very high temperature", "To heat the oven before you put the food inside", "To turn the oven off so it stays cool"], a: "To heat the oven before you put the food inside" },
+            { q: "Which suffix would you add to 'Fear' to show someone has NO fear at all?", options: ["-ful", "-ness", "-less", "-ly"], a: "-less" },
+            { q: "The prefix 're-' means 'again.' In which sentence does it show an action happening a second time?", options: ["The monkey climbed the tall tree.", "Please rewrite your essay so that it is easier to read.", "The sunset was a beautiful red color.", "He went to the store to buy some bread."], a: "Please rewrite your essay so that it is easier to read." },
+            { q: "When adding the suffix '-er' to a verb like 'teach,' the word becomes a noun meaning ____.", options: ["Someone who does that action", "The opposite of that action", "Doing the action very quickly", "Having already finished the action"], a: "Someone who does that action" },
+            { q: "What does the prefix 'un-' mean in words like unlucky, unfold, and untie?", options: ["Very or extremely", "Not or to do the opposite of", "To do something again", "To do something for the first time"], a: "Not or to do the opposite of" },
+            { q: "Which of these words contains a suffix meaning 'full of'?", options: ["Running", "Joyful", "Sadness", "Untie"], a: "Joyful" },
+            { q: "The root word 'graph' means 'to write.' What is a 'biography'?", options: ["A machine that draws pictures", "A book written about a person's life", "A type of fast-growing plant", "A map of the entire world"], a: "A book written about a person's life" },
+            { q: "If you see the word 'Misunderstood,' what does the prefix 'mis-' tell you?", options: ["Something was done correctly", "Something was done wrongly or badly", "Something was done a long time ago", "Something was done by a professional"], a: "Something was done wrongly or badly" },
+            // Round 2: Questions 11-20
+            { q: "Which suffix should be added to 'Sad' to turn it into a noun describing a state of being?", options: ["-able", "-ness", "-pre", "-ing"], a: "-ness" },
+            { q: "The prefix 'bi-' means 'two.' How many wheels does a 'bicycle' have?", options: ["One", "Two", "Three", "Four"], a: "Two" },
+            { q: "Which word is a 'Root Word' that can stand alone?", options: ["Disagree", "Playful", "Jump", "Inactive"], a: "Jump" },
+            { q: "What does the suffix '-able' mean in words like portable or breakable?", options: ["Already happened", "Able to be", "Not possible", "In a certain way"], a: "Able to be" },
+            { q: "If 'micro-' means 'small' and 'scope' means 'to see,' what is a microscope used for?", options: ["To see things that are very far away in space", "To see things that are too small to be seen with just your eyes", "To listen to sounds under the water", "To measure how heavy an object is"], a: "To see things that are too small to be seen with just your eyes" },
+            { q: "Which prefix would you add to 'View' to mean a 'sneak peek'?", options: ["Dis-", "Re-", "Pre-", "Mis-"], a: "Pre-" },
+            { q: "If you are 'Incapable' of doing something, what does the prefix 'in-' mean?", options: ["Inside", "Not", "Again", "With"], a: "Not" },
+            { q: "The suffix '-ly' is often added to adjectives to turn them into adverbs. Which word shows this?", options: ["Slowly", "Flying", "Table", "Yellow"], a: "Slowly" },
+            { q: "What is the 'Root Word' in the word Construction?", options: ["Con", "Struct", "Tion", "Ion"], a: "Struct" },
+            { q: "If the prefix 'tri-' means 'three,' how many sides does a 'triangle' have?", options: ["Two", "Three", "Four", "Six"], a: "Three" }
+        ];
+
+        let currentRound = 1;
+        let currentIdx = 0;
+        let score = 0;
+        let userResults = [];
+        let quizData = [];
+
+        function loadRound(roundNum) {
+            const startIdx = (roundNum - 1) * 10;
+            const endIdx = startIdx + 10;
+            quizData = allQuestions.slice(startIdx, endIdx);
+            currentIdx = 0;
+            score = 0;
+            userResults = [];
+            document.getElementById("quiz-box").classList.remove("hidden");
+            document.getElementById("summary-box").classList.add("hidden");
+            document.getElementById("round-indicator").innerText = `Round ${roundNum}`;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const current = quizData[currentIdx];
+            document.getElementById("question-text").innerText = `Q${currentIdx + 1}: ${current.q}`;
+            
+            const progress = ((currentIdx + 1) / quizData.length) * 100;
+            document.getElementById("progress-fill").style.width = progress + "%";
+            
+            const optionsDiv = document.getElementById("options");
+            optionsDiv.innerHTML = "";
+            document.getElementById("feedback").innerText = "";
+            document.getElementById("next-button").style.display = "none";
+
+            current.options.forEach((opt, idx) => {
+                const btn = document.createElement("button");
+                btn.innerText = String.fromCharCode(65 + idx) + ") " + opt;
+                btn.className = "option-btn";
+                btn.onclick = () => checkAnswer(opt);
+                optionsDiv.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selected) {
+            const current = quizData[currentIdx];
+            const feedback = document.getElementById("feedback");
+            const btns = document.querySelectorAll(".option-btn");
+            
+            btns.forEach(b => b.disabled = true);
+
+            if (selected === current.a) {
+                feedback.innerText = "✓ Correct! Well done.";
+                feedback.className = "feedback correct";
+                score++;
+                userResults.push({ q: current.q, res: "Correct", class: "correct" });
+            } else {
+                feedback.innerText = "✗ Oops! The correct answer was: " + current.a;
+                feedback.className = "feedback wrong";
+                userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
+            }
+            document.getElementById("next-button").style.display = "block";
+        }
+
+        function loadNextQuestion() {
+            currentIdx++;
+            if (currentIdx < quizData.length) {
+                loadQuestion();
+            } else {
+                showSummary();
+            }
+        }
+
+        function showSummary() {
+            document.getElementById("quiz-box").classList.add("hidden");
+            const summaryBox = document.getElementById("summary-box");
+            summaryBox.classList.remove("hidden");
+            
+            const list = document.getElementById("results-list");
+            list.innerHTML = `<h3>Round ${currentRound} - Final Score: ${score}/10</h3>`;
+            
+            userResults.forEach((item, idx) => {
+                const div = document.createElement("div");
+                div.className = "summary-item";
+                div.innerHTML = `<strong>Q${idx + 1}: ${item.q}</strong><br/><span class="${item.class}">${item.res}</span>`;
+                list.appendChild(div);
+            });
+        }
+
+        function loadNewRound() {
+            currentRound++;
+            if (currentRound <= 2) {
+                loadRound(currentRound);
+            } else {
+                alert("No more rounds available. You've completed all questions!");
+                location.href = "grade4-reading-topics.html";
+            }
+        }
+
+        // Start with Round 1
+        loadRound(1);
+    </script>
+</body>
+</html>

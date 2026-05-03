@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 6 English Quiz: Vocabulary and Greek/Latin Roots</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        #quiz-container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        #round-indicator {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        #progress-bar {
+            width: 100%;
+            background-color: #f0f0f0;
+            height: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        #progress {
+            height: 100%;
+            background-color: #4CAF50;
+            width: 0%;
+            border-radius: 10px;
+            transition: width 0.3s;
+        }
+        #question-container {
+            margin-bottom: 20px;
+        }
+        #question {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        #options button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #e7e7e7;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #options button:hover {
+            background-color: #d4d4d4;
+        }
+        #options button.correct {
+            background-color: #4CAF50;
+            color: white;
+        }
+        #options button.wrong {
+            background-color: #f44336;
+            color: white;
+        }
+        #next-btn {
+            display: none;
+            width: 100%;
+            padding: 10px;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #next-btn:hover {
+            background-color: #0b7dda;
+        }
+        #summary {
+            max-width: 600px;
+            margin: auto;
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        #summary h2 {
+            color: #333;
+        }
+        #summary a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #2196F3;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        #summary a:hover {
+            background-color: #0b7dda;
+        }
+    </style>
+</head>
+<body>
+    <div id="quiz-container">
+        <h1>Grade 6 English Quiz: Vocabulary and Greek/Latin Roots</h1>
+        <div id="round-indicator">Round 1 of 2</div>
+        <div id="progress-bar">
+            <div id="progress"></div>
+        </div>
+        <div id="question-container">
+            <p id="question"></p>
+            <div id="options"></div>
+        </div>
+        <button id="next-btn" onclick="nextQuestion()">Next</button>
+    </div>
+    <div id="summary" style="display:none;">
+        <h2>Quiz Complete!</h2>
+        <p id="final-score"></p>
+        <p id="round-scores"></p>
+        <a href="grade6-english-topics.html">Back to English Topics</a>
+    </div>
+    <script>
+        const allQuestions = [
+            [
+                {
+                    q: "\"Ambi\" is a root meaning \"both.\" What does it mean to be \"ambidextrous\"?",
+                    options: ["A) To be very fast", "B) To use both hands equally well", "C) To be confused", "D) To have two names"],
+                    a: 1
+                },
+                {
+                    q: "The root \"bene\" means \"good.\" A \"beneficiary\" is someone who:",
+                    options: ["A) Does something bad", "B) Receives something good or helpful", "C) Works in a bank", "D) Writes books"],
+                    a: 1
+                },
+                {
+                    q: "\"Mal\" means \"bad.\" \"Malevolent\" describes someone who:",
+                    options: ["A) Is very sick", "B) Wishes harm or evil on others", "C) Is clumsy", "D) Moves slowly"],
+                    a: 1
+                },
+                {
+                    q: "If \"scop\" means \"to see,\" what is the definition of \"periscope\"?",
+                    options: ["A) To see clearly", "B) An instrument to see things otherwise out of sight", "C) A small mirror", "D) To see through walls"],
+                    a: 1
+                },
+                {
+                    q: "The root \"ced\" or \"cess\" means \"to go.\" What does it mean to \"recede\"?",
+                    options: ["A) To move forward", "B) To move back or away", "C) To stay still", "D) To go faster"],
+                    a: 1
+                },
+                {
+                    q: "\"Omni\" means \"all.\" What is an \"omnivore\"?",
+                    options: ["A) Something that eats only plants", "B) Something that eats everything (plants and animals)", "C) Something that lives in water", "D) A very large animal"],
+                    a: 1
+                },
+                {
+                    q: "If a story is \"incredible,\" it is:",
+                    options: ["A) Very true", "B) Hard to believe/extraordinary", "C) Short", "D) Written down"],
+                    a: 1
+                },
+                {
+                    q: "The root \"voc\" or \"vok\" means \"to call.\" To \"evoke\" a memory means to:",
+                    options: ["A) Forget it", "B) Call it forth or bring it to mind", "C) Write it down", "D) Share it with others"],
+                    a: 1
+                },
+                {
+                    q: "\"Mort\" means \"death.\" What does it mean if something is \"immortal\"?",
+                    options: ["A) It is very sick", "B) It can never die", "C) It is a ghost", "D) It is very old"],
+                    a: 1
+                },
+                {
+                    q: "The root \"path\" refers to \"feeling.\" \"Apathy\" means:",
+                    options: ["A) Feeling great pain", "B) Lack of interest or feeling", "C) Feeling sorry for others", "D) Feeling very happy"],
+                    a: 1
+                }
+            ],
+            [
+                {
+                    q: "\"Frag\" or \"Fract\" means \"to break.\" A \"fraction\" is:",
+                    options: ["A) A whole number", "B) A part \"broken\" off from a whole", "C) A type of glue", "D) A fast runner"],
+                    a: 1
+                },
+                {
+                    q: "\"Luc\" or \"Lum\" means \"light.\" \"Elucidate\" means to:",
+                    options: ["A) Turn off the lights", "B) Make something clear or \"throw light\" on it", "C) Paint a picture", "D) Hide the truth"],
+                    a: 1
+                },
+                {
+                    q: "The root \"mort\" means \"death.\" A \"mortician\" is someone who:",
+                    options: ["A) Is a doctor", "B) Prepares dead bodies for burial", "C) Studies history", "D) Is a soldier"],
+                    a: 1
+                },
+                {
+                    q: "\"Gen\" means \"birth\" or \"kind.\" What is \"genealogy\"?",
+                    options: ["A) The study of rocks", "B) The study of family history and origins", "C) The study of space", "D) A type of math"],
+                    a: 1
+                },
+                {
+                    q: "\"Spec\" means \"to look.\" What is a \"retrospective\"?",
+                    options: ["A) A look into the future", "B) A look back at past events", "C) A pair of glasses", "D) A quiet person"],
+                    a: 1
+                },
+                {
+                    q: "The prefix \"inter\" means \"between.\" What is an \"intermission\"?",
+                    options: ["A) A long mission", "B) A break between parts of a play or concert", "C) A secret message", "D) A group of people"],
+                    a: 1
+                },
+                {
+                    q: "\"Viv\" or \"Vit\" means \"life.\" To \"revitalize\" something is to:",
+                    options: ["A) Kill it", "B) Give it new life or energy", "C) Take a picture of it", "D) Change its color"],
+                    a: 1
+                },
+                {
+                    q: "\"Trans\" means \"across.\" To \"transgress\" means to:",
+                    options: ["A) Cross a bridge", "B) Go beyond a limit or break a law", "C) Translate a language", "D) Travel by train"],
+                    a: 1
+                },
+                {
+                    q: "\"Solo\" means \"alone.\" A \"soliloquy\" is a speech given by:",
+                    options: ["A) Two people", "B) A character alone on stage", "C) A large crowd", "D) A narrator"],
+                    a: 1
+                },
+                {
+                    q: "\"Magn\" means \"great\" or \"large.\" To \"magnify\" something is to:",
+                    options: ["A) Make it smaller", "B) Make it appear larger", "C) Change its shape", "D) Throw it away"],
+                    a: 1
+                }
+            ]
+        ];
+
+        let currentRound = 0;
+        let currentQuestion = 0;
+        let score = 0;
+        let roundScores = [0, 0];
+
+        function loadRound() {
+            currentQuestion = 0;
+            document.getElementById('round-indicator').textContent = `Round ${currentRound + 1} of 2`;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const q = allQuestions[currentRound][currentQuestion];
+            document.getElementById('question').textContent = q.q;
+            const optionsDiv = document.getElementById('options');
+            optionsDiv.innerHTML = '';
+            q.options.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.textContent = opt;
+                btn.onclick = () => checkAnswer(i);
+                optionsDiv.appendChild(btn);
+            });
+            updateProgress();
+        }
+
+        function checkAnswer(selected) {
+            const correct = allQuestions[currentRound][currentQuestion].a;
+            const buttons = document.querySelectorAll('#options button');
+            buttons.forEach(btn => btn.disabled = true);
+            if (selected === correct) {
+                buttons[selected].classList.add('correct');
+                score++;
+                roundScores[currentRound]++;
+            } else {
+                buttons[selected].classList.add('wrong');
+                buttons[correct].classList.add('correct');
+            }
+            document.getElementById('next-btn').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < allQuestions[currentRound].length) {
+                loadQuestion();
+                document.getElementById('next-btn').style.display = 'none';
+            } else {
+                currentRound++;
+                if (currentRound < allQuestions.length) {
+                    loadRound();
+                } else {
+                    showSummary();
+                }
+            }
+        }
+
+        function updateProgress() {
+            const totalQuestions = allQuestions.flat().length;
+            const answered = currentRound * 10 + currentQuestion;
+            const percent = (answered / totalQuestions) * 100;
+            document.getElementById('progress').style.width = percent + '%';
+        }
+
+        function showSummary() {
+            document.getElementById('quiz-container').style.display = 'none';
+            document.getElementById('summary').style.display = 'block';
+            document.getElementById('final-score').textContent = `Final Score: ${score} out of 20`;
+            document.getElementById('round-scores').textContent = `Round 1: ${roundScores[0]}/10, Round 2: ${roundScores[1]}/10`;
+        }
+
+        loadRound();
+    </script>
+</body>
+</html>

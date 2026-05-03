@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 4 Water Cycle Quiz - Study Buddy</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 600px; }
+        h2 { color: #667eea; text-align: center; }
+        .progress-bar { background: #e0e0e0; height: 10px; border-radius: 5px; margin: 15px 0; overflow: hidden; }
+        .progress-fill { background: #667eea; height: 100%; transition: width 0.3s; }
+        .options-container { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+        .option-btn { padding: 12px; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; text-align: left; font-size: 0.95rem; transition: 0.2s; }
+        .option-btn:hover { border-color: #667eea; background: #f0f2ff; }
+        .feedback { margin: 15px 0; font-weight: bold; min-height: 24px; text-align: center; }
+        .correct { color: #28a745; }
+        .wrong { color: #dc3545; }
+        .next-btn { background: #667eea; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; display: none; margin: 0 auto; }
+        .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #eee; }
+        .hidden { display: none; }
+        .round-indicator { text-align: center; color: #667eea; font-weight: bold; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-container" id="quiz-box">
+        <div class="round-indicator" id="round-indicator"></div>
+        <h2 id="question-text">Question</h2>
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+        <div class="options-container" id="options"></div>
+        <div id="feedback" class="feedback"></div>
+        <button id="next-button" class="next-btn" onclick="loadNextQuestion()">Next Question</button>
+    </div>
+
+    <div class="quiz-container hidden" id="summary-box">
+        <h2>Quiz Complete!</h2>
+        <div id="results-list"></div>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="loadNewRound()">Try Again (New Round)</button>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade4-science-topics.html'">Back to Topics</button>
+    </div>
+
+    <script>
+        const allQuestions = [
+            // Round 1: Questions 1-10
+            { q: "When liquid water on Earth's surface is heated by the sun, it turns into an invisible gas called ____.", options: ["Liquid water", "Water vapor", "Nitrogen", "Ice crystals"], a: "Water vapor" },
+            { q: "The process where water vapor cools down and turns back into tiny liquid water droplets to form clouds is called ____.", options: ["Evaporation", "Precipitation", "Condensation", "Collection"], a: "Condensation" },
+            { q: "Rain, snow, sleet, and hail are all different forms of ____.", options: ["Evaporation", "Condensation", "Precipitation", "Transpiration"], a: "Precipitation" },
+            { q: "The water cycle is a continuous process that repeats forever. What is the primary source of energy that keeps it moving?", options: ["The Moon's gravity", "The Sun", "The Wind", "Deep-sea volcanoes"], a: "The Sun" },
+            { q: "When plants release water vapor into the air through their leaves, the process is specifically called ____.", options: ["Respiration", "Transpiration", "Condensation", "Sublimation"], a: "Transpiration" },
+            { q: "Water that flows over the land and into streams, rivers, and eventually the ocean is known as ____.", options: ["Groundwater", "Runoff", "Infiltration", "Vapor"], a: "Runoff" },
+            { q: "Where is most of the Earth's water 'collected' or stored?", options: ["In the clouds", "In underground caves", "In the oceans", "In the atmosphere"], a: "In the oceans" },
+            { q: "Which state of matter is water in when it is in the form of 'water vapor'?", options: ["Solid", "Liquid", "Gas", "Plasma"], a: "Gas" },
+            { q: "What must happen for condensation to occur in the atmosphere?", options: ["The air must get much hotter", "The water vapor must cool down", "The wind must stop blowing", "It must be nighttime"], a: "The water vapor must cool down" },
+            { q: "Water that soaks into the soil and is stored in the cracks of rocks underground is called ____.", options: ["Runoff", "Groundwater", "Surface water", "Glacial water"], a: "Groundwater" },
+            // Round 2: Questions 11-20
+            { q: "Which form of precipitation happens when raindrops freeze into ice pellets before hitting the ground?", options: ["Snow", "Rain", "Sleet", "Fog"], a: "Sleet" },
+            { q: "What role do 'Dust Particles' play in the water cycle?", options: ["They block the sun to keep the water cool", "They provide a surface for water vapor to condense onto to form clouds", "They make the rain turn into snow", "They have no role in the water cycle"], a: "They provide a surface for water vapor to condense onto to form clouds" },
+            { q: "Why is the amount of water on Earth always about the same?", options: ["Because it rains every single day somewhere", "Because the water is constantly being recycled through the water cycle", "Because the oceans are too deep to dry up", "Because humans make new water in factories"], a: "Because the water is constantly being recycled through the water cycle" },
+            { q: "Which of these would most likely increase the rate of evaporation from a lake?", options: ["A very cold, cloudy day", "A hot, sunny, and windy day", "A calm night with no wind", "Covering the lake with a giant tarp"], a: "A hot, sunny, and windy day" },
+            { q: "What is a 'Glacier' in the context of the water cycle?", options: ["A type of heavy rain", "A huge mass of slowly moving ice that stores fresh water", "A cloud that touches the ground", "A very fast-moving river"], a: "A huge mass of slowly moving ice that stores fresh water" },
+            { q: "When water vapor changes directly into ice crystals (like frost on a window), skipping the liquid stage, it is called ____.", options: ["Melting", "Freezing", "Deposition", "Evaporation"], a: "Deposition" },
+            { q: "Which of these is the 'collection' part of the water cycle?", options: ["A puddle drying up in the sun", "Clouds getting heavy and dark", "Water pooling in a lake or ocean", "Steam rising from a hot cup of cocoa"], a: "Water pooling in a lake or ocean" },
+            { q: "Clouds are made of ____.", options: ["Only gas", "Billions of tiny liquid water droplets or ice crystals", "Smoke from forest fires", "Pure oxygen"], a: "Billions of tiny liquid water droplets or ice crystals" },
+            { q: "If the air temperature is below 32°F (0°C) all the way to the ground, precipitation will likely fall as ____.", options: ["Rain", "Snow", "Dew", "Fog"], a: "Snow" },
+            { q: "Which of these moves water through the atmosphere?", options: ["Tectonic plates", "Wind and air currents", "The roots of trees", "The rotation of the Earth"], a: "Wind and air currents" }
+        ];
+
+        let currentRound = 1;
+        let currentIdx = 0;
+        let score = 0;
+        let userResults = [];
+        let quizData = [];
+
+        function loadRound(roundNum) {
+            const startIdx = (roundNum - 1) * 10;
+            const endIdx = startIdx + 10;
+            quizData = allQuestions.slice(startIdx, endIdx);
+            currentIdx = 0;
+            score = 0;
+            userResults = [];
+            document.getElementById("quiz-box").classList.remove("hidden");
+            document.getElementById("summary-box").classList.add("hidden");
+            document.getElementById("round-indicator").innerText = `Round ${roundNum}`;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const current = quizData[currentIdx];
+            document.getElementById("question-text").innerText = `Q${currentIdx + 1}: ${current.q}`;
+            
+            const progress = ((currentIdx + 1) / quizData.length) * 100;
+            document.getElementById("progress-fill").style.width = progress + "%";
+            
+            const optionsDiv = document.getElementById("options");
+            optionsDiv.innerHTML = "";
+            document.getElementById("feedback").innerText = "";
+            document.getElementById("next-button").style.display = "none";
+
+            current.options.forEach((opt, idx) => {
+                const btn = document.createElement("button");
+                btn.innerText = String.fromCharCode(65 + idx) + ") " + opt;
+                btn.className = "option-btn";
+                btn.onclick = () => checkAnswer(opt);
+                optionsDiv.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selected) {
+            const current = quizData[currentIdx];
+            const feedback = document.getElementById("feedback");
+            const btns = document.querySelectorAll(".option-btn");
+            
+            btns.forEach(b => b.disabled = true);
+
+            if (selected === current.a) {
+                feedback.innerText = "✓ Correct! Well done.";
+                feedback.className = "feedback correct";
+                score++;
+                userResults.push({ q: current.q, res: "Correct", class: "correct" });
+            } else {
+                feedback.innerText = "✗ Oops! The correct answer was: " + current.a;
+                feedback.className = "feedback wrong";
+                userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
+            }
+            document.getElementById("next-button").style.display = "block";
+        }
+
+        function loadNextQuestion() {
+            currentIdx++;
+            if (currentIdx < quizData.length) {
+                loadQuestion();
+            } else {
+                showSummary();
+            }
+        }
+
+        function showSummary() {
+            document.getElementById("quiz-box").classList.add("hidden");
+            const summaryBox = document.getElementById("summary-box");
+            summaryBox.classList.remove("hidden");
+            
+            const list = document.getElementById("results-list");
+            list.innerHTML = `<h3>Round ${currentRound} - Final Score: ${score}/10</h3>`;
+            
+            userResults.forEach((item, idx) => {
+                const div = document.createElement("div");
+                div.className = "summary-item";
+                div.innerHTML = `<strong>Q${idx + 1}: ${item.q}</strong><br/><span class="${item.class}">${item.res}</span>`;
+                list.appendChild(div);
+            });
+        }
+
+        function loadNewRound() {
+            currentRound++;
+            if (currentRound <= 2) {
+                loadRound(currentRound);
+            } else {
+                alert("No more rounds available. You've completed all questions!");
+                location.href = "grade4-science-topics.html";
+            }
+        }
+
+        // Start with Round 1
+        loadRound(1);
+    </script>
+</body>
+</html>

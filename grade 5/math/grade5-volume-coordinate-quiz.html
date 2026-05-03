@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 5 Advanced: Volume & Coordinate Geometry Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #ddd;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: #4CAF50;
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.3s;
+        }
+        .question {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+        .options li {
+            margin-bottom: 10px;
+        }
+        .options button {
+            width: 100%;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .options button:hover {
+            background-color: #e9e9e9;
+        }
+        .feedback {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .wrong {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .round-info {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .summary {
+            display: none;
+            text-align: center;
+        }
+        .summary h2 {
+            color: #333;
+        }
+        .summary p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+            font-size: 16px;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Grade 5 Advanced: Volume & Coordinate Geometry Quiz</h1>
+        <div id="active-quiz">
+            <div class="round-info" id="round-info">Round 1</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="question" id="question"></div>
+            <ul class="options" id="options"></ul>
+            <div class="feedback" id="feedback"></div>
+        </div>
+        <div class="summary" id="summary">
+            <h2>Quiz Complete!</h2>
+            <p id="final-score"></p>
+            <p id="round-scores"></p>
+            <a href="../grade5-math-topics.html" class="back-link">Back to Math Topics</a>
+        </div>
+    </div>
+
+    <script>
+        const allQuestions = [
+            { q: "To find the volume of a rectangular prism (a 3D box), you use the formula: Volume = (blank) x width x height. What is the missing dimension?", options: ["A) Area", "B) Perimeter", "C) Length", "D) Weight"], a: 2 },
+            { q: "Calculate the volume of a storage box with the following dimensions: length = 2 units, width = 3 units, and height = 4 units.", options: ["A) 9 cubic units", "B) 12 cubic units", "C) 20 cubic units", "D) 24 cubic units"], a: 3 },
+            { q: "A coordinate graph (grid) is used to show exact locations. What are the names of the two lines used to measure these locations?", options: ["A) The North and South poles", "B) The X-axis and the Y-axis", "C) The Length and the Width", "D) The Top and the Bottom"], a: 1 },
+            { q: "In an ordered pair like (3, 4), what does the first number (3) tell you to do on the graph?", options: ["A) Move up 3 spaces from the origin (0,0)", "B) Move to the right 3 spaces from the origin (0,0)", "C) Move to the left 3 spaces from the origin (0,0)", "D) Stay at the center"], a: 1 },
+            { q: "Which of the following best describes \"Volume\"?", options: ["A) The distance around the outside of a shape", "B) The amount of space inside a 3D object", "C) The number of squares needed to cover a flat surface", "D) How much an object weighs on a scale"], a: 1 },
+            { q: "If a cube has a side length of 5 cm, what is its total volume?", options: ["A) 15 cubic cm", "B) 25 cubic cm", "C) 125 cubic cm", "D) 150 cubic cm"], a: 2 },
+            { q: "On a coordinate plane, the point where the X-axis and Y-axis meet (0, 0) is called the:", options: ["A) Destination", "B) Corner", "C) Origin", "D) Vertex"], a: 2 },
+            { q: "A rectangular prism has a volume of 60 cubic inches. If the length is 5 inches and the width is 3 inches, what is the height?", options: ["A) 4 inches", "B) 10 inches", "C) 15 inches", "D) 2 inches"], a: 0 },
+            { q: "To plot the point (2, 5), you would start at the origin and move:", options: ["A) Up 2, then right 5", "B) Right 2, then up 5", "C) Right 5, then up 2", "D) Left 2, then down 5"], a: 1 },
+            { q: "A \"unit cube\" is a cube where each side measures 1 unit. How many unit cubes would fit inside a box that is 4 units long, 2 units wide, and 2 units high?", options: ["A) 8", "B) 16", "C) 12", "D) 32"], a: 1 },
+            { q: "Which axis on a coordinate graph is the vertical line (going up and down)?", options: ["A) The X-axis", "B) The Y-axis", "C) The Z-axis", "D) The Main-axis"], a: 1 },
+            { q: "If you move 6 units to the right and 0 units up, what is your ordered pair?", options: ["A) (0, 6)", "B) (6, 0)", "C) (6, 6)", "D) (1, 6)"], a: 1 },
+            { q: "A flat shape (2D) has area. A solid shape (3D) has volume. Which units are used to measure volume?", options: ["A) Square units", "B) Linear units", "C) Cubic units", "D) Liquid units"], a: 2 },
+            { q: "If the volume of a box is 100 cubic cm and the area of its base (length x width) is 20 square cm, what is the height?", options: ["A) 80 cm", "B) 5 cm", "C) 10 cm", "D) 200 cm"], a: 1 },
+            { q: "In the ordered pair (7, 2), which number represents the \"y-coordinate\"?", options: ["A) 7", "B) 2", "C) 9", "D) 0"], a: 1 },
+            { q: "A swimming pool is 10 meters long, 5 meters wide, and 2 meters deep. How much water can it hold?", options: ["A) 17 cubic meters", "B) 50 cubic meters", "C) 100 cubic meters", "D) 200 cubic meters"], a: 2 },
+            { q: "Which point is further to the right on a coordinate grid: (5, 2) or (2, 5)?", options: ["A) (5, 2)", "B) (2, 5)", "C) They are the same distance to the right", "D) Neither is to the right"], a: 0 },
+            { q: "If you double the height of a box but keep the length and width the same, what happens to the volume?", options: ["A) The volume stays the same", "B) The volume triples", "C) The volume doubles", "D) The volume is cut in half"], a: 2 },
+            { q: "What is the volume of a rectangular prism with a base area of 15 square inches and a height of 10 inches?", options: ["A) 25 cubic inches", "B) 150 cubic inches", "C) 50 cubic inches", "D) 1.5 cubic inches"], a: 1 },
+            { q: "To move from (1, 1) to (4, 1) on a graph, you would move:", options: ["A) 3 units up", "B) 3 units to the right", "C) 4 units to the right", "D) 1 unit up"], a: 1 }
+        ];
+
+        let currentRound = 1;
+        let currentQuestionIndex = 0;
+        let userResults = [];
+        let roundScores = [0, 0];
+
+        function loadRound(round) {
+            currentRound = round;
+            currentQuestionIndex = (round - 1) * 10;
+            document.getElementById('round-info').textContent = `Round ${round}`;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const question = allQuestions[currentQuestionIndex];
+            document.getElementById('question').textContent = question.q;
+            const optionsUl = document.getElementById('options');
+            optionsUl.innerHTML = '';
+            question.options.forEach((option, index) => {
+                const li = document.createElement('li');
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.onclick = () => checkAnswer(index);
+                li.appendChild(button);
+                optionsUl.appendChild(li);
+            });
+            document.getElementById('feedback').style.display = 'none';
+            updateProgress();
+        }
+
+        function checkAnswer(selectedIndex) {
+            const correctIndex = allQuestions[currentQuestionIndex].a;
+            const feedback = document.getElementById('feedback');
+            if (selectedIndex === correctIndex) {
+                feedback.textContent = 'Correct!';
+                feedback.className = 'feedback correct';
+                roundScores[currentRound - 1]++;
+            } else {
+                feedback.textContent = `Wrong! The correct answer is: ${allQuestions[currentQuestionIndex].options[correctIndex]}`;
+                feedback.className = 'feedback wrong';
+            }
+            feedback.style.display = 'block';
+            userResults.push(selectedIndex === correctIndex);
+            setTimeout(() => {
+                nextQuestion();
+            }, 2000);
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < allQuestions.length) {
+                if (currentQuestionIndex % 10 === 0) {
+                    // End of round
+                    if (currentRound < 2) {
+                        loadRound(currentRound + 1);
+                    } else {
+                        showSummary();
+                    }
+                } else {
+                    loadQuestion();
+                }
+            } else {
+                showSummary();
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestionIndex % 10) + 1) / 10 * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+        }
+
+        function showSummary() {
+            document.getElementById('active-quiz').style.display = 'none';
+            document.getElementById('summary').style.display = 'block';
+            const totalCorrect = roundScores[0] + roundScores[1];
+            document.getElementById('final-score').textContent = `You got ${totalCorrect} out of 20 questions correct.`;
+            document.getElementById('round-scores').textContent = `Round 1: ${roundScores[0]}/10, Round 2: ${roundScores[1]}/10`;
+        }
+
+        loadRound(1);
+    </script>
+</body>
+</html>

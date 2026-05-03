@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 6 Science Quiz: Chemistry and Physics Basics - Study Buddy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Quicksand', sans-serif; 
+            background-color: #e0f7fa; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0; 
+        }
+        .quiz-container { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 20px; 
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1); 
+            width: 90%; 
+            max-width: 500px; 
+            text-align: center; 
+            border: 4px dashed #00acc1;
+        }
+        h1 { font-family: 'Fredoka', cursive; color: #007c91; font-size: 1.5rem; }
+        h2 { font-family: 'Fredoka', cursive; color: #007c91; }
+        .options-container { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+        .option-btn { 
+            padding: 12px; 
+            border: 3px solid #b2ebf2; 
+            border-radius: 50px; 
+            background: white; 
+            cursor: pointer; 
+            font-size: 1.1rem; 
+            font-weight: 600;
+            transition: 0.2s; 
+            color: #007c91;
+        }
+        .option-btn:hover { border-color: #00acc1; background: #e0f7fa; }
+        .feedback { margin: 15px 0; font-weight: bold; min-height: 24px; }
+        .correct { color: #00897b; }
+        .wrong { color: #d32f2f; }
+        .next-btn { 
+            background: linear-gradient(135deg, #00acc1 0%, #007c91 100%); 
+            color: white; 
+            border: none; 
+            padding: 12px 25px; 
+            border-radius: 50px; 
+            cursor: pointer; 
+            display: none; 
+            margin: 0 auto; 
+            font-weight: bold;
+            box-shadow: 0 4px 0px #005662;
+        }
+        .next-btn:active { transform: translateY(4px); box-shadow: none; }
+        .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #e0f7fa; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="quiz-container" id="quiz-box">
+        <h1>⚗️ Chemistry and Physics Basics</h1>
+        <h2 id="question-text" style="color: #333;">Question</h2>
+        <div class="options-container" id="options"></div>
+        <div id="feedback" class="feedback"></div>
+        <button id="next-button" class="next-btn" onclick="loadNextQuestion()">Next Question</button>
+    </div>
+
+    <div class="quiz-container hidden" id="summary-box">
+        <h2>Quiz Complete!</h2>
+        <div id="results-list"></div>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade6-science-topics.html'">Back to Science Topics</button>
+    </div>
+
+    <script>
+        const quizData = [
+            { q: "\"Isotopes\" are atoms of the same element that have different numbers of:", a: "C) Neutrons", options: ["A) Protons", "B) Electrons", "C) Neutrons", "D) Shells"] },
+            { q: "Which type of bond involves the \"sharing\" of electrons between atoms?", a: "B) Covalent", options: ["A) Ionic", "B) Covalent", "C) Metallic", "D) Magnetic"] },
+            { q: "\"Valence Electrons\" are located:", a: "B) In the outermost energy level", options: ["A) In the nucleus", "B) In the outermost energy level", "C) Next to the neutrons", "D) Outside the atom"] },
+            { q: "A \"Heterogeneous Mixture\" is one where:", a: "B) You can see the individual parts (like a salad)", options: ["A) The components are perfectly blended", "B) You can see the individual parts (like a salad)", "C) The atoms are chemically bonded", "D) It is a pure substance"] },
+            { q: "A substance with a pH of 14 is considered:", a: "C) A strong base", options: ["A) Highly acidic", "B) Neutral", "C) A strong base", "D) Pure water"] },
+            { q: "\"Viscosity\" refers to:", a: "A) A liquid's resistance to flow (thickness)", options: ["A) A liquid's resistance to flow (thickness)", "B) How much a gas can expand", "C) The melting point of a solid", "D) The color of a chemical"] },
+            { q: "Acceleration is defined as a change in:", a: "C) Velocity (speed or direction) over time", options: ["A) Mass", "B) Position", "C) Velocity (speed or direction) over time", "D) Gravity"] },
+            { q: "According to Newton's Second Law, Force equals:", a: "C) Mass times Acceleration", options: ["A) Mass plus Acceleration", "B) Mass divided by Acceleration", "C) Mass times Acceleration", "D) Velocity times Time"] },
+            { q: "Which type of energy is stored in the bonds of food or gasoline?", a: "B) Chemical Potential", options: ["A) Thermal", "B) Chemical Potential", "C) Mechanical", "D) Nuclear"] },
+            { q: "If an object has a mass of 50g and a volume of 10ml, what is its density?", a: "B) 5 g/ml", options: ["A) 0.2 g/ml", "B) 5 g/ml", "C) 500 g/ml", "D) 60 g/ml"] },
+            { q: "An \"Exothermic\" reaction is one that:", a: "B) Releases heat into the surroundings", options: ["A) Absorbs heat", "B) Releases heat into the surroundings", "C) Stays the same temperature", "D) Happens only in the dark"] },
+            { q: "\"Terminal Velocity\" is reached when:", a: "B) The force of gravity equals the force of air resistance", options: ["A) An object stops moving", "B) The force of gravity equals the force of air resistance", "C) An object hits the ground", "D) An object leaves the atmosphere"] },
+            { q: "In a \"Convection\" current, heat is transferred through:", a: "C) The movement of fluids (liquids or gases)", options: ["A) Direct contact", "B) Electromagnetic waves", "C) The movement of fluids (liquids or gases)", "D) Solid metal rods"] },
+            { q: "Which Law states that \"for every action, there is an equal and opposite reaction\"?", a: "C) Newton's 3rd Law", options: ["A) Newton's 1st Law", "B) Newton's 2nd Law", "C) Newton's 3rd Law", "D) Law of Universal Gravitation"] },
+            { q: "A \"Polyatomic Ion\" is:", a: "B) A group of atoms that stay together and have an overall charge", options: ["A) A single atom with no charge", "B) A group of atoms that stay together and have an overall charge", "C) A type of battery", "D) A gas"] },
+            { q: "\"Malleability\" is the ability of a metal to:", a: "B) Be hammered into thin sheets", options: ["A) Be drawn into a wire", "B) Be hammered into thin sheets", "C) Conduct heat", "D) Reflect light"] },
+            { q: "A \"Catalyst\" in a chemical reaction:", a: "B) Increases the speed of the reaction without being used up", options: ["A) Slows it down", "B) Increases the speed of the reaction without being used up", "C) Changes the color", "D) Stops the reaction"] },
+            { q: "\"Centripetal Force\" pulls a rotating object:", a: "B) Inward toward the center", options: ["A) Outward", "B) Inward toward the center", "C) Downward", "D) Forward"] },
+            { q: "Which simple machine is essentially an \"inclined plane wrapped around a cylinder\"?", a: "C) Screw", options: ["A) Wedge", "B) Lever", "C) Screw", "D) Wheel and Axle"] },
+            { q: "In \"Nuclear Fission,\" energy is released by:", a: "B) Splitting a heavy nucleus", options: ["A) Joining two small nuclei", "B) Splitting a heavy nucleus", "C) Burning fuel", "D) Vibrating molecules"] }
+        ];
+        let currentIdx = 0; let score = 0; let userResults = [];
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function ensureTryAgainButton() {
+            const summaryBox = document.getElementById("summary-box");
+            if (summaryBox && !summaryBox.querySelector('button[onclick="location.reload()"]')) {
+                const button = document.createElement('button');
+                button.className = 'next-btn';
+                button.style.display = 'block';
+                button.style.marginTop = '20px';
+                button.innerText = 'Try Again';
+                button.onclick = function() { location.reload(); };
+                const backButton = summaryBox.querySelector('button[onclick^="location.href"]');
+                summaryBox.insertBefore(button, backButton || null);
+            }
+        }
+
+        function initializeQuiz() {
+            shuffleArray(quizData);
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const current = quizData[currentIdx];
+            document.getElementById("question-text").innerText = current.q;
+            const optionsDiv = document.getElementById("options");
+            optionsDiv.innerHTML = "";
+            document.getElementById("feedback").innerText = "";
+            document.getElementById("next-button").style.display = "none";
+            current.options.forEach(opt => {
+                const btn = document.createElement("button");
+                btn.innerText = opt;
+                btn.className = "option-btn";
+                btn.onclick = () => checkAnswer(opt);
+                optionsDiv.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selected) {
+            const current = quizData[currentIdx];
+            const feedback = document.getElementById("feedback");
+            const btns = document.querySelectorAll(".option-btn");
+            btns.forEach(b => b.disabled = true);
+            if (selected === current.a) {
+                feedback.innerText = "Awesome! Correct.";
+                feedback.className = "feedback correct";
+                score++;
+                userResults.push({ q: current.q, res: "Correct", class: "correct" });
+            } else {
+                feedback.innerText = "Oops! The correct answer was " + current.a;
+                feedback.className = "feedback wrong";
+                userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
+            }
+            document.getElementById("next-button").style.display = "block";
+        }
+
+        function loadNextQuestion() {
+            currentIdx++;
+            if (currentIdx < quizData.length) { loadQuestion(); } 
+            else { showSummary(); }
+        }
+
+        function showSummary() {
+            document.getElementById("quiz-box").classList.add("hidden");
+            document.getElementById("summary-box").classList.remove("hidden");
+            const list = document.getElementById("results-list");
+            list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
+            userResults.forEach(item => {
+                const div = document.createElement("div");
+                div.className = "summary-item";
+                div.innerHTML = `<strong>${item.q}</strong> - <span class="${item.class}">${item.res}</span>`;
+                list.appendChild(div);
+            });
+            ensureTryAgainButton();
+        }
+        initializeQuiz();
+    </script>
+</body>
+</html>

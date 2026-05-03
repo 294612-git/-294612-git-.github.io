@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 5 Elite: Earth Systems & The Solar System Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #ddd;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: #4CAF50;
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.3s;
+        }
+        .question {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+        .options li {
+            margin-bottom: 10px;
+        }
+        .options button {
+            width: 100%;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .options button:hover {
+            background-color: #e9e9e9;
+        }
+        .feedback {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .wrong {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .round-info {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .summary {
+            display: none;
+            text-align: center;
+        }
+        .summary h2 {
+            color: #333;
+        }
+        .summary p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+            font-size: 16px;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Grade 5 Elite: Earth Systems & The Solar System Quiz</h1>
+        <div id="active-quiz">
+            <div class="round-info" id="round-info">Round 1</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="question" id="question"></div>
+            <ul class="options" id="options"></ul>
+            <div class="feedback" id="feedback"></div>
+        </div>
+        <div class="summary" id="summary">
+            <h2>Quiz Complete!</h2>
+            <p id="final-score"></p>
+            <p id="round-scores"></p>
+            <a href="../grade5-science-topics.html" class="back-link">Back to Science Topics</a>
+        </div>
+    </div>
+
+    <script>
+        const allQuestions = [
+            { q: "The Water Cycle is a continuous process. Which specific part of the cycle is driven by gravity, pulling water from the atmosphere back down to the Earth's surface?", options: ["A) Evaporation", "B) Transpiration", "C) Precipitation", "D) Condensation"], a: 2 },
+            { q: "Earth's \"Rotation\" on its axis takes approximately 24 hours. What is the primary result of this specific motion?", options: ["A) The change of the four seasons", "B) The cycle of day and night", "C) The phases of the moon", "D) The Earth's orbit around the sun"], a: 1 },
+            { q: "The Sun is the center of our solar system. Scientifically, how is the Sun classified?", options: ["A) A giant gaseous planet", "B) A medium-sized yellow star", "C) A solid rock mass", "D) A moon that reflects light from other stars"], a: 1 },
+            { q: "Earth is located at a specific distance from the Sun that allows liquid water to exist. What is Earth's position in order from the Sun?", options: ["A) 2nd planet", "B) 3rd planet", "C) 4th planet", "D) 5th planet"], a: 1 },
+            { q: "Which of Earth's \"spheres\" includes all the water on the planet, including oceans, lakes, glaciers, and water vapor?", options: ["A) The Atmosphere", "B) The Geosphere", "C) The Hydrosphere", "D) The Biosphere"], a: 2 },
+            { q: "Earth \"Revolves\" around the sun in an elliptical path. How long does one full revolution take, and what does it help cause?", options: ["A) 24 hours; causes day and night", "B) 28 days; causes moon phases", "C) 365.25 days; contributes to the changing seasons", "D) 100 years; causes climate change"], a: 2 },
+            { q: "The Sun is made mostly of which two elements undergoing nuclear fusion?", options: ["A) Oxygen and Carbon", "B) Nitrogen and Iron", "C) Hydrogen and Helium", "D) Gold and Silver"], a: 2 },
+            { q: "What causes the Earth to have different seasons (Summer, Winter, etc.) throughout the year?", options: ["A) The Earth getting closer and further from the sun", "B) The tilt of the Earth's axis as it revolves around the sun", "C) The clouds blocking the sun in the winter", "D) The sun cooling down every six months"], a: 1 },
+            { q: "The Atmosphere is a mixture of gases. Which gas is the most abundant (plentiful) in Earth's atmosphere?", options: ["A) Oxygen", "B) Carbon Dioxide", "C) Nitrogen", "D) Argon"], a: 2 },
+            { q: "Tides on Earth (the rise and fall of ocean levels) are primarily caused by the gravitational pull of which celestial body?", options: ["A) The Sun", "B) The Moon", "C) Mars", "D) Jupiter"], a: 1 },
+            { q: "Which planet is known as the \"Red Planet\" due to the iron oxide (rust) on its surface?", options: ["A) Venus", "B) Mars", "C) Saturn", "D) Mercury"], a: 1 },
+            { q: "A \"Solar Eclipse\" occurs when which object passes directly between the Earth and the Sun?", options: ["A) An asteroid", "B) The Moon", "C) Venus", "D) A comet"], a: 1 },
+            { q: "What is the name for the layer of the Earth that consists of the crust and the very top part of the mantle?", options: ["A) The Core", "B) The Lithosphere", "C) The Stratosphere", "D) The Biosphere"], a: 1 },
+            { q: "In the water cycle, what is \"Transpiration\"?", options: ["A) Water freezing into ice", "B) Plants releasing water vapor into the air through their leaves", "C) Saltwater turning into freshwater", "D) Rain turning into snow"], a: 1 },
+            { q: "Which of the outer planets is famous for its large, visible system of rings made of ice and rock?", options: ["A) Neptune", "B) Jupiter", "C) Saturn", "D) Uranus"], a: 2 },
+            { q: "What is the \"Ozone Layer\" and why is it important to Earth's systems?", options: ["A) A layer of water in the ocean that protects fish", "B) A layer in the atmosphere that absorbs harmful UV radiation from the sun", "C) A layer of soil where plants grow best", "D) A ring of rocks around the Earth"], a: 1 },
+            { q: "Which type of rock is formed from the cooling and hardening of molten magma or lava?", options: ["A) Sedimentary", "B) Metamorphic", "C) Igneous", "D) Fossilized"], a: 2 },
+            { q: "The \"Great Red Spot\" is a giant, spinning storm located on which planet?", options: ["A) Saturn", "B) Jupiter", "C) Mars", "D) Neptune"], a: 1 },
+            { q: "What is \"Weathering\" in the context of Earth's surface?", options: ["A) The movement of rocks from one place to another", "B) The process of rocks being broken down into smaller pieces by wind, water, or ice", "C) The process of volcanoes erupting", "D) The way animals hide from the rain"], a: 1 },
+            { q: "Why does the Moon appear to shine at night?", options: ["A) It is a small star that makes its own light", "B) It reflects light from the Sun", "C) It is made of glowing volcanic lava", "D) It reflects light from the Earth's city lights"], a: 1 }
+        ];
+
+        let currentRound = 1;
+        let currentQuestionIndex = 0;
+        let userResults = [];
+        let roundScores = [0, 0];
+
+        function loadRound(round) {
+            currentRound = round;
+            currentQuestionIndex = (round - 1) * 10;
+            document.getElementById('round-info').textContent = `Round ${round}`;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const question = allQuestions[currentQuestionIndex];
+            document.getElementById('question').textContent = question.q;
+            const optionsUl = document.getElementById('options');
+            optionsUl.innerHTML = '';
+            question.options.forEach((option, index) => {
+                const li = document.createElement('li');
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.onclick = () => checkAnswer(index);
+                li.appendChild(button);
+                optionsUl.appendChild(li);
+            });
+            document.getElementById('feedback').style.display = 'none';
+            updateProgress();
+        }
+
+        function checkAnswer(selectedIndex) {
+            const correctIndex = allQuestions[currentQuestionIndex].a;
+            const feedback = document.getElementById('feedback');
+            if (selectedIndex === correctIndex) {
+                feedback.textContent = 'Correct!';
+                feedback.className = 'feedback correct';
+                roundScores[currentRound - 1]++;
+            } else {
+                feedback.textContent = `Wrong! The correct answer is: ${allQuestions[currentQuestionIndex].options[correctIndex]}`;
+                feedback.className = 'feedback wrong';
+            }
+            feedback.style.display = 'block';
+            userResults.push(selectedIndex === correctIndex);
+            setTimeout(() => {
+                nextQuestion();
+            }, 2000);
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < allQuestions.length) {
+                if (currentQuestionIndex % 10 === 0) {
+                    // End of round
+                    if (currentRound < 2) {
+                        loadRound(currentRound + 1);
+                    } else {
+                        showSummary();
+                    }
+                } else {
+                    loadQuestion();
+                }
+            } else {
+                showSummary();
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestionIndex % 10) + 1) / 10 * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+        }
+
+        function showSummary() {
+            document.getElementById('active-quiz').style.display = 'none';
+            document.getElementById('summary').style.display = 'block';
+            const totalCorrect = roundScores[0] + roundScores[1];
+            document.getElementById('final-score').textContent = `You got ${totalCorrect} out of 20 questions correct.`;
+            document.getElementById('round-scores').textContent = `Round 1: ${roundScores[0]}/10, Round 2: ${roundScores[1]}/10`;
+        }
+
+        loadRound(1);
+    </script>
+</body>
+</html>

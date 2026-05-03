@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 6 Math Quiz: Geometry and Statistics - Study Buddy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Quicksand', sans-serif; 
+            background-color: #e0f7fa; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0; 
+        }
+        .quiz-container { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 20px; 
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1); 
+            width: 90%; 
+            max-width: 500px; 
+            text-align: center; 
+            border: 4px dashed #00acc1;
+        }
+        h1 { font-family: 'Fredoka', cursive; color: #007c91; font-size: 1.5rem; }
+        h2 { font-family: 'Fredoka', cursive; color: #007c91; }
+        .options-container { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+        .option-btn { 
+            padding: 12px; 
+            border: 3px solid #b2ebf2; 
+            border-radius: 50px; 
+            background: white; 
+            cursor: pointer; 
+            font-size: 1.1rem; 
+            font-weight: 600;
+            transition: 0.2s; 
+            color: #007c91;
+        }
+        .option-btn:hover { border-color: #00acc1; background: #e0f7fa; }
+        .feedback { margin: 15px 0; font-weight: bold; min-height: 24px; }
+        .correct { color: #00897b; }
+        .wrong { color: #d32f2f; }
+        .next-btn { 
+            background: linear-gradient(135deg, #00acc1 0%, #007c91 100%); 
+            color: white; 
+            border: none; 
+            padding: 12px 25px; 
+            border-radius: 50px; 
+            cursor: pointer; 
+            display: none; 
+            margin: 0 auto; 
+            font-weight: bold;
+            box-shadow: 0 4px 0px #005662;
+        }
+        .next-btn:active { transform: translateY(4px); box-shadow: none; }
+        .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #e0f7fa; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="quiz-container" id="quiz-box">
+        <h1>🔺 Geometry and Statistics</h1>
+        <h2 id="question-text" style="color: #333;">Question</h2>
+        <div class="options-container" id="options"></div>
+        <div id="feedback" class="feedback"></div>
+        <button id="next-button" class="next-btn" onclick="loadNextQuestion()">Next Question</button>
+    </div>
+
+    <div class="quiz-container hidden" id="summary-box">
+        <h2>Quiz Complete!</h2>
+        <div id="results-list"></div>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade6-math-topics.html'">Back to Math Topics</button>
+    </div>
+
+    <script>
+        const quizData = [
+            { q: "A triangle has an area of 35 sq cm and a base of 10 cm. What is its height?", a: "B) 7 cm", options: ["A) 3.5 cm", "B) 7 cm", "C) 14 cm", "D) 5 cm"] },
+            { q: "How many small cubes with side length 1/2 inch can fit inside a larger cube with side length 2 inches?", a: "C) 64", options: ["A) 16", "B) 32", "C) 64", "D) 8"] },
+            { q: "Data set: 10, 20, 30, 40, x. If the mean is 30, what is x?", a: "B) 50", options: ["A) 30", "B) 50", "C) 40", "D) 60"] },
+            { q: "Find the median of: 4, 12, 8, 2, 10, 15.", a: "C) 9", options: ["A) 8", "B) 10", "C) 9", "D) 11"] },
+            { q: "A rectangular prism has a surface area of 94 sq cm. If length = 4 and width = 3, what is the height?", a: "A) 5 cm", options: ["A) 5 cm", "B) 6 cm", "C) 7 cm", "D) 4 cm"] },
+            { q: "In a box plot, the \"Interquartile Range\" (IQR) represents what percentage of the data?", a: "B) 50%", options: ["A) 25%", "B) 50%", "C) 75%", "D) 100%"] },
+            { q: "Find the mean absolute deviation (MAD) for the set: 2, 4, 6.", a: "B) 1.33", options: ["A) 4", "B) 1.33", "C) 2", "D) 0"] },
+            { q: "If the area of a circle is 25π, what is its circumference?", a: "B) 10π", options: ["A) 5π", "B) 10π", "C) 25π", "D) 50π"] },
+            { q: "Find the area of a composite shape made of a 4x6 rectangle and a triangle with base 4 and height 3.", a: "A) 30", options: ["A) 30", "B) 27", "C) 36", "D) 24"] },
+            { q: "A histogram shows the frequency of scores. If 5 people scored 10-20 and 8 people scored 21-30, how many people total are represented in those two bars?", a: "B) 13", options: ["A) 3", "B) 13", "C) 40", "D) 5"] },
+            { q: "A trapezoid has an area of 60. If the bases are 8 and 12, what is the height?", a: "B) 6", options: ["A) 3", "B) 6", "C) 5", "D) 10"] },
+            { q: "If you double the side length of a square, what happens to its area?", a: "C) It quadruples (x4)", options: ["A) It doubles", "B) It triples", "C) It quadruples (x4)", "D) It stays the same"] },
+            { q: "Which measure of center is best to use if the data is skewed?", a: "B) Median", options: ["A) Mean", "B) Median", "C) Mode", "D) Range"] },
+            { q: "Find the volume of a right rectangular prism with fractional edges: 1/2, 2/3, and 3/4.", a: "A) 1/4", options: ["A) 1/4", "B) 6/9", "C) 1/3", "D) 1/2"] },
+            { q: "If the range of a data set is 20 and the smallest number is -5, what is the largest number?", a: "A) 15", options: ["A) 15", "B) 25", "C) 10", "D) 20"] },
+            { q: "A cube has a volume of 64 cubic inches. What is its total surface area?", a: "A) 16 sq in", options: ["A) 16 sq in", "B) 64 sq in", "C) 96 sq in", "D) 384 sq in"] },
+            { q: "The sum of the angles in a quadrilateral is:", a: "B) 360°", options: ["A) 180°", "B) 360°", "C) 90°", "D) 270°"] },
+            { q: "If Q1 is 15 and Q3 is 35, which of these values would be considered an outlier using the 1.5 * IQR rule?", a: "C) 66", options: ["A) 40", "B) 50", "C) 66", "D) 10"] },
+            { q: "A cylindrical tank has a base area of 20 sq ft and a height of 5 ft. What is its volume?", a: "B) 100 cubic ft", options: ["A) 4 cubic ft", "B) 100 cubic ft", "C) 25 cubic ft", "D) 50 cubic ft"] },
+            { q: "Which of these can be determined from a box plot?", a: "C) The Median", options: ["A) The Mean", "B) The exact number of data points", "C) The Median", "D) The Mode"] }
+        ];
+        let currentIdx = 0; let score = 0; let userResults = [];
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function ensureTryAgainButton() {
+            const summaryBox = document.getElementById("summary-box");
+            if (summaryBox && !summaryBox.querySelector('button[onclick="location.reload()"]')) {
+                const button = document.createElement('button');
+                button.className = 'next-btn';
+                button.style.display = 'block';
+                button.style.marginTop = '20px';
+                button.innerText = 'Try Again';
+                button.onclick = function() { location.reload(); };
+                const backButton = summaryBox.querySelector('button[onclick^="location.href"]');
+                summaryBox.insertBefore(button, backButton || null);
+            }
+        }
+
+        function initializeQuiz() {
+            shuffleArray(quizData);
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const current = quizData[currentIdx];
+            document.getElementById("question-text").innerText = current.q;
+            const optionsDiv = document.getElementById("options");
+            optionsDiv.innerHTML = "";
+            document.getElementById("feedback").innerText = "";
+            document.getElementById("next-button").style.display = "none";
+            current.options.forEach(opt => {
+                const btn = document.createElement("button");
+                btn.innerText = opt;
+                btn.className = "option-btn";
+                btn.onclick = () => checkAnswer(opt);
+                optionsDiv.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selected) {
+            const current = quizData[currentIdx];
+            const feedback = document.getElementById("feedback");
+            const btns = document.querySelectorAll(".option-btn");
+            btns.forEach(b => b.disabled = true);
+            if (selected === current.a) {
+                feedback.innerText = "Awesome! Correct.";
+                feedback.className = "feedback correct";
+                score++;
+                userResults.push({ q: current.q, res: "Correct", class: "correct" });
+            } else {
+                feedback.innerText = "Oops! The correct answer was " + current.a;
+                feedback.className = "feedback wrong";
+                userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
+            }
+            document.getElementById("next-button").style.display = "block";
+        }
+
+        function loadNextQuestion() {
+            currentIdx++;
+            if (currentIdx < quizData.length) { loadQuestion(); } 
+            else { showSummary(); }
+        }
+
+        function showSummary() {
+            document.getElementById("quiz-box").classList.add("hidden");
+            document.getElementById("summary-box").classList.remove("hidden");
+            const list = document.getElementById("results-list");
+            list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
+            userResults.forEach(item => {
+                const div = document.createElement("div");
+                div.className = "summary-item";
+                div.innerHTML = `<strong>${item.q}</strong> - <span class="${item.class}">${item.res}</span>`;
+                list.appendChild(div);
+            });
+            ensureTryAgainButton();
+        }
+        initializeQuiz();
+    </script>
+</body>
+</html>

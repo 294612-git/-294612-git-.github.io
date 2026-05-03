@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 6 Science Quiz: Earth's Systems and Atmosphere</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        #quiz-container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        #round-indicator {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        #progress-bar {
+            width: 100%;
+            background-color: #f0f0f0;
+            height: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        #progress {
+            height: 100%;
+            background-color: #4CAF50;
+            width: 0%;
+            border-radius: 10px;
+            transition: width 0.3s;
+        }
+        #question-container {
+            margin-bottom: 20px;
+        }
+        #question {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        #options button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #e7e7e7;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #options button:hover {
+            background-color: #d4d4d4;
+        }
+        #options button.correct {
+            background-color: #4CAF50;
+            color: white;
+        }
+        #options button.wrong {
+            background-color: #f44336;
+            color: white;
+        }
+        #next-btn {
+            display: none;
+            width: 100%;
+            padding: 10px;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #next-btn:hover {
+            background-color: #0b7dda;
+        }
+        #summary {
+            max-width: 600px;
+            margin: auto;
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        #summary h2 {
+            color: #333;
+        }
+        #summary a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #2196F3;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        #summary a:hover {
+            background-color: #0b7dda;
+        }
+    </style>
+</head>
+<body>
+    <div id="quiz-container">
+        <h1>Grade 6 Science Quiz: Earth's Systems and Atmosphere</h1>
+        <div id="round-indicator">Round 1 of 2</div>
+        <div id="progress-bar">
+            <div id="progress"></div>
+        </div>
+        <div id="question-container">
+            <p id="question"></p>
+            <div id="options"></div>
+        </div>
+        <button id="next-btn" onclick="nextQuestion()">Next</button>
+    </div>
+    <div id="summary" style="display:none;">
+        <h2>Quiz Complete!</h2>
+        <p id="final-score"></p>
+        <p id="round-scores"></p>
+        <a href="grade6-science-topics.html">Back to Science Topics</a>
+    </div>
+    <script>
+        const allQuestions = [
+            [
+                {
+                    q: "The \"Lithosphere\" is composed of:",
+                    options: ["A) The upper mantle only", "B) The crust and the rigid uppermost mantle", "C) The liquid outer core", "D) The atmosphere and oceans"],
+                    a: 1
+                },
+                {
+                    q: "What provides the heat that drives convection currents in the mantle?",
+                    options: ["A) Sunlight", "B) Friction from tectonic plates", "C) Radioactive decay and leftover heat from Earth's formation", "D) The Greenhouse Effect"],
+                    a: 2
+                },
+                {
+                    q: "\"Subduction\" occurs when:",
+                    options: ["A) Two plates pull apart", "B) A denser oceanic plate sinks beneath a less dense continental plate", "C) Two plates slide horizontally", "D) A mountain collapses"],
+                    a: 1
+                },
+                {
+                    q: "Which type of seismic wave travels the fastest and can move through both solids and liquids?",
+                    options: ["A) S-waves", "B) Surface waves", "C) P-waves", "D) Tidal waves"],
+                    a: 2
+                },
+                {
+                    q: "The \"Coriolis Effect\" is caused by:",
+                    options: ["A) The Moon's orbit", "B) Earth's rotation", "C) Ocean tides", "D) Global warming"],
+                    a: 1
+                },
+                {
+                    q: "Which layer of the atmosphere contains the Ionosphere and can reach temperatures of 2,500 degrees Celsius?",
+                    options: ["A) Troposphere", "B) Stratosphere", "C) Thermosphere", "D) Mesosphere"],
+                    a: 2
+                },
+                {
+                    q: "\"Albedo\" refers to:",
+                    options: ["A) The amount of oxygen in the air", "B) The reflectiveness of a surface (like ice vs. asphalt)", "C) The saltiness of the ocean", "D) The speed of a hurricane"],
+                    a: 1
+                },
+                {
+                    q: "An \"Artesian Well\" gets its water from:",
+                    options: ["A) A lake", "B) A pressurized aquifer", "C) Rainwater collection", "D) The ocean"],
+                    a: 1
+                },
+                {
+                    q: "Which cloud type is high-altitude, wispy, and made of ice crystals?",
+                    options: ["A) Cumulus", "B) Stratus", "C) Cirrus", "D) Nimbostratus"],
+                    a: 2
+                },
+                {
+                    q: "\"El Nino\" is a climate pattern characterized by:",
+                    options: ["A) Cooling of the Pacific Ocean", "B) Unusual warming of surface waters in the eastern Pacific", "C) Increased ice at the poles", "D) A decrease in global temperatures"],
+                    a: 1
+                }
+            ],
+            [
+                {
+                    q: "\"Index Fossils\" are used by geologists to:",
+                    options: ["A) Measure the weight of a rock", "B) Determine the relative age of rock layers", "C) Predict earthquakes", "D) Find oil"],
+                    a: 1
+                },
+                {
+                    q: "The \"Law of Superposition\" states that in undisturbed rock layers:",
+                    options: ["A) The oldest layer is on top", "B) The oldest layer is at the bottom", "C) All layers are the same age", "D) Layers are made of the same material"],
+                    a: 1
+                },
+                {
+                    q: "Which of these is a form of \"Chemical Weathering\"?",
+                    options: ["A) Ice wedging", "B) Abrasion", "C) Acid rain dissolving limestone", "D) Tree roots splitting a sidewalk"],
+                    a: 2
+                },
+                {
+                    q: "A \"Watershed\" is:",
+                    options: ["A) A building where water is stored", "B) An area of land that drains into a common body of water", "C) A deep hole in the ocean", "D) The top of a mountain"],
+                    a: 1
+                },
+                {
+                    q: "In a \"Cold Front,\" what happens?",
+                    options: ["A) Warm air slowly pushes out cold air", "B) Cold air slides under warm air, forcing it up quickly", "C) Air stops moving", "D) The temperature rises"],
+                    a: 1
+                },
+                {
+                    q: "The \"Specific Heat\" of water means that:",
+                    options: ["A) It boils very quickly", "B) It takes a lot of energy to change its temperature, helping regulate Earth's climate", "C) It freezes at a high temperature", "D) It is very light"],
+                    a: 1
+                },
+                {
+                    q: "What is the primary cause of deep ocean currents?",
+                    options: ["A) Wind", "B) Differences in density (thermohaline circulation)", "C) Tides", "D) Ships"],
+                    a: 1
+                },
+                {
+                    q: "\"Permeability\" describes:",
+                    options: ["A) How much water a rock can hold", "B) How easily water can flow through a rock or soil", "C) The color of the soil", "D) The age of the soil"],
+                    a: 1
+                },
+                {
+                    q: "Which gas was almost entirely missing from Earth's early atmosphere until \"cyanobacteria\" began photosynthesis?",
+                    options: ["A) Nitrogen", "B) Carbon Dioxide", "C) Oxygen", "D) Methane"],
+                    a: 2
+                },
+                {
+                    q: "A \"Spring Tide\" occurs when:",
+                    options: ["A) It is springtime", "B) The Sun, Earth, and Moon are aligned, creating the highest high tides", "C) The Moon is at a right angle to the Sun", "D) The water is cold"],
+                    a: 1
+                }
+            ]
+        ];
+
+        let currentRound = 0;
+        let currentQuestion = 0;
+        let score = 0;
+        let roundScores = [0, 0];
+
+        function loadRound() {
+            currentQuestion = 0;
+            document.getElementById('round-indicator').textContent = `Round ${currentRound + 1} of 2`;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const q = allQuestions[currentRound][currentQuestion];
+            document.getElementById('question').textContent = q.q;
+            const optionsDiv = document.getElementById('options');
+            optionsDiv.innerHTML = '';
+            q.options.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.textContent = opt;
+                btn.onclick = () => checkAnswer(i);
+                optionsDiv.appendChild(btn);
+            });
+            updateProgress();
+        }
+
+        function checkAnswer(selected) {
+            const correct = allQuestions[currentRound][currentQuestion].a;
+            const buttons = document.querySelectorAll('#options button');
+            buttons.forEach(btn => btn.disabled = true);
+            if (selected === correct) {
+                buttons[selected].classList.add('correct');
+                score++;
+                roundScores[currentRound]++;
+            } else {
+                buttons[selected].classList.add('wrong');
+                buttons[correct].classList.add('correct');
+            }
+            document.getElementById('next-btn').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < allQuestions[currentRound].length) {
+                loadQuestion();
+                document.getElementById('next-btn').style.display = 'none';
+            } else {
+                currentRound++;
+                if (currentRound < allQuestions.length) {
+                    loadRound();
+                } else {
+                    showSummary();
+                }
+            }
+        }
+
+        function updateProgress() {
+            const totalQuestions = allQuestions.flat().length;
+            const answered = currentRound * 10 + currentQuestion;
+            const percent = (answered / totalQuestions) * 100;
+            document.getElementById('progress').style.width = percent + '%';
+        }
+
+        function showSummary() {
+            document.getElementById('quiz-container').style.display = 'none';
+            document.getElementById('summary').style.display = 'block';
+            document.getElementById('final-score').textContent = `Final Score: ${score} out of 20`;
+            document.getElementById('round-scores').textContent = `Round 1: ${roundScores[0]}/10, Round 2: ${roundScores[1]}/10`;
+        }
+
+        loadRound();
+    </script>
+</body>
+</html>

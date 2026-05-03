@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 6 English Quiz: Reading and Narrative Analysis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        #quiz-container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        #round-indicator {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        #progress-bar {
+            width: 100%;
+            background-color: #f0f0f0;
+            height: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        #progress {
+            height: 100%;
+            background-color: #4CAF50;
+            width: 0%;
+            border-radius: 10px;
+            transition: width 0.3s;
+        }
+        #question-container {
+            margin-bottom: 20px;
+        }
+        #question {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        #options button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #e7e7e7;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #options button:hover {
+            background-color: #d4d4d4;
+        }
+        #options button.correct {
+            background-color: #4CAF50;
+            color: white;
+        }
+        #options button.wrong {
+            background-color: #f44336;
+            color: white;
+        }
+        #next-btn {
+            display: none;
+            width: 100%;
+            padding: 10px;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #next-btn:hover {
+            background-color: #0b7dda;
+        }
+        #summary {
+            max-width: 600px;
+            margin: auto;
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        #summary h2 {
+            color: #333;
+        }
+        #summary a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #2196F3;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        #summary a:hover {
+            background-color: #0b7dda;
+        }
+    </style>
+</head>
+<body>
+    <div id="quiz-container">
+        <h1>Grade 6 English Quiz: Reading and Narrative Analysis</h1>
+        <div id="round-indicator">Round 1 of 2</div>
+        <div id="progress-bar">
+            <div id="progress"></div>
+        </div>
+        <div id="question-container">
+            <p id="question"></p>
+            <div id="options"></div>
+        </div>
+        <button id="next-btn" onclick="nextQuestion()">Next</button>
+    </div>
+    <div id="summary" style="display:none;">
+        <h2>Quiz Complete!</h2>
+        <p id="final-score"></p>
+        <p id="round-scores"></p>
+        <a href="grade6-english-topics.html">Back to English Topics</a>
+    </div>
+    <script>
+        const allQuestions = [
+            [
+                {
+                    q: "What is the difference between \"Theme\" and \"Subject\"?",
+                    options: ["A) They are the same thing", "B) Subject is the topic (e.g., War); Theme is the message (e.g., War is destructive)", "C) Subject is for nonfiction; Theme is for fiction", "D) Theme is a summary"],
+                    a: 1
+                },
+                {
+                    q: "\"Unreliable Narrator\" refers to a storyteller who:",
+                    options: ["A) Is not the main character", "B) May be lying, biased, or mistaken", "C) Doesn't know the ending", "D) Uses \"we\" instead of \"I\""],
+                    a: 1
+                },
+                {
+                    q: "The stars danced playfully in the moonlit sky\" uses which device?",
+                    options: ["A) Simile", "B) Personification", "C) Alliteration", "D) Oxymoron"],
+                    a: 1
+                },
+                {
+                    q: "\"In Media Res\" is a storytelling technique where the plot starts:",
+                    options: ["A) At the very beginning", "B) In the middle of the action", "C) At the end", "D) In a flashback"],
+                    a: 1
+                },
+                {
+                    q: "An \"Extended Metaphor\" is one that:",
+                    options: ["A) Compares three different things", "B) Is introduced and then developed throughout a work", "C) Is very short", "D) Uses \"like\" or \"as\""],
+                    a: 1
+                },
+                {
+                    q: "\"Connotation\" refers to:",
+                    options: ["A) The dictionary definition of a word", "B) The emotional or cultural feeling associated with a word", "C) The spelling of a word", "D) The rhyme scheme"],
+                    a: 1
+                },
+                {
+                    q: "\"Dramatic Irony\" differs from \"Situational Irony\" because:",
+                    options: ["A) It is only in plays", "B) The audience knows more than the characters", "C) It is always funny", "D) It is an exaggeration"],
+                    a: 1
+                },
+                {
+                    q: "An \"Archetype\" is:",
+                    options: ["A) The villain of a story", "B) A recurring symbol, character type, or motif in literature", "C) The first chapter of a book", "D) A type of old building"],
+                    a: 1
+                },
+                {
+                    q: "Which of the following is an example of an \"Oxymoron\"?",
+                    options: ["A) Fast car", "B) Deafening silence", "C) Pretty flower", "D) Big elephant"],
+                    a: 1
+                },
+                {
+                    q: "The \"Falling Action\" of a story follows which part of the plot?",
+                    options: ["A) Exposition", "B) Climax", "C) Resolution", "D) Inciting Incident"],
+                    a: 1
+                }
+            ],
+            [
+                {
+                    q: "\"Allusion\" is a literary device that:",
+                    options: ["A) Creates a mental image", "B) Makes a reference to a person, place, or event from another text or history", "C) Uses words that sound like their meaning", "D) Repeats the same vowel sound"],
+                    a: 1
+                },
+                {
+                    q: "\"External Conflict\" can be categorized as:",
+                    options: ["A) Person vs. Self", "B) Person vs. Society, Person vs. Nature, or Person vs. Person", "C) Person vs. Thoughts", "D) Both A and B"],
+                    a: 1
+                },
+                {
+                    q: "\"Third Person Limited\" POV means the narrator:",
+                    options: ["A) Knows everything about everyone", "B) Only knows the thoughts/feelings of one character", "C) Is the main character", "D) Talks directly to the reader"],
+                    a: 1
+                },
+                {
+                    q: "\"Motif\" is best defined as:",
+                    options: ["A) The reason a character does something", "B) A recurring element or idea that helps develop the theme", "C) The climax of the story", "D) A summary"],
+                    a: 1
+                },
+                {
+                    q: "What is \"Foreshadowing\"?",
+                    options: ["A) Looking back at the past", "B) Hints or clues about what will happen later in the plot", "C) The shadow of a character", "D) Describing a dark scene"],
+                    a: 1
+                },
+                {
+                    q: "\"Euphemism\" is:",
+                    options: ["A) An exaggeration", "B) Using a milder or less offensive way to say something harsh", "C) A comparison", "D) A type of poem"],
+                    a: 1
+                },
+                {
+                    q: "What is the \"Inciting Incident\"?",
+                    options: ["A) The very end", "B) The event that sets the main conflict in motion", "C) The first character description", "D) The introduction of the setting"],
+                    a: 1
+                },
+                {
+                    q: "\"Juxtaposition\" is the act of:",
+                    options: ["A) Placing two things side-by-side to highlight their differences", "B) Summarizing", "C) Rhyming", "D) Using dialogue"],
+                    a: 1
+                },
+                {
+                    q: "To \"Synthesize\" multiple texts means to:",
+                    options: ["A) Choose the best one", "B) Combine ideas from several sources to form a new conclusion", "C) Copy them word-for-word", "D) Criticize the authors"],
+                    a: 0
+                },
+                {
+                    q: "A \"Dynamic Character\" is one who:",
+                    options: ["A) Stays exactly the same", "B) Undergoes a significant inner change throughout the story", "C) Is very funny", "D) Is a superhero"],
+                    a: 1
+                }
+            ]
+        ];
+
+        let currentRound = 0;
+        let currentQuestion = 0;
+        let score = 0;
+        let roundScores = [0, 0];
+
+        function loadRound() {
+            currentQuestion = 0;
+            document.getElementById('round-indicator').textContent = `Round ${currentRound + 1} of 2`;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const q = allQuestions[currentRound][currentQuestion];
+            document.getElementById('question').textContent = q.q;
+            const optionsDiv = document.getElementById('options');
+            optionsDiv.innerHTML = '';
+            q.options.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.textContent = opt;
+                btn.onclick = () => checkAnswer(i);
+                optionsDiv.appendChild(btn);
+            });
+            updateProgress();
+        }
+
+        function checkAnswer(selected) {
+            const correct = allQuestions[currentRound][currentQuestion].a;
+            const buttons = document.querySelectorAll('#options button');
+            buttons.forEach(btn => btn.disabled = true);
+            if (selected === correct) {
+                buttons[selected].classList.add('correct');
+                score++;
+                roundScores[currentRound]++;
+            } else {
+                buttons[selected].classList.add('wrong');
+                buttons[correct].classList.add('correct');
+            }
+            document.getElementById('next-btn').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < allQuestions[currentRound].length) {
+                loadQuestion();
+                document.getElementById('next-btn').style.display = 'none';
+            } else {
+                currentRound++;
+                if (currentRound < allQuestions.length) {
+                    loadRound();
+                } else {
+                    showSummary();
+                }
+            }
+        }
+
+        function updateProgress() {
+            const totalQuestions = allQuestions.flat().length;
+            const answered = currentRound * 10 + currentQuestion;
+            const percent = (answered / totalQuestions) * 100;
+            document.getElementById('progress').style.width = percent + '%';
+        }
+
+        function showSummary() {
+            document.getElementById('quiz-container').style.display = 'none';
+            document.getElementById('summary').style.display = 'block';
+            document.getElementById('final-score').textContent = `Final Score: ${score} out of 20`;
+            document.getElementById('round-scores').textContent = `Round 1: ${roundScores[0]}/10, Round 2: ${roundScores[1]}/10`;
+        }
+
+        loadRound();
+    </script>
+</body>
+</html>

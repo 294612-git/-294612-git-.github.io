@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 4 Word Problems Quiz - Study Buddy</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 600px; }
+        h2 { color: #667eea; text-align: center; }
+        .progress-bar { background: #e0e0e0; height: 10px; border-radius: 5px; margin: 15px 0; overflow: hidden; }
+        .progress-fill { background: #667eea; height: 100%; transition: width 0.3s; }
+        .options-container { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+        .option-btn { padding: 12px; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; text-align: left; font-size: 0.95rem; transition: 0.2s; }
+        .option-btn:hover { border-color: #667eea; background: #f0f2ff; }
+        .feedback { margin: 15px 0; font-weight: bold; min-height: 24px; text-align: center; }
+        .correct { color: #28a745; }
+        .wrong { color: #dc3545; }
+        .next-btn { background: #667eea; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; display: none; margin: 0 auto; }
+        .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #eee; }
+        .hidden { display: none; }
+        .round-indicator { text-align: center; color: #667eea; font-weight: bold; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-container" id="quiz-box">
+        <div class="round-indicator" id="round-indicator"></div>
+        <h2 id="question-text">Question</h2>
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+        <div class="options-container" id="options"></div>
+        <div id="feedback" class="feedback"></div>
+        <button id="next-button" class="next-btn" onclick="loadNextQuestion()">Next Question</button>
+    </div>
+
+    <div class="quiz-container hidden" id="summary-box">
+        <h2>Quiz Complete!</h2>
+        <div id="results-list"></div>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="loadNewRound()">Try Again (New Round)</button>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade4-math-topics.html'">Back to Topics</button>
+    </div>
+
+    <script>
+        const allQuestions = [
+            // Round 1: Questions 1-10
+            { q: "A school ordered 12 boxes of pens. Each box has 24 pens. If the pens are shared equally among 8 classrooms, how many pens does each classroom get?", options: ["36", "42", "24", "48"], a: "36" },
+            { q: "A farmer has 145 eggs. He puts them into cartons that hold 12 eggs each. How many eggs will be left over after he fills as many full cartons as possible?", options: ["1", "5", "12", "0"], a: "1" },
+            { q: "Tickets to a play cost 15 dollars for adults and 8 dollars for children. If 2 adults and 5 children buy tickets, what is the total cost?", options: ["60 dollars", "70 dollars", "46 dollars", "31 dollars"], a: "70 dollars" },
+            { q: "A rectangular playground is 25 meters long and 15 meters wide. If a student runs around the entire edge 3 times, how far did they run?", options: ["80 meters", "120 meters", "240 meters", "40 meters"], a: "240 meters" },
+            { q: "A bakery makes 480 cookies every day. They put them into bags of 6 cookies each. If they sell each bag for 5 dollars, how much money do they make if they sell all the bags?", options: ["80 dollars", "400 dollars", "480 dollars", "2,400 dollars"], a: "400 dollars" },
+            { q: "Maya has 120 dollars. She spends 45 dollars on a jacket and 18 dollars on a hat. How much more money does she need if she also wants to buy a pair of boots that costs 75 dollars?", options: ["18 dollars", "57 dollars", "13 dollars", "22 dollars"], a: "18 dollars" },
+            { q: "A library has 8 shelves. Each shelf holds 35 books. If 12 books are checked out from every shelf, how many books are still on the shelves in total?", options: ["280", "96", "184", "210"], a: "184" },
+            { q: "A truck is carrying 4 crates. Each crate weighs 150 pounds. If the truck itself weighs 2,000 pounds, what is the total weight of the truck and the crates?", options: ["2,150 pounds", "2,400 pounds", "2,600 pounds", "3,000 pounds"], a: "2,600 pounds" },
+            { q: "There are 52 weeks in a year. If Leo saves 9 dollars every week, how much money will he have saved after 2 years?", options: ["468 dollars", "104 dollars", "936 dollars", "520 dollars"], a: "936 dollars" },
+            { q: "A rope is 10 meters long. A piece that is 250 centimeters long is cut off. How many centimeters of rope are left? (Hint: 1 meter = 100 centimeters)", options: ["750 centimeters", "850 centimeters", "75 centimeters", "500 centimeters"], a: "750 centimeters" },
+            // Round 2: Questions 11-20
+            { q: "An auditorium has 20 rows of seats. Each row has 15 seats. If 245 people are already sitting down, how many empty seats are left?", options: ["300", "45", "55", "65"], a: "55" },
+            { q: "A pizza shop uses 4 ounces of cheese for every small pizza. If they have 5 pounds of cheese, how many small pizzas can they make? (Hint: 1 pound = 16 ounces)", options: ["20 pizzas", "16 pizzas", "80 pizzas", "40 pizzas"], a: "20 pizzas" },
+            { q: "Jason ran 4 miles on Monday, twice as far on Tuesday, and 3 miles on Wednesday. What was the total distance he ran over those three days?", options: ["11 miles", "15 miles", "14 miles", "12 miles"], a: "15 miles" },
+            { q: "A group of 98 tourists is traveling in vans. Each van can hold 8 people. What is the minimum number of vans needed to carry all the tourists?", options: ["12", "13", "11", "10"], a: "13" },
+            { q: "A water tank was half full. After someone added 15 gallons, the tank became full with a total of 40 gallons. How many gallons were in the tank at the very start?", options: ["20 gallons", "25 gallons", "5 gallons", "10 gallons"], a: "5 gallons" },
+            { q: "At a fruit stand, apples are 3 for 2 dollars. How much would it cost to buy 12 apples?", options: ["24 dollars", "6 dollars", "8 dollars", "12 dollars"], a: "8 dollars" },
+            { q: "A rectangle has a perimeter of 40 inches. If the length is 12 inches, what is the area of the rectangle?", options: ["96 square inches", "48 square inches", "80 square inches", "60 square inches"], a: "96 square inches" },
+            { q: "A printer can print 25 pages per minute. How many pages can it print in half an hour?", options: ["250", "500", "750", "1,500"], a: "750" },
+            { q: "There are 365 days in a year. If it rains 1 out of every 5 days, how many rainy days are there in a year?", options: ["70", "73", "65", "80"], a: "73" },
+            { q: "A box of 48 chocolates is shared. Sarah takes 1/4 of them, and then Mark takes 1/3 of what is left. How many chocolates are left in the box?", options: ["24", "12", "36", "20"], a: "24" }
+        ];
+
+        let currentRound = 1;
+        let currentIdx = 0;
+        let score = 0;
+        let userResults = [];
+        let quizData = [];
+
+        function loadRound(roundNum) {
+            const startIdx = (roundNum - 1) * 10;
+            const endIdx = startIdx + 10;
+            quizData = allQuestions.slice(startIdx, endIdx);
+            currentIdx = 0;
+            score = 0;
+            userResults = [];
+            document.getElementById("quiz-box").classList.remove("hidden");
+            document.getElementById("summary-box").classList.add("hidden");
+            document.getElementById("round-indicator").innerText = `Round ${roundNum}`;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const current = quizData[currentIdx];
+            document.getElementById("question-text").innerText = `Q${currentIdx + 1}: ${current.q}`;
+            
+            const progress = ((currentIdx + 1) / quizData.length) * 100;
+            document.getElementById("progress-fill").style.width = progress + "%";
+            
+            const optionsDiv = document.getElementById("options");
+            optionsDiv.innerHTML = "";
+            document.getElementById("feedback").innerText = "";
+            document.getElementById("next-button").style.display = "none";
+
+            current.options.forEach((opt, idx) => {
+                const btn = document.createElement("button");
+                btn.innerText = String.fromCharCode(65 + idx) + ") " + opt;
+                btn.className = "option-btn";
+                btn.onclick = () => checkAnswer(opt);
+                optionsDiv.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selected) {
+            const current = quizData[currentIdx];
+            const feedback = document.getElementById("feedback");
+            const btns = document.querySelectorAll(".option-btn");
+            
+            btns.forEach(b => b.disabled = true);
+
+            if (selected === current.a) {
+                feedback.innerText = "✓ Correct! Well done.";
+                feedback.className = "feedback correct";
+                score++;
+                userResults.push({ q: current.q, res: "Correct", class: "correct" });
+            } else {
+                feedback.innerText = "✗ Oops! The correct answer was: " + current.a;
+                feedback.className = "feedback wrong";
+                userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
+            }
+            document.getElementById("next-button").style.display = "block";
+        }
+
+        function loadNextQuestion() {
+            currentIdx++;
+            if (currentIdx < quizData.length) {
+                loadQuestion();
+            } else {
+                showSummary();
+            }
+        }
+
+        function showSummary() {
+            document.getElementById("quiz-box").classList.add("hidden");
+            const summaryBox = document.getElementById("summary-box");
+            summaryBox.classList.remove("hidden");
+            
+            const list = document.getElementById("results-list");
+            list.innerHTML = `<h3>Round ${currentRound} - Final Score: ${score}/10</h3>`;
+            
+            userResults.forEach((item, idx) => {
+                const div = document.createElement("div");
+                div.className = "summary-item";
+                div.innerHTML = `<strong>Q${idx + 1}: ${item.q}</strong><br/><span class="${item.class}">${item.res}</span>`;
+                list.appendChild(div);
+            });
+        }
+
+        function loadNewRound() {
+            currentRound++;
+            if (currentRound <= 2) {
+                loadRound(currentRound);
+            } else {
+                alert("No more rounds available. You've completed all questions!");
+                location.href = "grade4-math-topics.html";
+            }
+        }
+
+        // Start with Round 1
+        loadRound(1);
+    </script>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 5 Elite: The American Revolution & Founding Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #ddd;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: #4CAF50;
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.3s;
+        }
+        .question {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+        .options li {
+            margin-bottom: 10px;
+        }
+        .options button {
+            width: 100%;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .options button:hover {
+            background-color: #e9e9e9;
+        }
+        .feedback {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .wrong {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .round-info {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .summary {
+            display: none;
+            text-align: center;
+        }
+        .summary h2 {
+            color: #333;
+        }
+        .summary p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+            font-size: 16px;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Grade 5 Elite: The American Revolution & Founding Quiz</h1>
+        <div id="active-quiz">
+            <div class="round-info" id="round-info">Round 1</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="question" id="question"></div>
+            <ul class="options" id="options"></ul>
+            <div class="feedback" id="feedback"></div>
+        </div>
+        <div class="summary" id="summary">
+            <h2>Quiz Complete!</h2>
+            <p id="final-score"></p>
+            <p id="round-scores"></p>
+            <a href="../grade5-history-topics.html" class="back-link">Back to History Topics</a>
+        </div>
+    </div>
+
+    <script>
+        const allQuestions = [
+            { q: "The 13 Original Colonies were located along the Atlantic Coast of North America. Which of these was a primary \"New England\" colony?", options: ["A) Virginia", "B) Massachusetts", "C) Georgia", "D) New York"], a: 1 },
+            { q: "The American Revolution was a war fought to gain independence from Great Britain. What was a major cause of the colonists' anger toward the King?", options: ["A) The King refused to visit the colonies", "B) \"Taxation without Representation\" (being taxed without having a say in Parliament)", "C) The British soldiers refused to wear uniforms", "D) The colonists wanted to move back to Europe"], a: 1 },
+            { q: "The United States Constitution was written in 1787. What is its main purpose?", options: ["A) To explain the history of the early explorers", "B) To act as the \"Supreme Law of the Land\" and provide a plan for how the government works", "C) To declare war on France and Spain", "D) To list all the citizens living in the colonies"], a: 1 },
+            { q: "George Washington is often called the \"Father of His Country.\" In addition to being the first President, what was his role during the Revolution?", options: ["A) He wrote the Declaration of Independence", "B) He was the Commander-in-Chief of the Continental Army", "C) He was a spy for the British King", "D) He was the first person to sign the Constitution"], a: 1 },
+            { q: "Who was the primary author of the Declaration of Independence?", options: ["A) Benjamin Franklin", "B) Thomas Jefferson", "C) John Adams", "D) Alexander Hamilton"], a: 1 },
+            { q: "The \"Boston Tea Party\" was a famous protest against the Tea Act. What did the colonists actually do?", options: ["A) They invited the British soldiers to a formal dinner", "B) They dumped 342 chests of British tea into the harbor", "C) They stopped drinking tea and only drank coffee", "D) They burned down the tea factories in London"], a: 1 },
+            { q: "The first three words of the Constitution are \"We the People.\" Why are these words so important to a democracy?", options: ["A) They show that the government's power comes from the citizens", "B) They list the names of the people who wrote the document", "C) They mean that only rich people can vote", "D) They are a secret code for the army"], a: 0 },
+            { q: "Which famous document was signed on July 4, 1776?", options: ["A) The Bill of Rights", "B) The Articles of Confederation", "C) The Declaration of Independence", "D) The Treaty of Paris"], a: 2 },
+            { q: "The U.S. Government is divided into three branches. Which branch is responsible for making the laws?", options: ["A) The Executive Branch", "B) The Judicial Branch", "C) The Legislative Branch (Congress)", "D) The Military Branch"], a: 2 },
+            { q: "Paul Revere is famous for his \"Midnight Ride.\" What was he trying to warn the colonists about?", options: ["A) A giant storm was coming", "B) British troops were moving toward Lexington and Concord", "C) The King had arrived in Boston", "D) The tea had arrived at the harbor"], a: 1 },
+            { q: "What was the \"Stamp Act\"?", options: ["A) A law that required colonists to buy special stamps for all paper documents", "B) A law that said everyone must collect stamps as a hobby", "C) A rule that limited how many letters a person could write", "D) A tax on the shoes people wore"], a: 0 },
+            { q: "The first battles of the American Revolution took place at:", options: ["A) Yorktown", "B) Bunker Hill", "C) Lexington and Concord", "D) Valley Forge"], a: 2 },
+            { q: "What is the \"Bill of Rights\"?", options: ["A) A list of all the money the colonies owed to Britain", "B) The first ten amendments to the Constitution that protect individual freedoms", "C) A book of rules for the first President", "D) A map showing the new borders of the United States"], a: 1 },
+            { q: "Benjamin Franklin was a famous \"Polymath.\" Which of these was one of his major contributions?", options: ["A) He was the first person to sail across the Atlantic", "B) He helped negotiate the peace treaty with Britain and was a famous inventor", "C) He was the King of the colonies for one year", "D) He wrote the national anthem"], a: 1 },
+            { q: "What does the \"Checks and Balances\" system do in the U.S. government?", options: ["A) It makes sure the government has enough money in the bank", "B) It prevents any one branch of government from becoming too powerful", "C) It checks the spelling of all new laws", "D) It balances the number of states in the North and South"], a: 1 },
+            { q: "At the end of the Revolution, which treaty officially recognized the United States as an independent nation?", options: ["A) The Treaty of London", "B) The Treaty of Versailles", "C) The Treaty of Paris (1783)", "D) The Treaty of Washington"], a: 2 },
+            { q: "Which Founding Father is known for his \"give me liberty or give me death\" speech?", options: ["A) Patrick Henry", "B) Samuel Adams", "C) James Madison", "D) Nathan Hale"], a: 0 },
+            { q: "The \"Articles of Confederation\" was the first plan of government for the U.S., but it failed because:", options: ["A) It made the national government too strong", "B) It made the national government too weak (it couldn't collect taxes or raise an army)", "C) It was written in a language no one could read", "D) It only allowed one state to make decisions"], a: 1 },
+            { q: "What is an \"Amendment\"?", options: ["A) A law that has been canceled", "B) A formal change or addition to the Constitution", "C) A speech given by the President", "D) The name of a person who votes"], a: 1 },
+            { q: "Who is known as the \"Father of the Constitution\" because of his detailed notes and leadership at the Convention?", options: ["A) Abraham Lincoln", "B) James Madison", "C) Thomas Paine", "D) John Hancock"], a: 1 }
+        ];
+
+        let currentRound = 1;
+        let currentQuestionIndex = 0;
+        let userResults = [];
+        let roundScores = [0, 0];
+
+        function loadRound(round) {
+            currentRound = round;
+            currentQuestionIndex = (round - 1) * 10;
+            document.getElementById('round-info').textContent = `Round ${round}`;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const question = allQuestions[currentQuestionIndex];
+            document.getElementById('question').textContent = question.q;
+            const optionsUl = document.getElementById('options');
+            optionsUl.innerHTML = '';
+            question.options.forEach((option, index) => {
+                const li = document.createElement('li');
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.onclick = () => checkAnswer(index);
+                li.appendChild(button);
+                optionsUl.appendChild(li);
+            });
+            document.getElementById('feedback').style.display = 'none';
+            updateProgress();
+        }
+
+        function checkAnswer(selectedIndex) {
+            const correctIndex = allQuestions[currentQuestionIndex].a;
+            const feedback = document.getElementById('feedback');
+            if (selectedIndex === correctIndex) {
+                feedback.textContent = 'Correct!';
+                feedback.className = 'feedback correct';
+                roundScores[currentRound - 1]++;
+            } else {
+                feedback.textContent = `Wrong! The correct answer is: ${allQuestions[currentQuestionIndex].options[correctIndex]}`;
+                feedback.className = 'feedback wrong';
+            }
+            feedback.style.display = 'block';
+            userResults.push(selectedIndex === correctIndex);
+            setTimeout(() => {
+                nextQuestion();
+            }, 2000);
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < allQuestions.length) {
+                if (currentQuestionIndex % 10 === 0) {
+                    // End of round
+                    if (currentRound < 2) {
+                        loadRound(currentRound + 1);
+                    } else {
+                        showSummary();
+                    }
+                } else {
+                    loadQuestion();
+                }
+            } else {
+                showSummary();
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestionIndex % 10) + 1) / 10 * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+        }
+
+        function showSummary() {
+            document.getElementById('active-quiz').style.display = 'none';
+            document.getElementById('summary').style.display = 'block';
+            const totalCorrect = roundScores[0] + roundScores[1];
+            document.getElementById('final-score').textContent = `You got ${totalCorrect} out of 20 questions correct.`;
+            document.getElementById('round-scores').textContent = `Round 1: ${roundScores[0]}/10, Round 2: ${roundScores[1]}/10`;
+        }
+
+        loadRound(1);
+    </script>
+</body>
+</html>
