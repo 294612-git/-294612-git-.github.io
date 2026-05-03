@@ -1,160 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phonics Quiz - Study Buddy</title>
-    <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 500px; text-align: center; }
-        h2 { color: #667eea; }
-        .options-container { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
-        .option-btn { padding: 12px; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; font-size: 1.1rem; transition: 0.2s; }
-        .option-btn:hover { border-color: #667eea; background: #f0f2ff; }
-        .feedback { margin: 15px 0; font-weight: bold; min-height: 24px; }
-        .correct { color: #28a745; }
-        .wrong { color: #dc3545; }
-        .next-btn { background: #667eea; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; display: none; margin: 0 auto; }
-        .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #eee; }
-        .hidden { display: none; }
-    </style>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Phonics Quiz - Study Buddy</title>
+   <style>
+       body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+       .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 500px; text-align: center; }
+       h2 { color: #667eea; }
+       .options-container { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+       .option-btn { padding: 12px; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; font-size: 1.1rem; transition: 0.2s; }
+       .option-btn:hover { border-color: #667eea; background: #f0f2ff; }
+       .feedback { margin: 15px 0; font-weight: bold; min-height: 24px; }
+       .correct { color: #28a745; }
+       .wrong { color: #dc3545; }
+       .next-btn { background: #667eea; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; display: none; margin: 0 auto; }
+       .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #eee; }
+       .hidden { display: none; }
+   </style>
 </head>
 <body>
 
-    <div class="quiz-container" id="quiz-box">
-        <h2 id="question-text">Question</h2>
-        <div class="options-container" id="options"></div>
-        <div id="feedback" class="feedback"></div>
-        <button id="next-button" class="next-btn" onclick="loadNextQuestion()">Next Question</button>
-    </div>
+   <div class="quiz-container" id="quiz-box">
+       <h2 id="question-text">Question</h2>
+       <div class="options-container" id="options"></div>
+       <div id="feedback" class="feedback"></div>
+       <button id="next-button" class="next-btn" onclick="loadNextQuestion()">Next Question</button>
+   </div>
 
-    <div class="quiz-container hidden" id="summary-box">
-        <h2>Quiz Complete!</h2>
-        <div id="results-list"></div>
-        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
-        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='../index.html'">Back to Topics</button>
-    </div>
+   <div class="quiz-container hidden" id="summary-box">
+       <h2>Quiz Complete!</h2>
+       <div id="results-list"></div>
+       <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
+       <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='../index.html'">Back to Topics</button>
+   </div>
 
-    <script>
-        const quizData = [
-            { q: "What sound does 'A' make?", a: "ah", options: ["eh", "ah", "ih"] },
-            { q: "What sound does 'B' make?", a: "buh", options: ["duh", "buh", "guh"] },
-            { q: "What sound does 'C' make?", a: "kuh", options: ["suh", "kuh", "tuh"] },
-            { q: "What sound does 'D' make?", a: "duh", options: ["buh", "duh", "fuh"] },
-            { q: "What sound does 'E' make?", a: "eh", options: ["ah", "eh", "uh"] },
-            { q: "What sound does 'F' make?", a: "fuh", options: ["guh", "fuh", "huh"] },
-            { q: "What sound does 'G' make?", a: "guh", options: ["fuh", "guh", "juh"] },
-            { q: "What sound does 'H' make?", a: "huh", options: ["guh", "huh", "ih"] },
-            { q: "What sound does 'I' make?", a: "ih", options: ["eh", "ih", "oh"] },
-            { q: "What sound does 'J' make?", a: "juh", options: ["ih", "juh", "kuh"] },
-            { q: "What sound does 'K' make?", a: "kuh", options: ["juh", "kuh", "luh"] },
-            { q: "What sound does 'L' make?", a: "luh", options: ["kuh", "luh", "muh"] },
-            { q: "What sound does 'M' make?", a: "muh", options: ["luh", "muh", "nuh"] },
-            { q: "What sound does 'N' make?", a: "nuh", options: ["muh", "nuh", "oh"] },
-            { q: "What sound does 'O' make?", a: "oh", options: ["nuh", "oh", "puh"] },
-            { q: "What sound does 'P' make?", a: "puh", options: ["oh", "puh", "kwuh"] },
-            { q: "What sound does 'Q' make?", a: "kwuh", options: ["puh", "kwuh", "ruh"] },
-            { q: "What sound does 'R' make?", a: "ruh", options: ["kwuh", "ruh", "suh"] },
-            { q: "What sound does 'S' make?", a: "suh", options: ["ruh", "suh", "tuh"] },
-            { q: "What sound does 'T' make?", a: "tuh", options: ["suh", "tuh", "ah"] }
-        ];
+   <script>
+       const quizData = [
+           { q: "What sound does the letter “B” make?", a: "/b/ as in bat", options: ["/s/ as in snake", "/b/ as in bat", "/t/ as in top", "/m/ as in moon"] },
+           { q: "Which word starts with the letter “S”?", a: "Sun", options: ["Cat", "Dog", "Sun", "Ball"] },
+           { q: "Which word has a short “a” sound (like in \"apple\")?", a: "Cat", options: ["Cake", "Rain", "Cat", "Play"] },
+           { q: "What two letters work together to make the “sh” sound?", a: "S and H", options: ["C and H", "S and H", "T and H", "P and H"] },
+           { q: "Which word starts with the \"ch\" sound?", a: "Chair", options: ["Shoe", "Chair", "Think", "Phone"] },
+           { q: "What is the first sound you hear in the word \"Pig\"?", a: "/p/", options: ["/g/", "/p/", "/i/", "/b/"] },
+           { q: "Which word has a long \"i\" sound (where the letter says its name)?", a: "Kite", options: ["Pig", "Sit", "Kite", "Bin"] },
+           { q: "What sound do \"C\" and \"L\" make when put together (CL)?", a: "/cl/", options: ["/cr/", "/cl/", "/sl/", "/bl/"] },
+           { q: "Which word ends with the \"ck\" sound?", a: "Duck", options: ["Duck", "Dog", "Dad", "Day"] },
+           { q: "What vowel sound do you hear in the word \"Bed\"?", a: "Short e", options: ["Short a", "Short e", "Short i", "Short o"] },
+           { q: "Which word rhymes with \"Moon\"?", a: "Spoon", options: ["Man", "Spoon", "More", "Mouth"] },
+           { q: "What sound does the letter \"F\" make?", a: "/f/", options: ["/v/", "/ph/", "/f/", "/s/"] },
+           { q: "Which word has a silent \"e\" at the end?", a: "Bike", options: ["Bed", "Bike", "Sit", "Run"] },
+           { q: "What sound does \"th\" make in the word \"Thumb\"?", a: "/th/", options: ["/sh/", "/ch/", "/th/", "/wh/"] },
+           { q: "Which word starts with a \"Bl\" blend?", a: "Blue", options: ["Blue", "Red", "Green", "Yellow"] },
+           { q: "How many sounds (phonemes) are in the word \"Cat\"?", a: "3", options: ["1", "2", "3", "4"] },
+           { q: "Which word has a short \"u\" sound (like in \"up\")?", a: "Sun", options: ["Blue", "Use", "Sun", "Cube"] },
+           { q: "What sound does the letter \"J\" make?", a: "/j/", options: ["/g/", "/j/", "/y/", "/h/"] },
+           { q: "Which word has a \"magic e\" that makes the \"o\" say its name?", a: "Hope", options: ["Hop", "Hot", "Hope", "Hog"] },
+           { q: "Which word starts with the same sound as \"Frog\"?", a: "Fish", options: ["Fish", "Pen", "Dog", "Star"] }
+       ];
 
-        let currentIdx = 0;
-        let score = 0;
-        let userResults = [];
+       let currentIdx = 0;
+       let score = 0;
+       let userResults = [];
 
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-        }
+       function shuffleArray(array) {
+           for (let i = array.length - 1; i > 0; i--) {
+               const j = Math.floor(Math.random() * (i + 1));
+               [array[i], array[j]] = [array[j], array[i]];
+           }
+       }
 
-        function ensureTryAgainButton() {
-            const summaryBox = document.getElementById("summary-box");
-            if (summaryBox && !summaryBox.querySelector('button[onclick="location.reload()"]')) {
-                const button = document.createElement('button');
-                button.className = 'next-btn';
-                button.style.display = 'block';
-                button.style.marginTop = '20px';
-                button.innerText = 'Try Again';
-                button.onclick = function() { location.reload(); };
-                const backButton = summaryBox.querySelector('button[onclick^="location.href"]');
-                summaryBox.insertBefore(button, backButton || null);
-            }
-        }
+       function ensureTryAgainButton() {
+           const summaryBox = document.getElementById("summary-box");
+           if (summaryBox && !summaryBox.querySelector('button[onclick="location.reload()"]')) {
+               const button = document.createElement('button');
+               button.className = 'next-btn';
+               button.style.display = 'block';
+               button.style.marginTop = '20px';
+               button.innerText = 'Try Again';
+               button.onclick = function() { location.reload(); };
+               const backButton = summaryBox.querySelector('button[onclick^="location.href"]');
+               summaryBox.insertBefore(button, backButton || null);
+           }
+       }
 
-        function initializeQuiz() {
-            shuffleArray(quizData);
-            loadQuestion();
-        }
+       function initializeQuiz() {
+           shuffleArray(quizData);
+           loadQuestion();
+       }
 
-        function loadQuestion() {
-            const current = quizData[currentIdx];
-            document.getElementById("question-text").innerText = current.q;
-            const optionsDiv = document.getElementById("options");
-            optionsDiv.innerHTML = "";
-            document.getElementById("feedback").innerText = "";
-            document.getElementById("next-button").style.display = "none";
+       function loadQuestion() {
+           const current = quizData[currentIdx];
+           document.getElementById("question-text").innerText = current.q;
+           const optionsDiv = document.getElementById("options");
+           optionsDiv.innerHTML = "";
+           document.getElementById("feedback").innerText = "";
+           document.getElementById("next-button").style.display = "none";
 
-            current.options.forEach(opt => {
-                const btn = document.createElement("button");
-                btn.innerText = opt;
-                btn.className = "option-btn";
-                btn.onclick = () => checkAnswer(opt);
-                optionsDiv.appendChild(btn);
-            });
-        }
+           current.options.forEach(opt => {
+               const btn = document.createElement("button");
+               btn.innerText = opt;
+               btn.className = "option-btn";
+               btn.onclick = () => checkAnswer(opt);
+               optionsDiv.appendChild(btn);
+           });
+       }
 
-        function checkAnswer(selected) {
-            const current = quizData[currentIdx];
-            const feedback = document.getElementById("feedback");
-            const btns = document.querySelectorAll(".option-btn");
-            
-            // Disable buttons after answer
-            btns.forEach(b => b.disabled = true);
+       function checkAnswer(selected) {
+           const current = quizData[currentIdx];
+           const feedback = document.getElementById("feedback");
+           const btns = document.querySelectorAll(".option-btn");
+          
+           btns.forEach(b => b.disabled = true);
 
-            if (selected === current.a) {
-                feedback.innerText = "Splashtastic! Correct.";
-                feedback.className = "feedback correct";
-                score++;
-                userResults.push({ q: current.q, res: "Correct", class: "correct" });
-            } else {
-                feedback.innerText = "Glub! Incorrect.";
-                feedback.className = "feedback wrong";
-                userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
-            }
-            document.getElementById("next-button").style.display = "block";
-        }
+           if (selected === current.a) {
+               feedback.innerText = "Splashtastic! Correct.";
+               feedback.className = "feedback correct";
+               score++;
+               userResults.push({ q: current.q, res: "Correct", class: "correct" });
+           } else {
+               feedback.innerText = "Glub! Incorrect.";
+               feedback.className = "feedback wrong";
+               userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
+           }
+           document.getElementById("next-button").style.display = "block";
+       }
 
-        function loadNextQuestion() {
-            currentIdx++;
-            if (currentIdx < quizData.length) {
-                loadQuestion();
-            } else {
-                showSummary();
-            }
-        }
+       function loadNextQuestion() {
+           currentIdx++;
+           if (currentIdx < quizData.length) {
+               loadQuestion();
+           } else {
+               showSummary();
+           }
+       }
 
-        function showSummary() {
-            document.getElementById("quiz-box").classList.add("hidden");
-            const summaryBox = document.getElementById("summary-box");
-            summaryBox.classList.remove("hidden");
-            ensureTryAgainButton();
-            
-            const list = document.getElementById("results-list");
-            list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
-            
-            userResults.forEach(item => {
-                const div = document.createElement("div");
-                div.className = "summary-item";
-                div.innerHTML = `<strong>${item.q}</strong> - <span class="${item.class}">${item.res}</span>`;
-                list.appendChild(div);
-            });
-        }
+       function showSummary() {
+           document.getElementById("quiz-box").classList.add("hidden");
+           const summaryBox = document.getElementById("summary-box");
+           summaryBox.classList.remove("hidden");
+           ensureTryAgainButton();
+          
+           const list = document.getElementById("results-list");
+           list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
+          
+           userResults.forEach(item => {
+               const div = document.createElement("div");
+               div.className = "summary-item";
+               div.innerHTML = `<strong>${item.q}</strong> - <span class="${item.class}">${item.res}</span>`;
+               list.appendChild(div);
+           });
+       }
 
-        // Start the quiz
-        initializeQuiz();
-    </script>
+       initializeQuiz();
+   </script>
 </body>
 </html>

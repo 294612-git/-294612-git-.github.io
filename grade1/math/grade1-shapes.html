@@ -1,95 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shapes Quiz - Study Buddy</title>
-    <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 500px; text-align: center; }
-        h2 { color: #667eea; }
-        .question { font-size: 1.2rem; margin: 20px 0; }
-        .options-container { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
-        .option-btn { padding: 12px; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; font-size: 1.1rem; transition: 0.2s; }
-        .option-btn:hover { border-color: #667eea; background: #f0f2ff; }
-        .feedback { margin: 15px 0; font-weight: bold; min-height: 24px; }
-        .correct { color: #28a745; }
-        .wrong { color: #dc3545; }
-        .next-btn { background: #667eea; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; display: none; margin: 0 auto; }
-        .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #eee; }
-        .hidden { display: none; }
-    </style>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Shapes Quiz - Study Buddy</title>
+   <style>
+       body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+       .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 500px; text-align: center; }
+       h2 { color: #667eea; }
+       .question { font-size: 1.2rem; margin: 20px 0; }
+       .options-container { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+       .option-btn { padding: 12px; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; font-size: 1.1rem; transition: 0.2s; }
+       .option-btn:hover { border-color: #667eea; background: #f0f2ff; }
+       .feedback { margin: 15px 0; font-weight: bold; min-height: 24px; }
+       .correct { color: #28a745; }
+       .wrong { color: #dc3545; }
+       .next-btn { background: #667eea; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; display: none; margin: 0 auto; }
+       .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #eee; }
+       .hidden { display: none; }
+   </style>
 </head>
 <body>
-    <div class="quiz-container">
-        <h2>Grade 1 Shapes Quiz</h2>
-        
-        <div id="quiz-box">
-            <div class="question" id="question"></div>
-            <div class="options-container" id="options"></div>
-            <div class="feedback" id="feedback"></div>
-            <button class="next-btn" id="next-button" onclick="loadNextQuestion()">Next Question</button>
-        </div>
-        
-        <div id="summary-box" class="hidden">
-            <h3>Quiz Complete!</h3>
-            <div id="results-list"></div>
-            <a href="grade1-math-topics.html" style="display: inline-block; margin-top: 20px; color: #667eea; text-decoration: none;">← Back to Topics</a>
-        </div>
-    </div>
+   <div class="quiz-container">
+       <h2>Grade 1 Shapes Quiz</h2>
+      
+       <div id="quiz-box">
+           <div class="question" id="question"></div>
+           <div class="options-container" id="options"></div>
+           <div class="feedback" id="feedback"></div>
+           <button class="next-btn" id="next-button" onclick="loadNextQuestion()">Next Question</button>
+       </div>
+      
+       <div id="summary-box" class="hidden">
+           <h3>Quiz Complete!</h3>
+           <div id="results-list"></div>
+           <a href="grade1-math-topics.html" style="display: inline-block; margin-top: 20px; color: #667eea; text-decoration: none;">← Back to Topics</a>
+       </div>
+   </div>
 
     <script>
         const quizData = [
             { q: "How many sides does a triangle have?", a: "3", options: ["3", "4", "5"] },
             { q: "How many sides does a square have?", a: "4", options: ["3", "4", "5"] },
             { q: "How many sides does a circle have?", a: "0", options: ["0", "1", "many"] },
-            { q: "Which shape has 5 sides?", a: "pentagon", options: ["triangle", "square", "pentagon"] },
-            { q: "What shape is a ball?", a: "sphere", options: ["cube", "sphere", "cylinder"] },
-            { q: "What shape is a box?", a: "cube", options: ["sphere", "cube", "cone"] },
-            { q: "How many corners does a triangle have?", a: "3", options: ["3", "4", "5"] },
-            { q: "How many corners does a square have?", a: "4", options: ["3", "4", "5"] },
-            { q: "What shape looks like a stop sign?", a: "octagon", options: ["hexagon", "octagon", "circle"] },
-            { q: "What shape is a pizza?", a: "circle", options: ["square", "triangle", "circle"] },
-            { q: "How many sides does a hexagon have?", a: "6", options: ["5", "6", "7"] },
-            { q: "What shape is a can of soup?", a: "cylinder", options: ["cube", "sphere", "cylinder"] },
-            { q: "How many faces does a cube have?", a: "6", options: ["4", "6", "8"] },
-            { q: "What shape is a wheel?", a: "circle", options: ["square", "triangle", "circle"] },
-            { q: "How many sides does a rectangle have?", a: "4", options: ["3", "4", "5"] },
-            { q: "What shape is a door?", a: "rectangle", options: ["circle", "rectangle", "triangle"] },
-            { q: "How many vertices does a triangle have?", a: "3", options: ["3", "4", "5"] },
-            { q: "What shape is a cone?", a: "cone", options: ["cube", "sphere", "cone"] },
-            { q: "How many sides does an octagon have?", a: "8", options: ["6", "7", "8"] },
-            { q: "What shape is a pyramid?", a: "pyramid", options: ["cube", "pyramid", "cylinder"] }
+            { q: "Which shape has 5 sides?", a: "pentagon", options: ["triangle", "square", "pentagon"] }
         ];
 
         let currentIdx = 0;
         let score = 0;
         let userResults = [];
 
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-        }
-
         function ensureTryAgainButton() {
             const summaryBox = document.getElementById("summary-box");
-            if (summaryBox && !summaryBox.querySelector('button[onclick="location.reload()"]')) {
-                const button = document.createElement('button');
-                button.className = 'next-btn';
-                button.style.display = 'block';
-                button.style.marginTop = '20px';
-                button.innerText = 'Try Again';
-                button.onclick = function() { location.reload(); };
-                const backButton = summaryBox.querySelector('button[onclick^="location.href"]');
-                summaryBox.insertBefore(button, backButton || null);
-            }
-        }
+            if (!summaryBox) return;
+            if (summaryBox.querySelector('button.try-again-btn')) return;
 
-        function initializeQuiz() {
-            shuffleArray(quizData);
-            loadQuestion();
+            const button = document.createElement("button");
+            button.className = "next-btn try-again-btn";
+            button.style.display = "block";
+            button.style.marginTop = "20px";
+            button.innerText = "Try Again";
+            button.onclick = () => location.reload();
+            summaryBox.insertBefore(button, summaryBox.querySelector('a') || null);
         }
 
         function loadQuestion() {
@@ -97,10 +69,10 @@
             document.getElementById("question").innerText = current.q;
             document.getElementById("feedback").innerText = "";
             document.getElementById("next-button").style.display = "none";
-            
+           
             const optionsContainer = document.getElementById("options");
             optionsContainer.innerHTML = "";
-            
+           
             current.options.forEach(option => {
                 const btn = document.createElement("button");
                 btn.className = "option-btn";
@@ -110,18 +82,21 @@
             });
         }
 
+        function initializeQuiz() {
+            loadQuestion();
+        }
+
         function checkAnswer(selected) {
             const current = quizData[currentIdx];
             const feedback = document.getElementById("feedback");
-            const btns = document.querySelectorAll(".option-btn");
-            btns.forEach(b => b.disabled = true);
+            
             if (selected === current.a) {
-                feedback.innerText = "Splashtastic! Correct.";
+                feedback.innerText = "Correct! 🎉";
                 feedback.className = "feedback correct";
                 score++;
                 userResults.push({ q: current.q, res: "Correct", class: "correct" });
             } else {
-                feedback.innerText = "Glub! The correct answer was " + current.a;
+                feedback.innerText = "Oops! The correct answer was " + current.a;
                 feedback.className = "feedback wrong";
                 userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
             }
@@ -130,29 +105,32 @@
 
         function loadNextQuestion() {
             currentIdx++;
-            if (currentIdx < quizData.length) { loadQuestion(); } 
-            else { showSummary(); }
+            if (currentIdx < quizData.length) {
+                loadQuestion();
+            } else {
+                showSummary();
+            }
         }
 
-        function showSummary() {
-            document.getElementById("quiz-box").classList.add("hidden");
-            const summaryBox = document.getElementById("summary-box");
-            summaryBox.classList.remove("hidden");
-            ensureTryAgainButton();
-            
-            const list = document.getElementById("results-list");
-            list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
-            
-            userResults.forEach(item => {
-                const div = document.createElement("div");
-                div.className = "summary-item";
-                div.innerHTML = `<strong>${item.q}</strong> - <span class="${item.class}">${item.res}</span>`;
-                list.appendChild(div);
-            });
-        }
+       function showSummary() {
+           document.getElementById("quiz-box").classList.add("hidden");
+           const summaryBox = document.getElementById("summary-box");
+           summaryBox.classList.remove("hidden");
+           ensureTryAgainButton();
+          
+           const list = document.getElementById("results-list");
+           list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
+          
+           userResults.forEach(item => {
+               const div = document.createElement("div");
+               div.className = "summary-item";
+               div.innerHTML = `<strong>${item.q}</strong> - <span class="${item.class}">${item.res}</span>`;
+               list.appendChild(div);
+           });
+       }
 
-        // Start the quiz
-        initializeQuiz();
-    </script>
+       // Start the quiz
+       initializeQuiz();
+   </script>
 </body>
 </html>

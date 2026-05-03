@@ -1,144 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solar Systems Quiz - Study Buddy</title>
-    <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 500px; text-align: center; }
-        h2 { color: #667eea; }
-        .options-container { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
-        .option-btn { padding: 12px; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; font-size: 1.1rem; transition: 0.2s; }
-        .option-btn:hover { border-color: #667eea; background: #f0f2ff; }
-        .feedback { margin: 15px 0; font-weight: bold; min-height: 24px; }
-        .correct { color: #28a745; }
-        .wrong { color: #dc3545; }
-        .next-btn { background: #667eea; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; display: none; margin: 0 auto; }
-        .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #eee; }
-        .hidden { display: none; }
-    </style>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Solar Systems Quiz - Study Buddy</title>
+   <style>
+       body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+       .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 500px; text-align: center; }
+       h2 { color: #667eea; }
+       .options-container { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+       .option-btn { padding: 12px; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; font-size: 1.1rem; transition: 0.2s; }
+       .option-btn:hover { border-color: #667eea; background: #f0f2ff; }
+       .feedback { margin: 15px 0; font-weight: bold; min-height: 24px; }
+       .correct { color: #28a745; }
+       .wrong { color: #dc3545; }
+       .next-btn { background: #667eea; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; display: none; margin: 0 auto; }
+       .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #eee; }
+       .hidden { display: none; }
+   </style>
 </head>
 <body>
 
-    <div class="quiz-container" id="quiz-box">
-        <h2 id="question-text">Question</h2>
-        <div class="options-container" id="options"></div>
-        <div id="feedback" class="feedback"></div>
-        <button id="next-button" class="next-btn" onclick="loadNextQuestion()">Next Question</button>
-    </div>
+   <div class="quiz-container" id="quiz-box">
+       <h2 id="question-text">Question</h2>
+       <div class="options-container" id="options"></div>
+       <div id="feedback" class="feedback"></div>
+       <button id="next-button" class="next-btn" onclick="loadNextQuestion()">Next Question</button>
+   </div>
 
-    <div class="quiz-container hidden" id="summary-box">
-        <h2>Quiz Complete!</h2>
-        <div id="results-list"></div>
-        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
-        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade1-science-topics.html'">Back to Topics</button>
-    </div>
+   <div class="quiz-container hidden" id="summary-box">
+       <h2>Quiz Complete!</h2>
+       <div id="results-list"></div>
+       <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
+       <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade1-science-topics.html'">Back to Topics</button>
+   </div>
 
-    <script>
-        const quizData = [
-            { q: "What planet do we live on?", a: "Earth", options: ["Mars", "Venus", "Earth   "] },
-            { q: "Which planet is known as the Red Planet?", a: "Mars", options: ["Jupiter", "Mars", "Saturn"] },
-            { q: "What is the largest planet in our solar system?", a: "Jupiter", options: ["Saturn", "Jupiter", "Neptune"] },
-            { q: "What shines in the sky during the day?", a: "The Sun", options: ["The Moon", "The Sun", "A Star"] }
-        ];
+   <script>
+       const quizData = [
+           { q: "What planet do we live on?", a: "Earth", options: ["Mars", "Earth", "Jupiter", "Venus"] },
+           { q: "What big, hot star shines in the sky during the day?", a: "The Sun", options: ["The Moon", "The Sun", "A Comet", "A Cloud"] },
+           { q: "When does the Moon mostly come out?", a: "At night", options: ["At lunchtime", "In the morning", "At night", "In the afternoon"] },
+           { q: "What is the Earth mostly covered with?", a: "Water and land", options: ["Candy and toys", "Water and land", "Fire and ice", "Sand and juice"] },
+           { q: "Which planet is known as the \"Red Planet\"?", a: "Mars", options: ["Earth", "Saturn", "Mars", "Neptune"] },
+           { q: "How many suns do we have in our solar system?", a: "1", options: ["1", "2", "5", "10"] },
+           { q: "What do we call a person who travels into space?", a: "An Astronaut", options: ["A Pilot", "A Doctor", "An Astronaut", "A Farmer"] },
+           { q: "Which planet is the largest in our solar system?", a: "Jupiter", options: ["Mercury", "Earth", "Jupiter", "Mars"] },
+           { q: "What are the rings around the planet Saturn made of?", a: "Ice and rock", options: ["Ice and rock", "Rubber bands", "Cotton candy", "Gold coins"] },
+           { q: "Which is the closest planet to the Sun?", a: "Mercury", options: ["Earth", "Venus", "Mercury", "Jupiter"] },
+           { q: "What do we use to look at far-away stars and planets?", a: "A Telescope", options: ["Sunglasses", "A Microscope", "A Telescope", "A Magnifying glass"] },
+           { q: "What gives the Moon its light?", a: "It reflects the Sun's light", options: ["It has batteries", "It reflects the Sun's light", "It is made of lightbulbs", "It is on fire"] },
+           { q: "Which planet is called the \"Blue Planet\" because of its water?", a: "Earth", options: ["Mars", "Earth", "Venus", "Saturn"] },
+           { q: "How many planets are in our solar system?", a: "8", options: ["5", "8", "12", "20"] },
+           { q: "What is the shape of the Earth?", a: "A round ball (sphere)", options: ["A flat pancake", "A square box", "A round ball (sphere)", "A triangle"] },
+           { q: "What do we call a group of stars that makes a picture in the sky?", a: "A Constellation", options: ["A Constellation", "A Galaxy", "A Planet", "A Moon"] },
+           { q: "Which of these is NOT a planet?", a: "The Sun", options: ["Venus", "The Sun", "Neptune", "Saturn"] },
+           { q: "What do we call the path a planet takes around the Sun?", a: "An Orbit", options: ["A Road", "An Orbit", "A Slide", "A Tunnel"] },
+           { q: "Gravity is the force that:", a: "Keeps us on the ground", options: ["Keeps us on the ground", "Makes us fly", "Makes things disappear", "Changes our hair color"] },
+           { q: "Which planet is the coldest and farthest from the Sun?", a: "Neptune", options: ["Mercury", "Mars", "Neptune", "Venus"] }
+       ];
 
-        let currentIdx = 0;
-        let score = 0;
-        let userResults = [];
+       let currentIdx = 0;
+       let score = 0;
+       let userResults = [];
 
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-        }
+       function shuffleArray(array) {
+           for (let i = array.length - 1; i > 0; i--) {
+               const j = Math.floor(Math.random() * (i + 1));
+               [array[i], array[j]] = [array[j], array[i]];
+           }
+       }
 
-        function ensureTryAgainButton() {
-            const summaryBox = document.getElementById("summary-box");
-            if (summaryBox && !summaryBox.querySelector('button[onclick="location.reload()"]')) {
-                const button = document.createElement('button');
-                button.className = 'next-btn';
-                button.style.display = 'block';
-                button.style.marginTop = '20px';
-                button.innerText = 'Try Again';
-                button.onclick = function() { location.reload(); };
-                const backButton = summaryBox.querySelector('button[onclick^="location.href"]');
-                summaryBox.insertBefore(button, backButton || null);
-            }
-        }
+       function ensureTryAgainButton() {
+           const summaryBox = document.getElementById("summary-box");
+           if (summaryBox && !summaryBox.querySelector('button[onclick="location.reload()"]')) {
+               const button = document.createElement('button');
+               button.className = 'next-btn';
+               button.style.display = 'block';
+               button.style.marginTop = '20px';
+               button.innerText = 'Try Again';
+               button.onclick = function() { location.reload(); };
+               const backButton = summaryBox.querySelector('button[onclick^="location.href"]');
+               summaryBox.insertBefore(button, backButton || null);
+           }
+       }
 
-        function initializeQuiz() {
-            shuffleArray(quizData);
-            loadQuestion();
-        }
+       function initializeQuiz() {
+           shuffleArray(quizData);
+           loadQuestion();
+       }
 
-        function loadQuestion() {
-            const current = quizData[currentIdx];
-            document.getElementById("question-text").innerText = current.q;
-            const optionsDiv = document.getElementById("options");
-            optionsDiv.innerHTML = "";
-            document.getElementById("feedback").innerText = "";
-            document.getElementById("next-button").style.display = "none";
+       function loadQuestion() {
+           const current = quizData[currentIdx];
+           document.getElementById("question-text").innerText = current.q;
+           const optionsDiv = document.getElementById("options");
+           optionsDiv.innerHTML = "";
+           document.getElementById("feedback").innerText = "";
+           document.getElementById("next-button").style.display = "none";
 
-            current.options.forEach(opt => {
-                const btn = document.createElement("button");
-                btn.innerText = opt;
-                btn.className = "option-btn";
-                btn.onclick = () => checkAnswer(opt);
-                optionsDiv.appendChild(btn);
-            });
-        }
+           current.options.forEach(opt => {
+               const btn = document.createElement("button");
+               btn.innerText = opt;
+               btn.className = "option-btn";
+               btn.onclick = () => checkAnswer(opt);
+               optionsDiv.appendChild(btn);
+           });
+       }
 
-        function checkAnswer(selected) {
-            const current = quizData[currentIdx];
-            const feedback = document.getElementById("feedback");
-            const btns = document.querySelectorAll(".option-btn");
-            
-            // Disable buttons after answer
-            btns.forEach(b => b.disabled = true);
+       function checkAnswer(selected) {
+           const current = quizData[currentIdx];
+           const feedback = document.getElementById("feedback");
+           const btns = document.querySelectorAll(".option-btn");
+          
+           btns.forEach(b => b.disabled = true);
 
-            if (selected === current.a) {
-                feedback.innerText = "Correct! Well done.";
-                feedback.className = "feedback correct";
-                score++;
-                userResults.push({ q: current.q, res: "Correct", class: "correct" });
-            } else {
-                feedback.innerText = "Oops! The correct answer was " + current.a;
-                feedback.className = "feedback wrong";
-                userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
-            }
-            document.getElementById("next-button").style.display = "block";
-        }
+           if (selected === current.a) {
+               feedback.innerText = "Correct! Well done.";
+               feedback.className = "feedback correct";
+               score++;
+               userResults.push({ q: current.q, res: "Correct", class: "correct" });
+           } else {
+               feedback.innerText = "Oops! The correct answer was " + current.a;
+               feedback.className = "feedback wrong";
+               userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
+           }
+           document.getElementById("next-button").style.display = "block";
+       }
 
-        function loadNextQuestion() {
-            currentIdx++;
-            if (currentIdx < quizData.length) {
-                loadQuestion();
-            } else {
-                showSummary();
-            }
-        }
+       function loadNextQuestion() {
+           currentIdx++;
+           if (currentIdx < quizData.length) {
+               loadQuestion();
+           } else {
+               showSummary();
+           }
+       }
 
-        function showSummary() {
-            document.getElementById("quiz-box").classList.add("hidden");
-            const summaryBox = document.getElementById("summary-box");
-            summaryBox.classList.remove("hidden");
-            ensureTryAgainButton();
-            
-            const list = document.getElementById("results-list");
-            list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
-            
-            userResults.forEach(item => {
-                const div = document.createElement("div");
-                div.className = "summary-item";
-                div.innerHTML = `<strong>${item.q}</strong> - <span class="${item.class}">${item.res}</span>`;
-                list.appendChild(div);
-            });
-        }
+       function showSummary() {
+           document.getElementById("quiz-box").classList.add("hidden");
+           const summaryBox = document.getElementById("summary-box");
+           summaryBox.classList.remove("hidden");
+           ensureTryAgainButton();
+          
+           const list = document.getElementById("results-list");
+           list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
+          
+           userResults.forEach(item => {
+               const div = document.createElement("div");
+               div.className = "summary-item";
+               div.innerHTML = `<strong>${item.q}</strong> - <span class="${item.class}">${item.res}</span>`;
+               list.appendChild(div);
+           });
+       }
 
-        // Start the quiz
-        initializeQuiz();
-    </script>
+       initializeQuiz();
+   </script>
 </body>
 </html>

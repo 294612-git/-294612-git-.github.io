@@ -1,154 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grade 1 History - Maps</title>
-    <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 540px; text-align: center; }
-        h2 { color: #667eea; }
-        .options-container { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
-        .option-btn { padding: 12px; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; font-size: 1.1rem; transition: 0.2s; }
-        .option-btn:hover { border-color: #667eea; background: #f0f2ff; }
-        .feedback { margin: 15px 0; font-weight: bold; min-height: 24px; }
-        .correct { color: #28a745; }
-        .wrong { color: #dc3545; }
-        .next-btn { background: #667eea; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; display: none; margin: 0 auto; }
-        .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #eee; }
-        .hidden { display: none; }
-    </style>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Grade 1 History - Maps</title>
+   <style>
+       body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+       .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 540px; text-align: center; }
+       h2 { color: #667eea; }
+       .options-container { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+       .option-btn { padding: 12px; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; font-size: 1.1rem; transition: 0.2s; }
+       .option-btn:hover { border-color: #667eea; background: #f0f2ff; }
+       .feedback { margin: 15px 0; font-weight: bold; min-height: 24px; }
+       .correct { color: #28a745; }
+       .wrong { color: #dc3545; }
+       .next-btn { background: #667eea; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; display: none; margin: 10px auto; width: 100%; max-width: 200px; }
+       .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #eee; }
+       .hidden { display: none; }
+   </style>
 </head>
 <body>
 
-    <div class="quiz-container" id="quiz-box">
-        <h2 id="question-text">Question</h2>
-        <div class="options-container" id="options"></div>
-        <div id="feedback" class="feedback"></div>
-        <button id="next-button" class="next-btn" onclick="loadNextQuestion()">Next Question</button>
-    </div>
+   <div class="quiz-container" id="quiz-box">
+       <h2 id="question-text">Question</h2>
+       <div class="options-container" id="options"></div>
+       <div id="feedback" class="feedback"></div>
+       <button id="next-button" class="next-btn" onclick="loadNextQuestion()">Next Question</button>
+   </div>
 
-    <div class="quiz-container hidden" id="summary-box">
-        <h2>Quiz Complete!</h2>
-        <div id="results-list"></div>
-        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade1-history.html'">Back to History Topics</button>
-    </div>
+   <div class="quiz-container hidden" id="summary-box">
+       <h2>Quiz Complete!</h2>
+       <div id="results-list"></div>
+       <button class="next-btn" style="display:block;" onclick="location.reload()">Try Again</button>
+       <button class="next-btn" style="display:block;" onclick="window.history.back()">Back to History Topics</button>
+   </div>
 
-    <script>
-        const quizData = [
-            { q: "What is a map?", a: "shows places", options: ["shows food", "shows places", "shows animals"] },
-            { q: "What is a globe?", a: "round map", options: ["flat map", "round map", "square map"] },
-            { q: "What is north?", a: "up direction", options: ["down direction", "up direction", "side direction"] },
-            { q: "What is south?", a: "down direction", options: ["up direction", "down direction", "side direction"] },
-            { q: "What is east?", a: "right direction", options: ["left direction", "right direction", "up direction"] },
-            { q: "What is west?", a: "left direction", options: ["right direction", "left direction", "down direction"] },
-            { q: "What is a compass?", a: "direction finder", options: ["food finder", "direction finder", "animal finder"] },
-            { q: "What is a key on a map?", a: "explains symbols", options: ["opens door", "explains symbols", "plays music"] },
-            { q: "What color is land?", a: "green or brown", options: ["blue", "green or brown", "red"] },
-            { q: "What color is water?", a: "blue", options: ["green", "blue", "brown"] },
-            { q: "What are continents?", a: "big land masses", options: ["small land masses", "big land masses", "water masses"] },
-            { q: "What are oceans?", a: "big water bodies", options: ["small water bodies", "big water bodies", "land bodies"] },
-            { q: "What is a country?", a: "group of states", options: ["single state", "group of states", "group of cities"] },
-            { q: "What is a state?", a: "part of country", options: ["whole country", "part of country", "part of city"] },
-            { q: "What is a city?", a: "big town", options: ["small town", "big town", "village"] },
-            { q: "What is a road?", a: "path for cars", options: ["path for water", "path for cars", "path for air"] },
-            { q: "What is a river?", a: "flowing water", options: ["standing water", "flowing water", "frozen water"] },
-            { q: "What is a mountain?", a: "high land", options: ["low land", "high land", "flat land"] },
-            { q: "What is a border?", a: "line between places", options: ["line between colors", "line between places", "line between animals"] },
-            { q: "What is a capital?", a: "main city", options: ["small city", "main city", "country city"] }
-        ];
+   <script>
+       const quizDataRaw = [
+           { q: "What do maps show us?", a: "Places and where they are", options: ["Places and where they are", "What we should eat", "How to play a game", "The names of our toys"] },
+           { q: "On most maps, what color is used to show water like oceans and lakes?", a: "Blue", options: ["Red", "Green", "Blue", "Yellow"] },
+           { q: "What tool is often printed on a map to help us know which way is North?", a: "A Compass Rose", options: ["A Spoon", "A Compass Rose", "A Ruler", "A Clock"] },
+           { q: "North, South, East, and West are called:", a: "Directions", options: ["Animals", "Directions", "Colors", "Planets"] },
+           { q: "A 'map key' or 'legend' tells us:", a: "What the symbols on the map mean", options: ["Where treasure is", "What the symbols mean", "The artist's name", "How to unlock a door"] },
+           { q: "On a map, what color usually represents land or forests?", a: "Green", options: ["Blue", "Green", "Purple", "Orange"] },
+           { q: "What do we call a book that is full of different maps?", a: "An Atlas", options: ["A Dictionary", "An Atlas", "A Storybook", "A Notebook"] },
+           { q: "Which direction is the opposite of North?", a: "South", options: ["East", "West", "South", "Up"] },
+           { q: "A map that is shaped like a round ball to show the whole Earth is called a:", a: "Globe", options: ["Square", "Globe", "Circle", "Box"] },
+           { q: "What might a small 'star' symbol on a map represent?", a: "A capital city", options: ["A star in the sky", "A capital city", "A mountain", "A park"] },
+           { q: "If you are looking at a map, which direction is usually at the very top?", a: "North", options: ["South", "East", "North", "West"] },
+           { q: "What do we call the line that divides the Earth into a top and bottom half?", a: "The Equator", options: ["The North Pole", "The Equator", "The Finish Line", "The Street"] },
+           { q: "Which direction does the sun rise in the morning?", a: "East", options: ["North", "South", "East", "West"] },
+           { q: "A map of your neighborhood might show:", a: "Streets and houses", options: ["Every planet", "Streets and houses", "Inside the fridge", "Your future job"] },
+           { q: "What do we call a large area of land, like North America?", a: "A Continent", options: ["A City", "A Continent", "A State", "A Street"] },
+           { q: "If you walk toward the sunset in the evening, which direction are you going?", a: "West", options: ["North", "East", "South", "West"] },
+           { q: "A symbol that looks like a tiny tent on a map might mean:", a: "A campground", options: ["A hospital", "A campground", "A grocery store", "A swimming pool"] },
+           { q: "What does a 'Scale' on a map help you measure?", a: "The distance between two places", options: ["The map's weight", "The distance", "Water temperature", "Population"] },
+           { q: "What is a 'Border' on a map?", a: "A line that shows where one place ends", options: ["A line that shows where one place ends", "A type of tree", "The name of the ocean", "A road for bicycles"] },
+           { q: "Which of these is a large body of salt water shown on a map?", a: "An Ocean", options: ["A Pond", "A River", "An Ocean", "A Puddle"] }
+       ];
 
-        let currentIdx = 0;
-        let score = 0;
-        let userResults = [];
+       function shuffle(array) {
+           for (let i = array.length - 1; i > 0; i--) {
+               const j = Math.floor(Math.random() * (i + 1));
+               [array[i], array[j]] = [array[j], array[i]];
+           }
+           return array;
+       }
 
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-        }
+       const quizData = shuffle([...quizDataRaw]).slice(0, 5);
+       let currentIdx = 0;
+       let score = 0;
+       let userResults = [];
 
-        function ensureTryAgainButton() {
-            const summaryBox = document.getElementById("summary-box");
-            if (summaryBox && !summaryBox.querySelector('button[onclick="location.reload()"]')) {
-                const button = document.createElement('button');
-                button.className = 'next-btn';
-                button.style.display = 'block';
-                button.style.marginTop = '20px';
-                button.innerText = 'Try Again';
-                button.onclick = function() { location.reload(); };
-                const backButton = summaryBox.querySelector('button[onclick^="location.href"]');
-                summaryBox.insertBefore(button, backButton || null);
-            }
-        }
+       function loadQuestion() {
+           const current = quizData[currentIdx];
+           document.getElementById("question-text").innerText = current.q;
+           const optionsDiv = document.getElementById("options");
+           optionsDiv.innerHTML = "";
+           document.getElementById("feedback").innerText = "";
+           document.getElementById("next-button").style.display = "none";
 
-        function initializeQuiz() {
-            shuffleArray(quizData);
-            loadQuestion();
-        }
+           current.options.forEach(opt => {
+               const btn = document.createElement("button");
+               btn.innerText = opt;
+               btn.className = "option-btn";
+               btn.onclick = () => checkAnswer(opt);
+               optionsDiv.appendChild(btn);
+           });
+       }
 
-        function loadQuestion() {
-            const current = quizData[currentIdx];
-            document.getElementById("question-text").innerText = current.q;
-            const optionsDiv = document.getElementById("options");
-            optionsDiv.innerHTML = "";
-            document.getElementById("feedback").innerText = "";
-            document.getElementById("next-button").style.display = "none";
+       function checkAnswer(selected) {
+           const current = quizData[currentIdx];
+           const feedback = document.getElementById("feedback");
+           const btns = document.querySelectorAll(".option-btn");
+           btns.forEach(b => b.disabled = true);
 
-            current.options.forEach(opt => {
-                const btn = document.createElement("button");
-                btn.innerText = opt;
-                btn.className = "option-btn";
-                btn.onclick = () => checkAnswer(opt);
-                optionsDiv.appendChild(btn);
-            });
-        }
+           if (selected === current.a) {
+               feedback.innerText = "Correct! Well done.";
+               feedback.className = "feedback correct";
+               score++;
+               userResults.push({ q: current.q, res: "Correct", class: "correct" });
+           } else {
+               feedback.innerText = "Oops! The correct answer was " + current.a + ".";
+               feedback.className = "feedback wrong";
+               userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
+           }
+           document.getElementById("next-button").style.display = "block";
+       }
 
-        function checkAnswer(selected) {
-            const current = quizData[currentIdx];
-            const feedback = document.getElementById("feedback");
-            const btns = document.querySelectorAll(".option-btn");
-            btns.forEach(b => b.disabled = true);
+       function loadNextQuestion() {
+           currentIdx++;
+           if (currentIdx < quizData.length) {
+               loadQuestion();
+           } else {
+               showSummary();
+           }
+       }
 
-            if (selected === current.a) {
-                feedback.innerText = "Correct! Well done.";
-                feedback.className = "feedback correct";
-                score++;
-                userResults.push({ q: current.q, res: "Correct", class: "correct" });
-            } else {
-                feedback.innerText = "Oops! The correct answer was " + current.a + ".";
-                feedback.className = "feedback wrong";
-                userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
-            }
-            document.getElementById("next-button").style.display = "block";
-        }
+       function showSummary() {
+           document.getElementById("quiz-box").classList.add("hidden");
+           const summaryBox = document.getElementById("summary-box");
+           summaryBox.classList.remove("hidden");
+           const list = document.getElementById("results-list");
+           list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
+           userResults.forEach(item => {
+               const div = document.createElement("div");
+               div.className = "summary-item";
+               div.innerHTML = `<strong>${item.q}</strong> - <span class="${item.class}">${item.res}</span>`;
+               list.appendChild(div);
+           });
+       }
 
-        function loadNextQuestion() {
-            currentIdx++;
-            if (currentIdx < quizData.length) {
-                loadQuestion();
-            } else {
-                showSummary();
-            }
-        }
-
-        function showSummary() {
-            document.getElementById("quiz-box").classList.add("hidden");
-            const summaryBox = document.getElementById("summary-box");
-            summaryBox.classList.remove("hidden");
-            ensureTryAgainButton();
-            const list = document.getElementById("results-list");
-            list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
-            userResults.forEach(item => {
-                const div = document.createElement("div");
-                div.className = "summary-item";
-                div.innerHTML = `<strong>${item.q}</strong> - <span class="${item.class}">${item.res}</span>`;
-                list.appendChild(div);
-            });
-        }
-
-        initializeQuiz();
-    </script>
+       loadQuestion();
+   </script>
 </body>
 </html>
