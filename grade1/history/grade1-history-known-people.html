@@ -1,154 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grade 1 History - Known People</title>
-    <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 540px; text-align: center; }
-        h2 { color: #667eea; }
-        .options-container { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
-        .option-btn { padding: 12px; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; font-size: 1.1rem; transition: 0.2s; }
-        .option-btn:hover { border-color: #667eea; background: #f0f2ff; }
-        .feedback { margin: 15px 0; font-weight: bold; min-height: 24px; }
-        .correct { color: #28a745; }
-        .wrong { color: #dc3545; }
-        .next-btn { background: #667eea; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; display: none; margin: 0 auto; }
-        .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #eee; }
-        .hidden { display: none; }
-    </style>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Grade 1 History - Known People</title>
+   <style>
+       body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+       .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 540px; text-align: center; }
+       h2 { color: #667eea; }
+       .options-container { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+       .option-btn { padding: 12px; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; font-size: 1.1rem; transition: 0.2s; }
+       .option-btn:hover { border-color: #667eea; background: #f0f2ff; }
+       .feedback { margin: 15px 0; font-weight: bold; min-height: 24px; }
+       .correct { color: #28a745; }
+       .wrong { color: #dc3545; }
+       .next-btn { background: #667eea; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; display: none; margin: 10px auto; width: 100%; max-width: 200px; }
+       .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #eee; }
+       .hidden { display: none; }
+   </style>
 </head>
 <body>
 
-    <div class="quiz-container" id="quiz-box">
-        <h2 id="question-text">Question</h2>
-        <div class="options-container" id="options"></div>
-        <div id="feedback" class="feedback"></div>
-        <button id="next-button" class="next-btn" onclick="loadNextQuestion()">Next Question</button>
-    </div>
+   <div class="quiz-container" id="quiz-box">
+       <h2 id="question-text">Question</h2>
+       <div class="options-container" id="options"></div>
+       <div id="feedback" class="feedback"></div>
+       <button id="next-button" class="next-btn" onclick="loadNextQuestion()">Next Question</button>
+   </div>
 
-    <div class="quiz-container hidden" id="summary-box">
-        <h2>Quiz Complete!</h2>
-        <div id="results-list"></div>
-        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade1-history.html'">Back to History Topics</button>
-    </div>
+   <div class="quiz-container hidden" id="summary-box">
+       <h2>Quiz Complete!</h2>
+       <div id="results-list"></div>
+       <button class="next-btn" style="display:block;" onclick="location.reload()">Try Again</button>
+       <button class="next-btn" style="display:block;" onclick="window.history.back()">Back to History Topics</button>
+   </div>
 
-    <script>
-        const quizData = [
-            { q: "Who is the president?", a: "leader of country", options: ["teacher", "leader of country", "doctor"] },
-            { q: "Who was George Washington?", a: "first president", options: ["last president", "first president", "soldier"] },
-            { q: "Who was Abraham Lincoln?", a: "ended slavery", options: ["started slavery", "ended slavery", "invented car"] },
-            { q: "Who was Martin Luther King?", a: "civil rights leader", options: ["soldier", "civil rights leader", "teacher"] },
-            { q: "Who was Christopher Columbus?", a: "explorer", options: ["farmer", "explorer", "doctor"] },
-            { q: "Who were the Pilgrims?", a: "early settlers", options: ["native people", "early settlers", "soldiers"] },
-            { q: "Who was Sacagawea?", a: "guide for explorers", options: ["cook", "guide for explorers", "teacher"] },
-            { q: "Who was Harriet Tubman?", a: "helped slaves escape", options: ["slave owner", "helped slaves escape", "soldier"] },
-            { q: "Who was Rosa Parks?", a: "refused bus seat", options: ["bus driver", "refused bus seat", "teacher"] },
-            { q: "Who was Susan B. Anthony?", a: "women's rights", options: ["men's rights", "women's rights", "children's rights"] },
-            { q: "Who was Thomas Jefferson?", a: "wrote Declaration", options: ["wrote Constitution", "wrote Declaration", "wrote Bible"] },
-            { q: "Who was Benjamin Franklin?", a: "inventor statesman", options: ["farmer", "inventor statesman", "soldier"] },
-            { q: "Who was John Adams?", a: "second president", options: ["first president", "second president", "third president"] },
-            { q: "Who was Theodore Roosevelt?", a: "conservation president", options: ["war president", "conservation president", "peace president"] },
-            { q: "Who was Franklin D. Roosevelt?", a: "WWII president", options: ["WWI president", "WWII president", "Cold War president"] },
-            { q: "Who was John F. Kennedy?", a: "young president", options: ["old president", "young president", "tall president"] },
-            { q: "Who was Ronald Reagan?", a: "actor president", options: ["singer president", "actor president", "dancer president"] },
-            { q: "Who was Barack Obama?", a: "first black president", options: ["first white president", "first black president", "first woman president"] },
-            { q: "Who was Donald Trump?", a: "businessman president", options: ["lawyer president", "businessman president", "doctor president"] },
-            { q: "Who is Joe Biden?", a: "current president", options: ["past president", "current president", "future president"] }
-        ];
+   <script>
+       const quizDataRaw = [
+           { q: "Who is the leader of our country (the United States)?", a: "The President", options: ["The Principal", "The President", "The Coach", "The Mayor"] },
+           { q: "Who was the very first President of the United States?", a: "George Washington", options: ["Abraham Lincoln", "George Washington", "Benjamin Franklin", "Thomas Jefferson"] },
+           { q: "Who are the people that work together to help make laws for our country?", a: "Government leaders", options: ["Government leaders", "Students", "Small children", "Animals"] },
+           { q: "Which President was a leader during the Civil War and helped end slavery?", a: "Abraham Lincoln", options: ["George Washington", "Abraham Lincoln", "Barack Obama", "Theodore Roosevelt"] },
+           { q: "Who was a brave woman that led people to freedom on the Underground Railroad?", a: "Harriet Tubman", options: ["Rosa Parks", "Harriet Tubman", "Betsy Ross", "Amelia Earhart"] },
+           { q: "Who is the leader of a city or a town?", a: "The Mayor", options: ["The President", "The Mayor", "The Governor", "The Captain"] },
+           { q: "Who was a leader who gave a famous speech about having a 'Dream' for fairness?", a: "Martin Luther King Jr.", options: ["Martin Luther King Jr.", "John F. Kennedy", "George Washington", "Ben Franklin"] },
+           { q: "Who was the first African American President of the United States?", a: "Barack Obama", options: ["Abraham Lincoln", "Barack Obama", "Joe Biden", "Bill Clinton"] },
+           { q: "Which famous American was an inventor who helped discover electricity with a kite?", a: "Benjamin Franklin", options: ["Benjamin Franklin", "Thomas Edison", "Alexander Bell", "Albert Einstein"] },
+           { q: "Who was a brave woman who refused to give up her seat on a bus?", a: "Rosa Parks", options: ["Harriet Tubman", "Rosa Parks", "Helen Keller", "Susan B. Anthony"] },
+           { q: "Who is the leader of a state (like Texas or New York)?", a: "The Governor", options: ["The President", "The Governor", "The Mayor", "The Judge"] },
+           { q: "Who was a famous pilot who was the first woman to fly alone across the Atlantic?", a: "Amelia Earhart", options: ["Sally Ride", "Amelia Earhart", "Bessie Coleman", "Mary Jackson"] },
+           { q: "What do we call the group of people who help the President make big decisions?", a: "The Cabinet", options: ["The Team", "The Cabinet", "The Class", "The Audience"] },
+           { q: "Who was a famous scientist who studied plants and found many uses for peanuts?", a: "George Washington Carver", options: ["George Washington Carver", "Isaac Newton", "Charles Darwin", "Neil Armstrong"] },
+           { q: "Who was the first person to walk on the moon?", a: "Neil Armstrong", options: ["Buzz Lightyear", "Neil Armstrong", "John Glenn", "Sally Ride"] },
+           { q: "Which leader is known for helping farm workers get better treatment and fair pay?", a: "Cesar Chavez", options: ["Cesar Chavez", "George Washington", "Abraham Lincoln", "Thomas Jefferson"] },
+           { q: "Who was a famous woman who used her writing to help people understand others?", a: "Maya Angelou", options: ["Helen Keller", "Maya Angelou", "Mother Teresa", "Jane Goodall"] },
+           { q: "Which Founding Father is known for writing the Declaration of Independence?", a: "Thomas Jefferson", options: ["Thomas Jefferson", "Alexander Hamilton", "John Adams", "Patrick Henry"] },
+           { q: "Who is the leader of your school?", a: "The Principal", options: ["The Teacher", "The Principal", "The Janitor", "The Librarian"] },
+           { q: "Why do we have leaders in our communities and country?", a: "To help keep people safe and make fair rules", options: ["To help keep people safe", "To tell everyone what to eat", "To win games", "To give away toys"] }
+       ];
 
-        let currentIdx = 0;
-        let score = 0;
-        let userResults = [];
+       function shuffle(array) {
+           for (let i = array.length - 1; i > 0; i--) {
+               const j = Math.floor(Math.random() * (i + 1));
+               [array[i], array[j]] = [array[j], array[i]];
+           }
+           return array;
+       }
 
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-        }
+       const quizData = shuffle([...quizDataRaw]).slice(0, 5);
+       let currentIdx = 0;
+       let score = 0;
+       let userResults = [];
 
-        function ensureTryAgainButton() {
-            const summaryBox = document.getElementById("summary-box");
-            if (summaryBox && !summaryBox.querySelector('button[onclick="location.reload()"]')) {
-                const button = document.createElement('button');
-                button.className = 'next-btn';
-                button.style.display = 'block';
-                button.style.marginTop = '20px';
-                button.innerText = 'Try Again';
-                button.onclick = function() { location.reload(); };
-                const backButton = summaryBox.querySelector('button[onclick^="location.href"]');
-                summaryBox.insertBefore(button, backButton || null);
-            }
-        }
+       function loadQuestion() {
+           const current = quizData[currentIdx];
+           document.getElementById("question-text").innerText = current.q;
+           const optionsDiv = document.getElementById("options");
+           optionsDiv.innerHTML = "";
+           document.getElementById("feedback").innerText = "";
+           document.getElementById("next-button").style.display = "none";
 
-        function initializeQuiz() {
-            shuffleArray(quizData);
-            loadQuestion();
-        }
+           current.options.forEach(opt => {
+               const btn = document.createElement("button");
+               btn.innerText = opt;
+               btn.className = "option-btn";
+               btn.onclick = () => checkAnswer(opt);
+               optionsDiv.appendChild(btn);
+           });
+       }
 
-        function loadQuestion() {
-            const current = quizData[currentIdx];
-            document.getElementById("question-text").innerText = current.q;
-            const optionsDiv = document.getElementById("options");
-            optionsDiv.innerHTML = "";
-            document.getElementById("feedback").innerText = "";
-            document.getElementById("next-button").style.display = "none";
+       function checkAnswer(selected) {
+           const current = quizData[currentIdx];
+           const feedback = document.getElementById("feedback");
+           const btns = document.querySelectorAll(".option-btn");
+           btns.forEach(b => b.disabled = true);
 
-            current.options.forEach(opt => {
-                const btn = document.createElement("button");
-                btn.innerText = opt;
-                btn.className = "option-btn";
-                btn.onclick = () => checkAnswer(opt);
-                optionsDiv.appendChild(btn);
-            });
-        }
+           if (selected === current.a) {
+               feedback.innerText = "Splashtastic! Correct.";
+               feedback.className = "feedback correct";
+               score++;
+               userResults.push({ q: current.q, res: "Correct", class: "correct" });
+           } else {
+               feedback.innerText = "Glub! The correct answer was " + current.a + ".";
+               feedback.className = "feedback wrong";
+               userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
+           }
+           document.getElementById("next-button").style.display = "block";
+       }
 
-        function checkAnswer(selected) {
-            const current = quizData[currentIdx];
-            const feedback = document.getElementById("feedback");
-            const btns = document.querySelectorAll(".option-btn");
-            btns.forEach(b => b.disabled = true);
+       function loadNextQuestion() {
+           currentIdx++;
+           if (currentIdx < quizData.length) {
+               loadQuestion();
+           } else {
+               showSummary();
+           }
+       }
 
-            if (selected === current.a) {
-                feedback.innerText = "Splashtastic! Correct.";
-                feedback.className = "feedback correct";
-                score++;
-                userResults.push({ q: current.q, res: "Correct", class: "correct" });
-            } else {
-                feedback.innerText = "Glub! Incorrect.";
-                feedback.className = "feedback wrong";
-                userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
-            }
-            document.getElementById("next-button").style.display = "block";
-        }
+       function showSummary() {
+           document.getElementById("quiz-box").classList.add("hidden");
+           const summaryBox = document.getElementById("summary-box");
+           summaryBox.classList.remove("hidden");
+           const list = document.getElementById("results-list");
+           list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
+           userResults.forEach(item => {
+               const div = document.createElement("div");
+               div.className = "summary-item";
+               div.innerHTML = `<strong>${item.q}</strong> - <span class="${item.class}">${item.res}</span>`;
+               list.appendChild(div);
+           });
+       }
 
-        function loadNextQuestion() {
-            currentIdx++;
-            if (currentIdx < quizData.length) {
-                loadQuestion();
-            } else {
-                showSummary();
-            }
-        }
-
-        function showSummary() {
-            document.getElementById("quiz-box").classList.add("hidden");
-            const summaryBox = document.getElementById("summary-box");
-            summaryBox.classList.remove("hidden");
-            ensureTryAgainButton();
-            const list = document.getElementById("results-list");
-            list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
-            userResults.forEach(item => {
-                const div = document.createElement("div");
-                div.className = "summary-item";
-                div.innerHTML = `<strong>${item.q}</strong> - <span class="${item.class}">${item.res}</span>`;
-                list.appendChild(div);
-            });
-        }
-
-        initializeQuiz();
-    </script>
+       loadQuestion();
+   </script>
 </body>
 </html>
