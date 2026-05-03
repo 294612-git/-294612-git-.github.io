@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 4 Measurement & Area Quiz - Study Buddy</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 600px; }
+        h2 { color: #667eea; text-align: center; }
+        .progress-bar { background: #e0e0e0; height: 10px; border-radius: 5px; margin: 15px 0; overflow: hidden; }
+        .progress-fill { background: #667eea; height: 100%; transition: width 0.3s; }
+        .options-container { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+        .option-btn { padding: 12px; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; text-align: left; font-size: 1rem; transition: 0.2s; }
+        .option-btn:hover { border-color: #667eea; background: #f0f2ff; }
+        .feedback { margin: 15px 0; font-weight: bold; min-height: 24px; text-align: center; }
+        .correct { color: #28a745; }
+        .wrong { color: #dc3545; }
+        .next-btn { background: #667eea; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; display: none; margin: 0 auto; }
+        .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #eee; }
+        .hidden { display: none; }
+        .round-indicator { text-align: center; color: #667eea; font-weight: bold; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-container" id="quiz-box">
+        <div class="round-indicator" id="round-indicator"></div>
+        <h2 id="question-text">Question</h2>
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+        <div class="options-container" id="options"></div>
+        <div id="feedback" class="feedback"></div>
+        <button id="next-button" class="next-btn" onclick="loadNextQuestion()">Next Question</button>
+    </div>
+
+    <div class="quiz-container hidden" id="summary-box">
+        <h2>Quiz Complete!</h2>
+        <div id="results-list"></div>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="loadNewRound()">Try Again (New Round)</button>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade4-math-topics.html'">Back to Topics</button>
+    </div>
+
+    <script>
+        const allQuestions = [
+            // Round 1: Questions 1-10
+            { q: "A rectangle has a length of 6 and a width of 4. What is the Area?", options: ["10", "20", "24", "12"], a: "24" },
+            { q: "What is the Perimeter of the same rectangle (length 6, width 4)?", options: ["10", "20", "24", "18"], a: "20" },
+            { q: "There are exactly 12 inches in one ____.", options: ["Yard", "Foot", "Mile", "Meter"], a: "Foot" },
+            { q: "Which measurement is longer?", options: ["1 meter", "1 centimeter", "1 millimeter", "They are all the same"], a: "1 meter" },
+            { q: "To find the Perimeter of a square with a side of 5, you should ____.", options: ["Multiply 5 × 5", "Add 5 + 5 + 5 + 5", "Multiply 5 × 2", "Divide 5 by 4"], a: "Add 5 + 5 + 5 + 5" },
+            { q: "How many feet are in 1 yard?", options: ["2 feet", "3 feet", "4 feet", "12 feet"], a: "3 feet" },
+            { q: "A square has an area of 49 square units. How long is each side?", options: ["6", "7", "8", "14"], a: "7" },
+            { q: "Which unit would you use to measure the weight of an elephant?", options: ["Ounces", "Pounds", "Tons", "Grams"], a: "Tons" },
+            { q: "How many cups are in 1 quart?", options: ["2 cups", "4 cups", "8 cups", "16 cups"], a: "4 cups" },
+            { q: "A rug is 9 feet long and 5 feet wide. What is its Perimeter?", options: ["45 feet", "14 feet", "28 feet", "32 feet"], a: "28 feet" },
+            // Round 2: Questions 11-20
+            { q: "Which metric unit is best for measuring the distance between two cities?", options: ["Centimeters", "Meters", "Kilometers", "Millimeters"], a: "Kilometers" },
+            { q: "There are ____ grams in 1 kilogram.", options: ["10", "100", "1,000", "1,200"], a: "1,000" },
+            { q: "What is the Area of a square with a perimeter of 16?", options: ["16", "8", "20", "4"], a: "16" },
+            { q: "How many centimeters are in 2 meters?", options: ["20 cm", "200 cm", "2,000 cm", "100 cm"], a: "200 cm" },
+            { q: "Which is heavier: 1 pound or 1 ounce?", options: ["1 pound", "1 ounce", "They are equal"], a: "1 pound" },
+            { q: "A garden has a perimeter of 30 feet. If the length is 10 feet, what is the width?", options: ["20 feet", "5 feet", "10 feet", "15 feet"], a: "5 feet" },
+            { q: "Which tool is used to measure the volume of a liquid?", options: ["Ruler", "Scale", "Graduated cylinder (or measuring cup)", "Clock"], a: "Graduated cylinder (or measuring cup)" },
+            { q: "How many minutes are in 3 hours?", options: ["120 minutes", "150 minutes", "180 minutes", "200 minutes"], a: "180 minutes" },
+            { q: "An angle that measures exactly 90 degrees is called a ____ angle.", options: ["Acute", "Obtuse", "Right", "Straight"], a: "Right" },
+            { q: "If you have 4 gallons of milk, how many quarts do you have?", options: ["8 quarts", "12 quarts", "16 quarts", "40 quarts"], a: "16 quarts" }
+        ];
+
+        let currentRound = 1;
+        let currentIdx = 0;
+        let score = 0;
+        let userResults = [];
+        let quizData = [];
+
+        function loadRound(roundNum) {
+            const startIdx = (roundNum - 1) * 10;
+            const endIdx = startIdx + 10;
+            quizData = allQuestions.slice(startIdx, endIdx);
+            currentIdx = 0;
+            score = 0;
+            userResults = [];
+            document.getElementById("quiz-box").classList.remove("hidden");
+            document.getElementById("summary-box").classList.add("hidden");
+            document.getElementById("round-indicator").innerText = `Round ${roundNum}`;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const current = quizData[currentIdx];
+            document.getElementById("question-text").innerText = `Q${currentIdx + 1}: ${current.q}`;
+            
+            const progress = ((currentIdx + 1) / quizData.length) * 100;
+            document.getElementById("progress-fill").style.width = progress + "%";
+            
+            const optionsDiv = document.getElementById("options");
+            optionsDiv.innerHTML = "";
+            document.getElementById("feedback").innerText = "";
+            document.getElementById("next-button").style.display = "none";
+
+            current.options.forEach((opt, idx) => {
+                const btn = document.createElement("button");
+                btn.innerText = String.fromCharCode(65 + idx) + ") " + opt;
+                btn.className = "option-btn";
+                btn.onclick = () => checkAnswer(opt);
+                optionsDiv.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selected) {
+            const current = quizData[currentIdx];
+            const feedback = document.getElementById("feedback");
+            const btns = document.querySelectorAll(".option-btn");
+            
+            btns.forEach(b => b.disabled = true);
+
+            if (selected === current.a) {
+                feedback.innerText = "✓ Correct! Well done.";
+                feedback.className = "feedback correct";
+                score++;
+                userResults.push({ q: current.q, res: "Correct", class: "correct" });
+            } else {
+                feedback.innerText = "✗ Oops! The correct answer was: " + current.a;
+                feedback.className = "feedback wrong";
+                userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
+            }
+            document.getElementById("next-button").style.display = "block";
+        }
+
+        function loadNextQuestion() {
+            currentIdx++;
+            if (currentIdx < quizData.length) {
+                loadQuestion();
+            } else {
+                showSummary();
+            }
+        }
+
+        function showSummary() {
+            document.getElementById("quiz-box").classList.add("hidden");
+            const summaryBox = document.getElementById("summary-box");
+            summaryBox.classList.remove("hidden");
+            
+            const list = document.getElementById("results-list");
+            list.innerHTML = `<h3>Round ${currentRound} - Final Score: ${score}/10</h3>`;
+            
+            userResults.forEach((item, idx) => {
+                const div = document.createElement("div");
+                div.className = "summary-item";
+                div.innerHTML = `<strong>Q${idx + 1}: ${item.q}</strong><br/><span class="${item.class}">${item.res}</span>`;
+                list.appendChild(div);
+            });
+        }
+
+        function loadNewRound() {
+            currentRound++;
+            if (currentRound <= 2) {
+                loadRound(currentRound);
+            } else {
+                alert("No more rounds available. You've completed all questions!");
+                location.href = "grade4-math-topics.html";
+            }
+        }
+
+        // Start with Round 1
+        loadRound(1);
+    </script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 4 Early America & Native Americans Quiz - Study Buddy</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 600px; }
+        h2 { color: #667eea; text-align: center; }
+        .progress-bar { background: #e0e0e0; height: 10px; border-radius: 5px; margin: 15px 0; overflow: hidden; }
+        .progress-fill { background: #667eea; height: 100%; transition: width 0.3s; }
+        .options-container { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+        .option-btn { padding: 12px; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; text-align: left; font-size: 0.9rem; transition: 0.2s; }
+        .option-btn:hover { border-color: #667eea; background: #f0f2ff; }
+        .feedback { margin: 15px 0; font-weight: bold; min-height: 24px; text-align: center; }
+        .correct { color: #28a745; }
+        .wrong { color: #dc3545; }
+        .next-btn { background: #667eea; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; display: none; margin: 0 auto; }
+        .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+        .hidden { display: none; }
+        .round-indicator { text-align: center; color: #667eea; font-weight: bold; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-container" id="quiz-box">
+        <div class="round-indicator" id="round-indicator"></div>
+        <h2 id="question-text">Question</h2>
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+        <div class="options-container" id="options"></div>
+        <div id="feedback" class="feedback"></div>
+        <button id="next-button" class="next-btn" onclick="loadNextQuestion()">Next Question</button>
+    </div>
+
+    <div class="quiz-container hidden" id="summary-box">
+        <h2>Quiz Complete!</h2>
+        <div id="results-list"></div>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="loadNewRound()">Try Again (New Round)</button>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade4-history-topics.html'">Back to Topics</button>
+    </div>
+
+    <script>
+        const allQuestions = [
+            // Round 1: Questions 1-10
+            { q: "Before European explorers arrived, Native American tribes had lived on the land for thousands of years. How did they primarily obtain what they needed to survive?", options: ["By trading with countries in Europe and Asia", "By using the natural resources available in their environment", "By purchasing goods from large trading posts", "By building factories to manufacture tools"], a: "By using the natural resources available in their environment" },
+            { q: "European explorers like Christopher Columbus traveled across the Atlantic Ocean primarily to ____.", options: ["Find a shorter trade route to Asia and discover riches", "Go on a vacation with their families", "Move away from Europe because it was too crowded", "Study the different types of fish in the ocean"], a: "Find a shorter trade route to Asia and discover riches" },
+            { q: "Native American tribes used natural materials to build homes. Which type was made of wooden frames covered in bark, used in the Eastern Woodlands?", options: ["Tepee", "Longhouse", "Igloo", "Adobe brick house"], a: "Longhouse" },
+            { q: "Which was a major 'Push Factor' that caused Europeans to explore and settle in the 'New World'?", options: ["A desire for religious freedom and to escape wars", "They wanted to see what a cactus looked like", "They were looking for a place with more ice", "They wanted to learn how to grow corn"], a: "A desire for religious freedom and to escape wars" },
+            { q: "The Inuit people lived in the Arctic region. Which adaptation helped them survive in the freezing cold?", options: ["Building homes out of sun-dried mud bricks", "Wearing clothing made of animal skins and fur", "Planting large fields of cotton", "Traveling in large wooden sailing ships"], a: "Wearing clothing made of animal skins and fur" },
+            { q: "What was the 'Northwest Passage' that explorers were searching for?", options: ["A hiking trail through the Appalachian Mountains", "A mythical fountain that made people live forever", "A water route through North America that would lead to Asia", "A map that showed where gold was buried"], a: "A water route through North America that would lead to Asia" },
+            { q: "The Great Plains tribes, like the Sioux, lived in 'Tepees.' Why was this beneficial?", options: ["It was made of heavy stone that never moved", "It was easy to take apart and move while following buffalo herds", "It was built high in trees to stay away from floods", "It was underground to stay cool in summer"], a: "It was easy to take apart and move while following buffalo herds" },
+            { q: "Which explorer is credited with being the first European to reach the Pacific Ocean by crossing the Isthmus of Panama?", options: ["Henry Hudson", "Vasco Núñez de Balboa", "John Cabot", "Jacques Cartier"], a: "Vasco Núñez de Balboa" },
+            { q: "Native Americans in the Southwest (like the Pueblo) built 'Adobe' homes. What is Adobe made of?", options: ["Large blocks of ice and snow", "Cedar wood and tree bark", "A mixture of sun-dried earth (clay) and straw", "Sheets of metal found in mountains"], a: "A mixture of sun-dried earth (clay) and straw" },
+            { q: "What was one of the most negative impacts of European exploration on Native Americans?", options: ["The introduction of new types of horses", "The spread of European diseases that Native Americans had no immunity to", "The sharing of new farming techniques", "The discovery of chocolate"], a: "The spread of European diseases that Native Americans had no immunity to" },
+            // Round 2: Questions 11-20
+            { q: "The 'Columbian Exchange' refers to the transfer of plants, animals, and ideas between ____.", options: ["The North Pole and the South Pole", "The Eastern Hemisphere and the Western Hemisphere (The Americas)", "Different Native American tribes in the West", "Explorers and the kings who paid for their trips"], a: "The Eastern Hemisphere and the Western Hemisphere (The Americas)" },
+            { q: "Which tribe is known for living in the Everglades of Florida and building 'Chickees' (homes with raised floors)?", options: ["Iroquois", "Seminole", "Navajo", "Aztec"], a: "Seminole" },
+            { q: "Why did Spanish explorers specifically settle in areas like Florida and the Southwest?", options: ["To find gold and to spread the Catholic religion (Missions)", "To build large ice skating rinks", "To hunt for whales in the desert", "To find a place where it rained every day"], a: "To find gold and to spread the Catholic religion (Missions)" },
+            { q: "Henry Hudson explored the area that is now New York while looking for the Northwest Passage. Which country paid for his voyage?", options: ["Spain", "France", "The Netherlands (The Dutch)", "Italy"], a: "The Netherlands (The Dutch)" },
+            { q: "Many Native American tribes used 'Wampum.' What was it used for?", options: ["A type of delicious soup", "Polished shells used for storytelling, recording treaties, or as currency", "A weapon used for hunting birds", "A type of boat carved from a single log"], a: "Polished shells used for storytelling, recording treaties, or as currency" },
+            { q: "Which of these crops was native to the Americas and was introduced to Europe during the Columbian Exchange?", options: ["Wheat", "Horses", "Potatoes", "Coffee"], a: "Potatoes" },
+            { q: "A 'Canoe' was a vital tool for many tribes. How was a 'Dugout Canoe' made?", options: ["By sewing together many small pieces of leather", "By hollowing out a large log using fire and stone tools", "By weaving together tall grasses and mud", "By using iron nails and wooden planks"], a: "By hollowing out a large log using fire and stone tools" },
+            { q: "The 'Three Sisters' was a term used by many Native American groups to describe which three crops?", options: ["Apples, Oranges, and Grapes", "Corn, Beans, and Squash", "Wheat, Barley, and Rye", "Cotton, Tobacco, and Indigo"], a: "Corn, Beans, and Squash" },
+            { q: "What does the term 'Circumnavigate' mean?", options: ["To walk across a continent", "To sail all the way around the world", "To draw a very accurate map", "To build a new colony"], a: "To sail all the way around the world" },
+            { q: "Which European country primarily settled in Canada and along the Mississippi River to trap furs and trade with Native Americans?", options: ["England", "Spain", "France", "Portugal"], a: "France" }
+        ];
+
+        let currentRound = 1;
+        let currentIdx = 0;
+        let score = 0;
+        let userResults = [];
+        let quizData = [];
+
+        function loadRound(roundNum) {
+            const startIdx = (roundNum - 1) * 10;
+            const endIdx = startIdx + 10;
+            quizData = allQuestions.slice(startIdx, endIdx);
+            currentIdx = 0;
+            score = 0;
+            userResults = [];
+            document.getElementById("quiz-box").classList.remove("hidden");
+            document.getElementById("summary-box").classList.add("hidden");
+            document.getElementById("round-indicator").innerText = `Round ${roundNum}`;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const current = quizData[currentIdx];
+            document.getElementById("question-text").innerText = `Q${currentIdx + 1}: ${current.q}`;
+            
+            const progress = ((currentIdx + 1) / quizData.length) * 100;
+            document.getElementById("progress-fill").style.width = progress + "%";
+            
+            const optionsDiv = document.getElementById("options");
+            optionsDiv.innerHTML = "";
+            document.getElementById("feedback").innerText = "";
+            document.getElementById("next-button").style.display = "none";
+
+            current.options.forEach((opt, idx) => {
+                const btn = document.createElement("button");
+                btn.innerText = String.fromCharCode(65 + idx) + ") " + opt;
+                btn.className = "option-btn";
+                btn.onclick = () => checkAnswer(opt);
+                optionsDiv.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selected) {
+            const current = quizData[currentIdx];
+            const feedback = document.getElementById("feedback");
+            const btns = document.querySelectorAll(".option-btn");
+            
+            btns.forEach(b => b.disabled = true);
+
+            if (selected === current.a) {
+                feedback.innerText = "✓ Correct! Well done.";
+                feedback.className = "feedback correct";
+                score++;
+                userResults.push({ q: current.q, res: "Correct", class: "correct" });
+            } else {
+                feedback.innerText = "✗ Oops! The correct answer was: " + current.a;
+                feedback.className = "feedback wrong";
+                userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
+            }
+            document.getElementById("next-button").style.display = "block";
+        }
+
+        function loadNextQuestion() {
+            currentIdx++;
+            if (currentIdx < quizData.length) {
+                loadQuestion();
+            } else {
+                showSummary();
+            }
+        }
+
+        function showSummary() {
+            document.getElementById("quiz-box").classList.add("hidden");
+            const summaryBox = document.getElementById("summary-box");
+            summaryBox.classList.remove("hidden");
+            
+            const list = document.getElementById("results-list");
+            list.innerHTML = `<h3>Round ${currentRound} - Final Score: ${score}/10</h3>`;
+            
+            userResults.forEach((item, idx) => {
+                const div = document.createElement("div");
+                div.className = "summary-item";
+                div.innerHTML = `<strong>Q${idx + 1}: ${item.q}</strong><br/><span class="${item.class}">${item.res}</span>`;
+                list.appendChild(div);
+            });
+        }
+
+        function loadNewRound() {
+            currentRound++;
+            if (currentRound <= 2) {
+                loadRound(currentRound);
+            } else {
+                alert("No more rounds available. You've completed all questions!");
+                location.href = "grade4-history-topics.html";
+            }
+        }
+
+        // Start with Round 1
+        loadRound(1);
+    </script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 6 Math Quiz: Ratios, Rates, and Percents - Study Buddy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Quicksand', sans-serif; 
+            background-color: #e0f7fa; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0; 
+        }
+        .quiz-container { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 20px; 
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1); 
+            width: 90%; 
+            max-width: 500px; 
+            text-align: center; 
+            border: 4px dashed #00acc1;
+        }
+        h1 { font-family: 'Fredoka', cursive; color: #007c91; font-size: 1.5rem; }
+        h2 { font-family: 'Fredoka', cursive; color: #007c91; }
+        .options-container { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+        .option-btn { 
+            padding: 12px; 
+            border: 3px solid #b2ebf2; 
+            border-radius: 50px; 
+            background: white; 
+            cursor: pointer; 
+            font-size: 1.1rem; 
+            font-weight: 600;
+            transition: 0.2s; 
+            color: #007c91;
+        }
+        .option-btn:hover { border-color: #00acc1; background: #e0f7fa; }
+        .feedback { margin: 15px 0; font-weight: bold; min-height: 24px; }
+        .correct { color: #00897b; }
+        .wrong { color: #d32f2f; }
+        .next-btn { 
+            background: linear-gradient(135deg, #00acc1 0%, #007c91 100%); 
+            color: white; 
+            border: none; 
+            padding: 12px 25px; 
+            border-radius: 50px; 
+            cursor: pointer; 
+            display: none; 
+            margin: 0 auto; 
+            font-weight: bold;
+            box-shadow: 0 4px 0px #005662;
+        }
+        .next-btn:active { transform: translateY(4px); box-shadow: none; }
+        .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #e0f7fa; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="quiz-container" id="quiz-box">
+        <h1>📐 Ratios, Rates, and Percents</h1>
+        <h2 id="question-text" style="color: #333;">Question</h2>
+        <div class="options-container" id="options"></div>
+        <div id="feedback" class="feedback"></div>
+        <button id="next-button" class="next-btn" onclick="loadNextQuestion()">Next Question</button>
+    </div>
+
+    <div class="quiz-container hidden" id="summary-box">
+        <h2>Quiz Complete!</h2>
+        <div id="results-list"></div>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade6-math-topics.html'">Back to Math Topics</button>
+    </div>
+
+    <script>
+        const quizData = [
+            { q: "A mixture contains 3 parts blue paint and 5 parts yellow paint. If you use 24 ounces of blue paint, what is the total weight of the final green mixture?", a: "B) 64 oz", options: ["A) 40 oz", "B) 64 oz", "C) 15 oz", "D) 48 oz"] },
+            { q: "A cyclist travels 45 miles in 2.5 hours. At this same constant rate, how many minutes will it take them to travel 12 miles?", a: "A) 40 min", options: ["A) 40 min", "B) 60 min", "C) 30 min", "D) 20 min"] },
+            { q: "If the ratio of x to y is 4:7, and y to z is 14:3, what is the ratio of x to z?", a: "B) 8:3", options: ["A) 4:3", "B) 8:3", "C) 2:1", "D) 5:2"] },
+            { q: "A store increases the price of a 120 dollar jacket by 10%, then offers a 10% discount on the new price. What is the final price?", a: "B) 118.80 dollars", options: ["A) 120 dollars", "B) 118.80 dollars", "C) 110 dollars", "D) 121.20 dollars"] },
+            { q: "60 is 75% of what number?", a: "B) 80", options: ["A) 45", "B) 80", "C) 90", "D) 100"] },
+            { q: "A bag contains red and blue marbles in a 3:2 ratio. If 4 blue marbles are added, the ratio becomes 1:1. How many red marbles were in the bag?", a: "A) 12", options: ["A) 12", "B) 6", "C) 18", "D) 10"] },
+            { q: "Convert the repeating decimal 0.666... into a percentage.", a: "C) 66.7%", options: ["A) 6%", "B) 66%", "C) 66.7%", "D) 0.6%"] },
+            { q: "If 3.5 pounds of apples cost 6.30 dollars, what is the price for 8 pounds?", a: "A) 14.40 dollars", options: ["A) 14.40 dollars", "B) 12.60 dollars", "C) 15.00 dollars", "D) 13.80 dollars"] },
+            { q: "In a school of 400 students, 15% are in the band. Of the band members, 20% play the flute. How many flute players are there?", a: "C) 12", options: ["A) 60", "B) 30", "C) 12", "D) 8"] },
+            { q: "A map scale is 1:250,000. If two cities are 8 cm apart on the map, how many kilometers apart are they in reality?", a: "B) 20 km", options: ["A) 2 km", "B) 20 km", "C) 200 km", "D) 2,000 km"] },
+            { q: "Express the ratio 0.5 : 1.25 in its simplest integer form.", a: "B) 2:5", options: ["A) 1:2", "B) 2:5", "C) 5:12", "D) 4:10"] },
+            { q: "A solution is 20% acid. If there are 30ml of acid, what is the total volume of the solution?", a: "B) 150ml", options: ["A) 60ml", "B) 150ml", "C) 120ml", "D) 200ml"] },
+            { q: "John can type 150 words in 3 minutes. How many words can he type in 10 minutes at this rate?", a: "B) 500", options: ["A) 450", "B) 500", "C) 600", "D) 300"] },
+            { q: "What is 0.2% of 5,000?", a: "B) 10", options: ["A) 1", "B) 10", "C) 100", "D) 1,000"] },
+            { q: "A car's fuel efficiency is 32 miles per gallon. If gas costs 4.00 dollars per gallon, how much does it cost to drive 128 miles?", a: "B) 16 dollars", options: ["A) 12 dollars", "B) 16 dollars", "C) 20 dollars", "D) 32 dollars"] },
+            { q: "If a:b = 2:3, find the value of (3a + 2b) / (b - a).", a: "A) 12", options: ["A) 12", "B) 6", "C) 9", "D) 15"] },
+            { q: "A TV is marked down 30% from its original price. If the sale price is 350 dollars, what was the original price?", a: "B) 500 dollars", options: ["A) 455 dollars", "B) 500 dollars", "C) 600 dollars", "D) 480 dollars"] },
+            { q: "On a test, a student got 24 questions right and 6 wrong. What percentage did they get correct?", a: "B) 80%", options: ["A) 75%", "B) 80%", "C) 85%", "D) 90%"] },
+            { q: "A worker makes 1,200 dollars a week. They receive a 5% raise, but then have 20% of their new pay taken for taxes. What is their take-home pay?", a: "A) 1,008 dollars", options: ["A) 1,008 dollars", "B) 1,050 dollars", "C) 1,260 dollars", "D) 960 dollars"] },
+            { q: "The ratio of the length to the width of a rectangle is 5:3. If the perimeter is 64 cm, what is the area?", a: "A) 240 sq cm", options: ["A) 240 sq cm", "B) 120 sq cm", "C) 15 sq cm", "D) 480 sq cm"] }
+        ];
+        let currentIdx = 0; let score = 0; let userResults = [];
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function ensureTryAgainButton() {
+            const summaryBox = document.getElementById("summary-box");
+            if (summaryBox && !summaryBox.querySelector('button[onclick="location.reload()"]')) {
+                const button = document.createElement('button');
+                button.className = 'next-btn';
+                button.style.display = 'block';
+                button.style.marginTop = '20px';
+                button.innerText = 'Try Again';
+                button.onclick = function() { location.reload(); };
+                const backButton = summaryBox.querySelector('button[onclick^="location.href"]');
+                summaryBox.insertBefore(button, backButton || null);
+            }
+        }
+
+        function initializeQuiz() {
+            shuffleArray(quizData);
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const current = quizData[currentIdx];
+            document.getElementById("question-text").innerText = current.q;
+            const optionsDiv = document.getElementById("options");
+            optionsDiv.innerHTML = "";
+            document.getElementById("feedback").innerText = "";
+            document.getElementById("next-button").style.display = "none";
+            current.options.forEach(opt => {
+                const btn = document.createElement("button");
+                btn.innerText = opt;
+                btn.className = "option-btn";
+                btn.onclick = () => checkAnswer(opt);
+                optionsDiv.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selected) {
+            const current = quizData[currentIdx];
+            const feedback = document.getElementById("feedback");
+            const btns = document.querySelectorAll(".option-btn");
+            btns.forEach(b => b.disabled = true);
+            if (selected === current.a) {
+                feedback.innerText = "Awesome! Correct.";
+                feedback.className = "feedback correct";
+                score++;
+                userResults.push({ q: current.q, res: "Correct", class: "correct" });
+            } else {
+                feedback.innerText = "Oops! The correct answer was " + current.a;
+                feedback.className = "feedback wrong";
+                userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
+            }
+            document.getElementById("next-button").style.display = "block";
+        }
+
+        function loadNextQuestion() {
+            currentIdx++;
+            if (currentIdx < quizData.length) { loadQuestion(); } 
+            else { showSummary(); }
+        }
+
+        function showSummary() {
+            document.getElementById("quiz-box").classList.add("hidden");
+            document.getElementById("summary-box").classList.remove("hidden");
+            const list = document.getElementById("results-list");
+            list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
+            userResults.forEach(item => {
+                const div = document.createElement("div");
+                div.className = "summary-item";
+                div.innerHTML = `<strong>${item.q}</strong> - <span class="${item.class}">${item.res}</span>`;
+                list.appendChild(div);
+            });
+            ensureTryAgainButton();
+        }
+        initializeQuiz();
+    </script>
+</body>
+</html>

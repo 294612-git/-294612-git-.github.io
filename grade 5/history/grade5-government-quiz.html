@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 5 Elite: Government & Global Economics Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #ddd;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: #4CAF50;
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.3s;
+        }
+        .question {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+        .options li {
+            margin-bottom: 10px;
+        }
+        .options button {
+            width: 100%;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .options button:hover {
+            background-color: #e9e9e9;
+        }
+        .feedback {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .wrong {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .round-info {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .summary {
+            display: none;
+            text-align: center;
+        }
+        .summary h2 {
+            color: #333;
+        }
+        .summary p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+            font-size: 16px;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Grade 5 Elite: Government & Global Economics Quiz</h1>
+        <div id="active-quiz">
+            <div class="round-info" id="round-info">Round 1</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="question" id="question"></div>
+            <ul class="options" id="options"></ul>
+            <div class="feedback" id="feedback"></div>
+        </div>
+        <div class="summary" id="summary">
+            <h2>Quiz Complete!</h2>
+            <p id="final-score"></p>
+            <p id="round-scores"></p>
+            <a href="../grade5-history-topics.html" class="back-link">Back to History Topics</a>
+        </div>
+    </div>
+
+    <script>
+        const allQuestions = [
+            { q: "The Legislative Branch of the U.S. government (Congress) is responsible for making laws. However, if the President disagrees with a law, they can use this power to stop it:", options: ["A) A Pardon", "B) A Veto", "C) An Amendment", "D) A Petition"], a: 1 },
+            { q: "In an economy, people earn an \"Income\" by providing labor or services. If a person spends more money than they earn in a month, they are creating a:", options: ["A) Profit", "B) Budget", "C) Surplus", "D) Deficit"], a: 3 },
+            { q: "What is the \"Supreme Court,\" and what is its primary job in the government?", options: ["A) It is the branch that collects taxes.", "B) It is the highest court in the land that decides if laws follow the Constitution.", "C) It is where the President lives and works.", "D) It is a meeting where new laws are written."], a: 1 },
+            { q: "In a \"Market Economy,\" the price of a product is usually determined by \"Supply and Demand.\" What happens to the price if the supply of a toy is very low but the demand is very high?", options: ["A) The price will stay the same.", "B) The price will likely go up.", "C) The price will likely go down.", "D) The toy will become free."], a: 1 },
+            { q: "A \"Representative Democracy\" (or Republic) means that:", options: ["A) One king makes all the rules for everyone.", "B) Citizens vote for leaders to represent them and make decisions on their behalf.", "C) Every single citizen must vote on every tiny law every day.", "D) The government is run by a computer."], a: 1 },
+            { q: "What is \"Inflation\"?", options: ["A) When the value of money goes up and things become cheaper.", "B) When the general price of goods and services rises over time, meaning a dollar buys less than it used to.", "C) When a tire is filled with too much air.", "D) When the government gives everyone a free house."], a: 1 },
+            { q: "The \"Bill of Rights\" protects individual freedoms. Which of these is a right protected by the First Amendment?", options: ["A) The right to drive a car at age 10.", "B) The freedom of speech, religion, and the press.", "C) The right to never pay taxes.", "D) The freedom to take whatever you want from a store."], a: 1 },
+            { q: "What is an \"Entrepreneur\"?", options: ["A) Someone who works for the government.", "B) A person who takes a risk to start and manage a new business.", "C) A type of ancient building.", "D) A person who refuses to spend any money."], a: 1 },
+            { q: "The U.S. government collects \"Taxes\" from citizens. What is the primary purpose of this money?", options: ["A) To give the President a bigger paycheck.", "B) To pay for public services like roads, schools, police, and the military.", "C) To save up for a giant party.", "D) To make sure nobody has too much money."], a: 1 },
+            { q: "In economics, \"Scarcity\" means:", options: ["A) Having more of something than you could ever use.", "B) When there are not enough resources to satisfy all the wants and needs of people.", "C) Being afraid of high prices.", "D) When everyone has the exact same amount of money."], a: 1 },
+            { q: "What are the three levels of government in the United States?", options: ["A) North, South, and West", "B) President, King, and Mayor", "C) Federal, State, and Local", "D) School, Home, and Work"], a: 2 },
+            { q: "What is an \"Import\"?", options: ["A) A product that is made inside a country and sent to another country.", "B) A product that is brought into a country from another country to be sold.", "C) A person who moves to a new city.", "D) A law that is very important."], a: 1 },
+            { q: "Which document begins with the words \"We the People\" and outlines the structure of the U.S. government?", options: ["A) The Declaration of Independence", "B) The U.S. Constitution", "C) The Mayflower Compact", "D) The Gettysburg Address"], a: 1 },
+            { q: "What is the difference between a \"Need\" and a \"Want\" in economics?", options: ["A) A need is something you must have to survive; a want is something you would like to have.", "B) A need is expensive; a want is cheap.", "C) A need is for adults; a want is for children.", "D) There is no difference."], a: 0 },
+            { q: "What does it mean when a country has a \"Global Economy\"?", options: ["A) Every country uses the exact same money.", "B) The economies of different countries are connected through trade and technology.", "C) Only the biggest countries are allowed to sell things.", "D) Nobody is allowed to buy things from other countries."], a: 1 },
+            { q: "The \"Executive Branch\" of the government is headed by the President. What is this branch's main job?", options: ["A) To interpret the laws.", "B) To carry out and enforce the laws.", "C) To write the laws.", "D) To meet with leaders of other countries."], a: 1 },
+            { q: "What is \"Opportunity Cost\"?", options: ["A) The price of a ticket to a movie.", "B) The value of the next best thing you give up when you make a choice.", "C) The amount of money you find on the ground.", "D) How much it costs to start a new business."], a: 1 },
+            { q: "A \"Monopoly\" happens in a market when:", options: ["A) There are too many businesses selling the same thing.", "B) One company has total control over a product or service and there is no competition.", "C) The prices are so low that everyone can buy the product.", "D) The government owns all the stores."], a: 1 },
+            { q: "What is the main role of the Legislative Branch (Congress)?", options: ["A) To command the army.", "B) To make and pass laws.", "C) To decide if a person is guilty of a crime.", "D) To meet with leaders of other countries."], a: 1 },
+            { q: "\"Specialization\" in an economy occurs when:", options: ["A) A person learns how to do every single job in a factory.", "B) A business or country focuses on producing a specific set of goods or services they are best at making.", "C) The government tells everyone what they must buy.", "D) Prices are exactly the same in every store."], a: 1 }
+        ];
+
+        let currentRound = 1;
+        let currentQuestionIndex = 0;
+        let userResults = [];
+        let roundScores = [0, 0];
+
+        function loadRound(round) {
+            currentRound = round;
+            currentQuestionIndex = (round - 1) * 10;
+            document.getElementById('round-info').textContent = `Round ${round}`;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const question = allQuestions[currentQuestionIndex];
+            document.getElementById('question').textContent = question.q;
+            const optionsUl = document.getElementById('options');
+            optionsUl.innerHTML = '';
+            question.options.forEach((option, index) => {
+                const li = document.createElement('li');
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.onclick = () => checkAnswer(index);
+                li.appendChild(button);
+                optionsUl.appendChild(li);
+            });
+            document.getElementById('feedback').style.display = 'none';
+            updateProgress();
+        }
+
+        function checkAnswer(selectedIndex) {
+            const correctIndex = allQuestions[currentQuestionIndex].a;
+            const feedback = document.getElementById('feedback');
+            if (selectedIndex === correctIndex) {
+                feedback.textContent = 'Correct!';
+                feedback.className = 'feedback correct';
+                roundScores[currentRound - 1]++;
+            } else {
+                feedback.textContent = `Wrong! The correct answer is: ${allQuestions[currentQuestionIndex].options[correctIndex]}`;
+                feedback.className = 'feedback wrong';
+            }
+            feedback.style.display = 'block';
+            userResults.push(selectedIndex === correctIndex);
+            setTimeout(() => {
+                nextQuestion();
+            }, 2000);
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < allQuestions.length) {
+                if (currentQuestionIndex % 10 === 0) {
+                    // End of round
+                    if (currentRound < 2) {
+                        loadRound(currentRound + 1);
+                    } else {
+                        showSummary();
+                    }
+                } else {
+                    loadQuestion();
+                }
+            } else {
+                showSummary();
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestionIndex % 10) + 1) / 10 * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+        }
+
+        function showSummary() {
+            document.getElementById('active-quiz').style.display = 'none';
+            document.getElementById('summary').style.display = 'block';
+            const totalCorrect = roundScores[0] + roundScores[1];
+            document.getElementById('final-score').textContent = `You got ${totalCorrect} out of 20 questions correct.`;
+            document.getElementById('round-scores').textContent = `Round 1: ${roundScores[0]}/10, Round 2: ${roundScores[1]}/10`;
+        }
+
+        loadRound(1);
+    </script>
+</body>
+</html>

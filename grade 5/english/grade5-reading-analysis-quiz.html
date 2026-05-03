@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 5 Elite: Reading & Analysis Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #ddd;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: #4CAF50;
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.3s;
+        }
+        .question {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+        .options li {
+            margin-bottom: 10px;
+        }
+        .options button {
+            width: 100%;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .options button:hover {
+            background-color: #e9e9e9;
+        }
+        .feedback {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .wrong {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .round-info {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .summary {
+            display: none;
+            text-align: center;
+        }
+        .summary h2 {
+            color: #333;
+        }
+        .summary p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+            font-size: 16px;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Grade 5 Elite: Reading & Analysis Quiz</h1>
+        <div id="active-quiz">
+            <div class="round-info" id="round-info">Round 1</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="question" id="question"></div>
+            <ul class="options" id="options"></ul>
+            <div class="feedback" id="feedback"></div>
+        </div>
+        <div class="summary" id="summary">
+            <h2>Quiz Complete!</h2>
+            <p id="final-score"></p>
+            <p id="round-scores"></p>
+            <a href="../grade5-reading-topics.html" class="back-link">Back to Reading Topics</a>
+        </div>
+    </div>
+
+    <script>
+        const allQuestions = [
+            { q: "The \"Theme\" of a story is best described as:", options: ["A) The list of all the characters in the book", "B) The underlying message, lesson, or \"big idea\" the author wants the reader to take away", "C) The place and time where the story happens", "D) The highest point of action in the plot"], a: 1 },
+            { q: "When you are asked to provide \"Evidence\" from a text, your goal is to:", options: ["A) Write a story that is similar to the one you just read", "B) Find specific quotes or details from the passage that support and prove your answer", "C) Guess what might happen in the next chapter", "D) List the page numbers without explaining them"], a: 1 },
+            { q: "Nonfiction or Informational texts are primarily written to:", options: ["A) Entertain the reader with imaginary creatures and magic", "B) Provide facts, explain a process, or give information about real-world topics", "C) Persuade the reader to buy a specific toy", "D) Hide the main idea so the reader has to solve a mystery"], a: 1 },
+            { q: "To fully understand a passage, you must identify the \"Main Idea\" and the \"Supporting Details.\" How do these two work together?", options: ["A) The details tell the reader what the story is mostly about, and the main idea is just a small fact.", "B) The main idea is the \"big picture\" or primary point, and the details provide the evidence to back it up.", "C) They are the same thing and can be used interchangeably.", "D) The main idea is always found in the very last sentence of the book."], a: 1 },
+            { q: "An \"Inference\" is something a reader does when they:", options: ["A) Read the words out loud as fast as possible", "B) Combine what they already know with clues from the text to \"read between the lines\"", "C) Copy the entire first paragraph of the story", "D) Only look at the pictures without reading the words"], a: 1 },
+            { q: "What is the difference between a \"First-Person\" and a \"Third-Person\" point of view?", options: ["A) First-person uses \"I\" and \"me\"; Third-person uses names and pronouns like \"he,\" \"she,\" or \"they.\"", "B) First-person is only for nonfiction; Third-person is only for poetry.", "C) First-person is when the author talks to the reader directly; Third-person is a secret code.", "D) There is no difference; they both mean the same thing."], a: 0 },
+            { q: "In a plot diagram, the \"Climax\" of a story is:", options: ["A) The introduction of the characters", "B) The moment when the conflict is resolved and everyone goes home", "C) The turning point or the most exciting and intense part of the story", "D) The very first sentence of the book"], a: 2 },
+            { q: "Which of these is a \"Text Feature\" often found in nonfiction to help organize information?", options: ["A) Rhyming words at the end of every line", "B) Headings, subheadings, and captions", "C) Magic spells", "D) Dialogue between fictional animals"], a: 1 },
+            { q: "If an author's purpose is to \"Persuade,\" they are trying to:", options: ["A) Teach you how to bake a cake", "B) Convince you to believe something or take a certain action", "C) Tell you a funny story about a cat", "D) Describe what a volcano looks like"], a: 1 },
+            { q: "A \"Summary\" of a text should always be:", options: ["A) Longer than the original story", "B) A brief retelling that includes only the most important parts and main ideas", "C) A list of every single word in the text", "D) Your personal opinion about whether the book was good or bad"], a: 1 },
+            { q: "What does it mean to compare and contrast two characters?", options: ["A) To tell the story from both of their perspectives", "B) To identify how the characters are similar and how they are different", "C) To draw a picture of both characters", "D) To count how many times their names appear in the book"], a: 1 },
+            { q: "The \"Tone\" of a story refers to:", options: ["A) The speed at which the narrator speaks", "B) The author's attitude toward the subject or the audience", "C) The volume of the characters' voices", "D) The color of the book cover"], a: 1 },
+            { q: "In literature, a \"Conflict\" is:", options: ["A) A type of delicious dessert", "B) The struggle between two opposing forces (like a hero vs. a villain)", "C) The list of books the author has written", "D) The font used in the printing of the book"], a: 1 },
+            { q: "Which of the following is an example of \"Figurative Language\"?", options: ["A) The sun is a yellow star in space.", "B) The sun smiled down on the children at the park.", "C) The sun rises in the east every morning.", "D) The sun provides heat and light to Earth."], a: 1 },
+            { q: "Context Clues are used to:", options: ["A) Determine the meaning of an unknown word by looking at the words around it", "B) Count the number of syllables in a word", "C) Change the ending of a story", "D) Check the spelling of a person's name"], a: 0 },
+            { q: "When a text is organized in \"Chronological Order,\" the events are told:", options: ["A) From least important to most important", "B) In the order in which they happened in time", "C) By grouping similar ideas together", "D) Alphabetically by the first letter of each sentence"], a: 1 },
+            { q: "What is the \"Setting\" of a story?", options: ["A) The physical traits of the main character", "B) The time and place in which the action occurs", "C) The set of rules the characters must follow", "D) The group of people who read the book"], a: 1 },
+            { q: "A \"Propaganda\" or \"Bias\" in a text means that the information is:", options: ["A) Perfectly fair and shows all sides of an argument", "B) Weighted toward one point of view to influence the reader", "C) Written in a different language", "D) Only containing numbers and charts"], a: 1 },
+            { q: "What is \"Imagery\" in writing?", options: ["A) Using only pictures and no words", "B) Using descriptive language that appeals to the five senses", "C) Copying the style of a famous painter", "D) Writing about things that are impossible"], a: 1 },
+            { q: "If you are reading a story and the narrator knows the thoughts and feelings of all the characters, the point of view is:", options: ["A) First-person limited", "B) Third-person omniscient", "C) Second-person", "D) Third-person objective"], a: 1 }
+        ];
+
+        let currentRound = 1;
+        let currentQuestionIndex = 0;
+        let userResults = [];
+        let roundScores = [0, 0];
+
+        function loadRound(round) {
+            currentRound = round;
+            currentQuestionIndex = (round - 1) * 10;
+            document.getElementById('round-info').textContent = `Round ${round}`;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const question = allQuestions[currentQuestionIndex];
+            document.getElementById('question').textContent = question.q;
+            const optionsUl = document.getElementById('options');
+            optionsUl.innerHTML = '';
+            question.options.forEach((option, index) => {
+                const li = document.createElement('li');
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.onclick = () => checkAnswer(index);
+                li.appendChild(button);
+                optionsUl.appendChild(li);
+            });
+            document.getElementById('feedback').style.display = 'none';
+            updateProgress();
+        }
+
+        function checkAnswer(selectedIndex) {
+            const correctIndex = allQuestions[currentQuestionIndex].a;
+            const feedback = document.getElementById('feedback');
+            if (selectedIndex === correctIndex) {
+                feedback.textContent = 'Correct!';
+                feedback.className = 'feedback correct';
+                roundScores[currentRound - 1]++;
+            } else {
+                feedback.textContent = `Wrong! The correct answer is: ${allQuestions[currentQuestionIndex].options[correctIndex]}`;
+                feedback.className = 'feedback wrong';
+            }
+            feedback.style.display = 'block';
+            userResults.push(selectedIndex === correctIndex);
+            setTimeout(() => {
+                nextQuestion();
+            }, 2000);
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < allQuestions.length) {
+                if (currentQuestionIndex % 10 === 0) {
+                    // End of round
+                    if (currentRound < 2) {
+                        loadRound(currentRound + 1);
+                    } else {
+                        showSummary();
+                    }
+                } else {
+                    loadQuestion();
+                }
+            } else {
+                showSummary();
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestionIndex % 10) + 1) / 10 * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+        }
+
+        function showSummary() {
+            document.getElementById('active-quiz').style.display = 'none';
+            document.getElementById('summary').style.display = 'block';
+            const totalCorrect = roundScores[0] + roundScores[1];
+            document.getElementById('final-score').textContent = `You got ${totalCorrect} out of 20 questions correct.`;
+            document.getElementById('round-scores').textContent = `Round 1: ${roundScores[0]}/10, Round 2: ${roundScores[1]}/10`;
+        }
+
+        loadRound(1);
+    </script>
+</body>
+</html>

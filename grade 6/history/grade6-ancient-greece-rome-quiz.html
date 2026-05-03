@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 6 History Quiz: Ancient Greece and Rome</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        #quiz-container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        #round-indicator {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        #progress-bar {
+            width: 100%;
+            background-color: #f0f0f0;
+            height: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        #progress {
+            height: 100%;
+            background-color: #4CAF50;
+            width: 0%;
+            border-radius: 10px;
+            transition: width 0.3s;
+        }
+        #question-container {
+            margin-bottom: 20px;
+        }
+        #question {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        #options button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #e7e7e7;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #options button:hover {
+            background-color: #d4d4d4;
+        }
+        #options button.correct {
+            background-color: #4CAF50;
+            color: white;
+        }
+        #options button.wrong {
+            background-color: #f44336;
+            color: white;
+        }
+        #next-btn {
+            display: none;
+            width: 100%;
+            padding: 10px;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #next-btn:hover {
+            background-color: #0b7dda;
+        }
+        #summary {
+            max-width: 600px;
+            margin: auto;
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        #summary h2 {
+            color: #333;
+        }
+        #summary a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #2196F3;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        #summary a:hover {
+            background-color: #0b7dda;
+        }
+    </style>
+</head>
+<body>
+    <div id="quiz-container">
+        <h1>Grade 6 History Quiz: Ancient Greece and Rome</h1>
+        <div id="round-indicator">Round 1 of 2</div>
+        <div id="progress-bar">
+            <div id="progress"></div>
+        </div>
+        <div id="question-container">
+            <p id="question"></p>
+            <div id="options"></div>
+        </div>
+        <button id="next-btn" onclick="nextQuestion()">Next</button>
+    </div>
+    <div id="summary" style="display:none;">
+        <h2>Quiz Complete!</h2>
+        <p id="final-score"></p>
+        <p id="round-scores"></p>
+        <a href="grade6-history-topics.html">Back to History Topics</a>
+    </div>
+    <script>
+        const allQuestions = [
+            [
+                {
+                    q: "\"Ostracism\" in ancient Athens was a process used to:",
+                    options: ["A) Vote for a new king", "B) Banish a citizen who was seen as a threat to democracy", "C) Choose a general", "D) Celebrate a harvest"],
+                    a: 1
+                },
+                {
+                    q: "The \"Peloponnesian War\" was fought between:",
+                    options: ["A) Greece and Persia", "B) Athens and Sparta", "C) Rome and Carthage", "D) Troy and Greece"],
+                    a: 1
+                },
+                {
+                    q: "A \"Direct Democracy\" differs from a \"Republic\" because:",
+                    options: ["A) Only one person rules", "B) Citizens vote on all laws directly rather than electing representatives", "C) It uses a king", "D) It is only for soldiers"],
+                    a: 1
+                },
+                {
+                    q: "The \"Twelve Tables\" of Rome were important because they:",
+                    options: ["A) Were made of gold", "B) Established the principle that all free citizens had a right to protection under the law", "C) Listed the Roman gods", "D) Described how to build roads"],
+                    a: 1
+                },
+                {
+                    q: "\"Punic Wars\" were fought between Rome and Carthage over control of:",
+                    options: ["A) The Nile River", "B) The Mediterranean Sea trade", "C) The Alps", "D) Britain"],
+                    a: 1
+                },
+                {
+                    q: "In Roman society, \"Plebeians\" were:",
+                    options: ["A) The wealthy landowning noble class", "B) The common farmers, artisans, and merchants", "C) The elected leaders", "D) The slaves"],
+                    a: 1
+                },
+                {
+                    q: "The \"Phalanx\" was a:",
+                    options: ["A) Type of government", "B) Military formation of foot soldiers armed with spears and shields", "C) Greek temple", "D) Roman marketplace"],
+                    a: 1
+                },
+                {
+                    q: "\"Bread and Circuses\" refers to the Roman government's policy of:",
+                    options: ["A) Providing free food and entertainment to keep the poor from rioting", "B) Teaching everyone how to bake", "C) Building more churches", "D) Ending slavery"],
+                    a: 0
+                },
+                {
+                    q: "Which Greek city-state was an \"Oligarchy\" focused entirely on military training?",
+                    options: ["A) Athens", "B) Corinth", "C) Sparta", "D) Thebes"],
+                    a: 2
+                },
+                {
+                    q: "The \"Edict of Milan\" was significant because it:",
+                    options: ["A) Ended the Roman Empire", "B) Proclaimed religious toleration for Christianity in the Roman Empire", "C) Taxed all citizens", "D) Declared war on Persia"],
+                    a: 1
+                }
+            ],
+            [
+                {
+                    q: "\"Socratic Method\" involves:",
+                    options: ["A) Giving long lectures", "B) Teaching through a series of questions and answers to encourage critical thinking", "C) Writing books", "D) Using magic"],
+                    a: 1
+                },
+                {
+                    q: "The \"Tribune\" in Rome was an official elected to protect the rights of:",
+                    options: ["A) The Patricians", "B) The Plebeians", "C) The Emperor", "D) The Army"],
+                    a: 1
+                },
+                {
+                    q: "\"Hannibal\" is famous for:",
+                    options: ["A) Building the Colosseum", "B) Crossing the Alps with elephants to attack Rome", "C) Discovering America", "D) Writing Greek plays"],
+                    a: 1
+                },
+                {
+                    q: "\"Stoicism\" was a Roman philosophy that emphasized:",
+                    options: ["A) Seeking as much pleasure as possible", "B) Duty, endurance, and self-control", "C) Living in a cave", "D) Having no rules"],
+                    a: 1
+                },
+                {
+                    q: "Which battle saw 300 Spartans hold off a massive Persian army?",
+                    options: ["A) Battle of Marathon", "B) Battle of Thermopylae", "C) Battle of Salamis", "D) Battle of Actium"],
+                    a: 1
+                },
+                {
+                    q: "The \"Senate\" in the Roman Republic was primarily composed of:",
+                    options: ["A) Plebeians", "B) Patricians", "C) Soldiers", "D) Foreigners"],
+                    a: 1
+                },
+                {
+                    q: "\"Homer\" is the legendary author of which two epics?",
+                    options: ["A) The Republic and The Laws", "B) The Iliad and The Odyssey", "C) The Aeneid", "D) The Bible"],
+                    a: 1
+                },
+                {
+                    q: "\"Constantinople\" became the capital of:",
+                    options: ["A) The Western Roman Empire", "B) The Eastern Roman (Byzantine) Empire", "C) Ancient Greece", "D) Carthage"],
+                    a: 1
+                },
+                {
+                    q: "Which building is considered the greatest example of Roman engineering, featuring a massive dome and an oculus?",
+                    options: ["A) The Parthenon", "B) The Pantheon", "C) The Colosseum", "D) The Circus Maximus"],
+                    a: 1
+                },
+                {
+                    q: "The \"Appian Way\" was a famous Roman:",
+                    options: ["A) Law", "B) Road", "C) Temple", "D) Ship"],
+                    a: 1
+                }
+            ]
+        ];
+
+        let currentRound = 0;
+        let currentQuestion = 0;
+        let score = 0;
+        let roundScores = [0, 0];
+
+        function loadRound() {
+            currentQuestion = 0;
+            document.getElementById('round-indicator').textContent = `Round ${currentRound + 1} of 2`;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const q = allQuestions[currentRound][currentQuestion];
+            document.getElementById('question').textContent = q.q;
+            const optionsDiv = document.getElementById('options');
+            optionsDiv.innerHTML = '';
+            q.options.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.textContent = opt;
+                btn.onclick = () => checkAnswer(i);
+                optionsDiv.appendChild(btn);
+            });
+            updateProgress();
+        }
+
+        function checkAnswer(selected) {
+            const correct = allQuestions[currentRound][currentQuestion].a;
+            const buttons = document.querySelectorAll('#options button');
+            buttons.forEach(btn => btn.disabled = true);
+            if (selected === correct) {
+                buttons[selected].classList.add('correct');
+                score++;
+                roundScores[currentRound]++;
+            } else {
+                buttons[selected].classList.add('wrong');
+                buttons[correct].classList.add('correct');
+            }
+            document.getElementById('next-btn').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < allQuestions[currentRound].length) {
+                loadQuestion();
+                document.getElementById('next-btn').style.display = 'none';
+            } else {
+                currentRound++;
+                if (currentRound < allQuestions.length) {
+                    loadRound();
+                } else {
+                    showSummary();
+                }
+            }
+        }
+
+        function updateProgress() {
+            const totalQuestions = allQuestions.flat().length;
+            const answered = currentRound * 10 + currentQuestion;
+            const percent = (answered / totalQuestions) * 100;
+            document.getElementById('progress').style.width = percent + '%';
+        }
+
+        function showSummary() {
+            document.getElementById('quiz-container').style.display = 'none';
+            document.getElementById('summary').style.display = 'block';
+            document.getElementById('final-score').textContent = `Final Score: ${score} out of 20`;
+            document.getElementById('round-scores').textContent = `Round 1: ${roundScores[0]}/10, Round 2: ${roundScores[1]}/10`;
+        }
+
+        loadRound();
+    </script>
+</body>
+</html>

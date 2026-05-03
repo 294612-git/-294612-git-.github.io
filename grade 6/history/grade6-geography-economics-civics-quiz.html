@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 6 History Quiz: Geography, Economics, and Civics</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        #quiz-container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        #round-indicator {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        #progress-bar {
+            width: 100%;
+            background-color: #f0f0f0;
+            height: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        #progress {
+            height: 100%;
+            background-color: #4CAF50;
+            width: 0%;
+            border-radius: 10px;
+            transition: width 0.3s;
+        }
+        #question-container {
+            margin-bottom: 20px;
+        }
+        #question {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        #options button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #e7e7e7;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #options button:hover {
+            background-color: #d4d4d4;
+        }
+        #options button.correct {
+            background-color: #4CAF50;
+            color: white;
+        }
+        #options button.wrong {
+            background-color: #f44336;
+            color: white;
+        }
+        #next-btn {
+            display: none;
+            width: 100%;
+            padding: 10px;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #next-btn:hover {
+            background-color: #0b7dda;
+        }
+        #summary {
+            max-width: 600px;
+            margin: auto;
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        #summary h2 {
+            color: #333;
+        }
+        #summary a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #2196F3;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        #summary a:hover {
+            background-color: #0b7dda;
+        }
+    </style>
+</head>
+<body>
+    <div id="quiz-container">
+        <h1>Grade 6 History Quiz: Geography, Economics, and Civics</h1>
+        <div id="round-indicator">Round 1 of 2</div>
+        <div id="progress-bar">
+            <div id="progress"></div>
+        </div>
+        <div id="question-container">
+            <p id="question"></p>
+            <div id="options"></div>
+        </div>
+        <button id="next-btn" onclick="nextQuestion()">Next</button>
+    </div>
+    <div id="summary" style="display:none;">
+        <h2>Quiz Complete!</h2>
+        <p id="final-score"></p>
+        <p id="round-scores"></p>
+        <a href="grade6-history-topics.html">Back to History Topics</a>
+    </div>
+    <script>
+        const allQuestions = [
+            [
+                {
+                    q: "A \"Mercator Projection\" map is known for distorting the:",
+                    options: ["A) Distance between cities", "B) Size of landmasses near the poles", "C) Names of countries", "D) Colors of the oceans"],
+                    a: 1
+                },
+                {
+                    q: "\"Comparative Advantage\" in trade means a country should:",
+                    options: ["A) Produce everything itself", "B) Produce goods that it can make at a lower opportunity cost than other countries", "C) Only buy from its neighbors", "D) Stop all trading"],
+                    a: 1
+                },
+                {
+                    q: "A \"Command Economy\" is often associated with which political system?",
+                    options: ["A) Capitalism", "B) Communism", "C) Democracy", "D) Monarchy"],
+                    a: 1
+                },
+                {
+                    q: "In the U.S. Constitution, \"Federalism\" is the principle that:",
+                    options: ["A) The President has all the power", "B) Power is divided between the national government and state governments", "C) Only the states can make laws", "D) There are no taxes"],
+                    a: 1
+                },
+                {
+                    q: "\"Gerrymandering\" is the practice of:",
+                    options: ["A) Counting every person", "B) Redrawing voting district boundaries to give one party an unfair advantage", "C) Voting twice", "D) Paying people to vote"],
+                    a: 1
+                },
+                {
+                    q: "The \"Consumer Price Index\" (CPI) is used to measure:",
+                    options: ["A) The population", "B) Inflation", "C) The number of stores", "D) Government spending"],
+                    a: 1
+                },
+                {
+                    q: "A \"Theocracy\" is a government based on:",
+                    options: ["A) Scientific facts", "B) Religious authority and divine guidance", "C) The will of the military", "D) Inherited royalty"],
+                    a: 1
+                },
+                {
+                    q: "\"Capital\" as a factor of production refers to:",
+                    options: ["A) The city where the government is", "B) Tools, machinery, and buildings used to produce goods", "C) The workers' skills", "D) Natural resources like oil"],
+                    a: 1
+                },
+                {
+                    q: "Which type of map shows the boundaries between countries and states?",
+                    options: ["A) Physical Map", "B) Topographic Map", "C) Political Map", "D) Climate Map"],
+                    a: 2
+                },
+                {
+                    q: "What is a \"Secondary Source\"?",
+                    options: ["A) A textbook analyzing the Civil War", "B) A soldier's letter from the war", "C) A photograph of a battle", "D) The original Constitution"],
+                    a: 0
+                }
+            ],
+            [
+                {
+                    q: "\"Laissez-faire\" is an economic theory that suggests:",
+                    options: ["A) The government should control all businesses", "B) The government should not interfere in the economy", "C) Taxes should be 100%", "D) Only gold should be used as money"],
+                    a: 1
+                },
+                {
+                    q: "A \"Sovereign\" nation is one that:",
+                    options: ["A) Is ruled by another country", "B) Has independent authority and the right to govern itself", "C) Has no borders", "D) Is very small"],
+                    a: 1
+                },
+                {
+                    q: "\"Human Capital\" refers to:",
+                    options: ["A) The machines in a factory", "B) The knowledge, skills, and experience of workers", "C) The money in a bank", "D) The building where people work"],
+                    a: 1
+                },
+                {
+                    q: "The \"Prime Meridian\" passes through which city?",
+                    options: ["A) New York", "B) Paris", "C) Greenwich, England", "D) Tokyo"],
+                    a: 2
+                },
+                {
+                    q: "In a \"Monarchy,\" power is usually:",
+                    options: ["A) Voted on every 4 years", "B) Inherited through a family line", "C) Taken by force in an election", "D) Shared by everyone"],
+                    a: 1
+                },
+                {
+                    q: "\"Demand\" for a product usually increases when:",
+                    options: ["A) The price goes up", "B) The price goes down", "C) The product becomes unpopular", "D) There are too many of them"],
+                    a: 1
+                },
+                {
+                    q: "\"Bicameral\" means a legislature has:",
+                    options: ["A) One house", "B) Two houses", "C) No leader", "D) Five members"],
+                    a: 1
+                },
+                {
+                    q: "Which continent contains the most countries?",
+                    options: ["A) Asia", "B) Africa", "C) Europe", "D) South America"],
+                    a: 1
+                },
+                {
+                    q: "\"Infrastructure\" includes:",
+                    options: ["A) Basic physical structures like roads, bridges, and power grids", "B) Only new houses", "C) The clothes people wear", "D) Books in a library"],
+                    a: 0
+                },
+                {
+                    q: "A \"Constitutional Monarchy\" is a system where:",
+                    options: ["A) The King has absolute power", "B) The King's power is limited by a constitution and shared with a parliament", "C) There is no King", "D) The King is elected by the people"],
+                    a: 1
+                }
+            ]
+        ];
+
+        let currentRound = 0;
+        let currentQuestion = 0;
+        let score = 0;
+        let roundScores = [0, 0];
+
+        function loadRound() {
+            currentQuestion = 0;
+            document.getElementById('round-indicator').textContent = `Round ${currentRound + 1} of 2`;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const q = allQuestions[currentRound][currentQuestion];
+            document.getElementById('question').textContent = q.q;
+            const optionsDiv = document.getElementById('options');
+            optionsDiv.innerHTML = '';
+            q.options.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.textContent = opt;
+                btn.onclick = () => checkAnswer(i);
+                optionsDiv.appendChild(btn);
+            });
+            updateProgress();
+        }
+
+        function checkAnswer(selected) {
+            const correct = allQuestions[currentRound][currentQuestion].a;
+            const buttons = document.querySelectorAll('#options button');
+            buttons.forEach(btn => btn.disabled = true);
+            if (selected === correct) {
+                buttons[selected].classList.add('correct');
+                score++;
+                roundScores[currentRound]++;
+            } else {
+                buttons[selected].classList.add('wrong');
+                buttons[correct].classList.add('correct');
+            }
+            document.getElementById('next-btn').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < allQuestions[currentRound].length) {
+                loadQuestion();
+                document.getElementById('next-btn').style.display = 'none';
+            } else {
+                currentRound++;
+                if (currentRound < allQuestions.length) {
+                    loadRound();
+                } else {
+                    showSummary();
+                }
+            }
+        }
+
+        function updateProgress() {
+            const totalQuestions = allQuestions.flat().length;
+            const answered = currentRound * 10 + currentQuestion;
+            const percent = (answered / totalQuestions) * 100;
+            document.getElementById('progress').style.width = percent + '%';
+        }
+
+        function showSummary() {
+            document.getElementById('quiz-container').style.display = 'none';
+            document.getElementById('summary').style.display = 'block';
+            document.getElementById('final-score').textContent = `Final Score: ${score} out of 20`;
+            document.getElementById('round-scores').textContent = `Round 1: ${roundScores[0]}/10, Round 2: ${roundScores[1]}/10`;
+        }
+
+        loadRound();
+    </script>
+</body>
+</html>

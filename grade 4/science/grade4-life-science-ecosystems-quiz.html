@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 4 Life Science & Ecosystems Quiz - Study Buddy</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 600px; }
+        h2 { color: #667eea; text-align: center; }
+        .progress-bar { background: #e0e0e0; height: 10px; border-radius: 5px; margin: 15px 0; overflow: hidden; }
+        .progress-fill { background: #667eea; height: 100%; transition: width 0.3s; }
+        .options-container { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+        .option-btn { padding: 12px; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; text-align: left; font-size: 0.95rem; transition: 0.2s; }
+        .option-btn:hover { border-color: #667eea; background: #f0f2ff; }
+        .feedback { margin: 15px 0; font-weight: bold; min-height: 24px; text-align: center; }
+        .correct { color: #28a745; }
+        .wrong { color: #dc3545; }
+        .next-btn { background: #667eea; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; display: none; margin: 0 auto; }
+        .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #eee; }
+        .hidden { display: none; }
+        .round-indicator { text-align: center; color: #667eea; font-weight: bold; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-container" id="quiz-box">
+        <div class="round-indicator" id="round-indicator"></div>
+        <h2 id="question-text">Question</h2>
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+        <div class="options-container" id="options"></div>
+        <div id="feedback" class="feedback"></div>
+        <button id="next-button" class="next-btn" onclick="loadNextQuestion()">Next Question</button>
+    </div>
+
+    <div class="quiz-container hidden" id="summary-box">
+        <h2>Quiz Complete!</h2>
+        <div id="results-list"></div>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="loadNewRound()">Try Again (New Round)</button>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade4-science-topics.html'">Back to Topics</button>
+    </div>
+
+    <script>
+        const allQuestions = [
+            // Round 1: Questions 1-10
+            { q: "Plants produce their own food through a process called photosynthesis. Besides water and carbon dioxide, what is the primary source of energy they need?", options: ["Soil nutrients", "Sunlight", "Oxygen", "Earth's heat"], a: "Sunlight" },
+            { q: "In an ecosystem, animals are known as 'Consumers' because they must ____.", options: ["Make their own food using the sun", "Eat plants or other animals to get energy", "Decompose dead leaves", "Live in the water"], a: "Eat plants or other animals to get energy" },
+            { q: "What does a 'Food Chain' represent in an ecosystem?", options: ["The different colors of animals in a forest", "The flow of energy from one living thing to another", "The physical weight of animals", "How animals build their homes"], a: "The flow of energy from one living thing to another" },
+            { q: "Which of these is a 'Producer'?", options: ["A grasshopper", "A mushroom", "A maple tree", "A hawk"], a: "A maple tree" },
+            { q: "A 'Decomposer' is an organism that ____.", options: ["Hunts other animals for sport", "Breaks down dead plants and animals into nutrients for the soil", "Makes food using sunlight", "Only eats fruit"], a: "Breaks down dead plants and animals into nutrients for the soil" },
+            { q: "What is an 'Adaptation'?", options: ["A choice an animal makes to move to a new city", "A physical trait or behavior that helps an organism survive in its environment", "The process of an animal getting older", "A type of weather pattern"], a: "A physical trait or behavior that helps an organism survive in its environment" },
+            { q: "In a food web, if the population of 'Prey' (like rabbits) decreases significantly, what will likely happen to the 'Predators' (like foxes)?", options: ["Their population will increase because they have more room", "Their population will decrease because they have less food", "They will start eating rocks", "Nothing will change"], a: "Their population will decrease because they have less food" },
+            { q: "Which of these is an example of a 'Behavioral Adaptation'?", options: ["A polar bear having thick white fur", "A cactus having sharp spines", "Birds flying south (migrating) for the winter", "A giraffe having a long neck"], a: "Birds flying south (migrating) for the winter" },
+            { q: "Plants release a specific gas into the air during photosynthesis that humans and animals need to breathe. What is it?", options: ["Carbon Dioxide", "Nitrogen", "Oxygen", "Helium"], a: "Oxygen" },
+            { q: "A 'Habitat' is best described as ____.", options: ["A type of weather", "The specific place where an organism lives and gets what it needs to survive", "A group of animals traveling together", "The way an animal sleeps"], a: "The specific place where an organism lives and gets what it needs to survive" },
+            // Round 2: Questions 11-20
+            { q: "Which of the following is an 'Omnivore'?", options: ["A lion that only eats meat", "A cow that only eats grass", "A bear that eats both berries and fish", "A vulture that only eats dead animals"], a: "A bear that eats both berries and fish" },
+            { q: "In the desert, many animals are 'Nocturnal.' This means they ____.", options: ["Sleep all night and are active during the hot day", "Are active at night to avoid the heat of the day", "Never need to drink water", "Change color to match the sand"], a: "Are active at night to avoid the heat of the day" },
+            { q: "What is the primary role of 'Chlorophyll' in a plant?", options: ["To help the plant stand up straight", "To absorb light energy for photosynthesis", "To protect the plant from bugs", "To turn the plant's flowers red"], a: "To absorb light energy for photosynthesis" },
+            { q: "Which part of the plant is responsible for absorbing water and minerals from the soil?", options: ["The leaves", "The stem", "The roots", "The petals"], a: "The roots" },
+            { q: "What happens during 'Germination'?", options: ["A plant dies and turns into soil", "A seed begins to grow into a new plant", "A bee moves pollen from one flower to another", "A leaf falls off a tree in autumn"], a: "A seed begins to grow into a new plant" },
+            { q: "An 'Ecosystem' includes ____.", options: ["Only the living things in an area", "Only the non-living things like rocks and water", "Both the living and non-living things interacting in an area", "Only the animals that hunt each other"], a: "Both the living and non-living things interacting in an area" },
+            { q: "Which of these is a 'Physical Adaptation' for protection?", options: ["A turtle's hard shell", "A snake hissing", "A wolf hunting in a pack", "An opossum 'playing dead'"], a: "A turtle's hard shell" },
+            { q: "If a plant does not receive enough sunlight, it will eventually ____.", options: ["Turn deep purple", "Grow much faster to reach the sun", "Lose its ability to make food and die", "Start eating insects instead"], a: "Lose its ability to make food and die" },
+            { q: "What is 'Pollination'?", options: ["The process of leaves turning colors", "The movement of pollen from the male part of a flower to the female part", "When an animal goes into a deep sleep for winter", "When a plant loses its seeds in the wind"], a: "The movement of pollen from the male part of a flower to the female part" },
+            { q: "Camouflage is an adaptation that helps an animal ____.", options: ["Stay warm in the snow", "Blend in with its surroundings to hide from predators or prey", "Run faster than its enemies", "Breathe underwater"], a: "Blend in with its surroundings to hide from predators or prey" }
+        ];
+
+        let currentRound = 1;
+        let currentIdx = 0;
+        let score = 0;
+        let userResults = [];
+        let quizData = [];
+
+        function loadRound(roundNum) {
+            const startIdx = (roundNum - 1) * 10;
+            const endIdx = startIdx + 10;
+            quizData = allQuestions.slice(startIdx, endIdx);
+            currentIdx = 0;
+            score = 0;
+            userResults = [];
+            document.getElementById("quiz-box").classList.remove("hidden");
+            document.getElementById("summary-box").classList.add("hidden");
+            document.getElementById("round-indicator").innerText = `Round ${roundNum}`;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const current = quizData[currentIdx];
+            document.getElementById("question-text").innerText = `Q${currentIdx + 1}: ${current.q}`;
+            
+            const progress = ((currentIdx + 1) / quizData.length) * 100;
+            document.getElementById("progress-fill").style.width = progress + "%";
+            
+            const optionsDiv = document.getElementById("options");
+            optionsDiv.innerHTML = "";
+            document.getElementById("feedback").innerText = "";
+            document.getElementById("next-button").style.display = "none";
+
+            current.options.forEach((opt, idx) => {
+                const btn = document.createElement("button");
+                btn.innerText = String.fromCharCode(65 + idx) + ") " + opt;
+                btn.className = "option-btn";
+                btn.onclick = () => checkAnswer(opt);
+                optionsDiv.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selected) {
+            const current = quizData[currentIdx];
+            const feedback = document.getElementById("feedback");
+            const btns = document.querySelectorAll(".option-btn");
+            
+            btns.forEach(b => b.disabled = true);
+
+            if (selected === current.a) {
+                feedback.innerText = "✓ Correct! Well done.";
+                feedback.className = "feedback correct";
+                score++;
+                userResults.push({ q: current.q, res: "Correct", class: "correct" });
+            } else {
+                feedback.innerText = "✗ Oops! The correct answer was: " + current.a;
+                feedback.className = "feedback wrong";
+                userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
+            }
+            document.getElementById("next-button").style.display = "block";
+        }
+
+        function loadNextQuestion() {
+            currentIdx++;
+            if (currentIdx < quizData.length) {
+                loadQuestion();
+            } else {
+                showSummary();
+            }
+        }
+
+        function showSummary() {
+            document.getElementById("quiz-box").classList.add("hidden");
+            const summaryBox = document.getElementById("summary-box");
+            summaryBox.classList.remove("hidden");
+            
+            const list = document.getElementById("results-list");
+            list.innerHTML = `<h3>Round ${currentRound} - Final Score: ${score}/10</h3>`;
+            
+            userResults.forEach((item, idx) => {
+                const div = document.createElement("div");
+                div.className = "summary-item";
+                div.innerHTML = `<strong>Q${idx + 1}: ${item.q}</strong><br/><span class="${item.class}">${item.res}</span>`;
+                list.appendChild(div);
+            });
+        }
+
+        function loadNewRound() {
+            currentRound++;
+            if (currentRound <= 2) {
+                loadRound(currentRound);
+            } else {
+                alert("No more rounds available. You've completed all questions!");
+                location.href = "grade4-science-topics.html";
+            }
+        }
+
+        // Start with Round 1
+        loadRound(1);
+    </script>
+</body>
+</html>

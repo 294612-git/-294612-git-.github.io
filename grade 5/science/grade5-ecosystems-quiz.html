@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 5 Elite: Ecosystems & Energy Flow Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #ddd;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: #4CAF50;
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.3s;
+        }
+        .question {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+        .options li {
+            margin-bottom: 10px;
+        }
+        .options button {
+            width: 100%;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .options button:hover {
+            background-color: #e9e9e9;
+        }
+        .feedback {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .wrong {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .round-info {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .summary {
+            display: none;
+            text-align: center;
+        }
+        .summary h2 {
+            color: #333;
+        }
+        .summary p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+            font-size: 16px;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Grade 5 Elite: Ecosystems & Energy Flow Quiz</h1>
+        <div id="active-quiz">
+            <div class="round-info" id="round-info">Round 1</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="question" id="question"></div>
+            <ul class="options" id="options"></ul>
+            <div class="feedback" id="feedback"></div>
+        </div>
+        <div class="summary" id="summary">
+            <h2>Quiz Complete!</h2>
+            <p id="final-score"></p>
+            <p id="round-scores"></p>
+            <a href="../grade5-science-topics.html" class="back-link">Back to Science Topics</a>
+        </div>
+    </div>
+
+    <script>
+        const allQuestions = [
+            { q: "In every ecosystem, plants are classified as \"Producers.\" What is the primary process they use to create their own food (energy) from sunlight?", options: ["A) Respiration", "B) Photosynthesis", "C) Decomposition", "D) Consumption"], a: 1 },
+            { q: "Animals cannot make their own food and must eat plants or other animals to survive. This makes them:", options: ["A) Producers", "B) Consumers", "C) Decomposers", "D) Abiotic factors"], a: 1 },
+            { q: "Which group of organisms is responsible for breaking down dead plants and animals, returning vital nutrients back into the soil?", options: ["A) Herbivores", "B) Scavengers", "C) Decomposers (like fungi and bacteria)", "D) Apex Predators"], a: 2 },
+            { q: "In a food chain, what happens to the amount of available energy as you move from the Producers up to the Tertiary Consumers?", options: ["A) The energy increases at each level", "B) The energy stays exactly the same", "C) The energy decreases significantly at each level", "D) The energy disappears instantly"], a: 2 },
+            { q: "Which of the following is an \"Abiotic\" factor in an ecosystem (a non-living part that affects the environment)?", options: ["A) An oak tree", "B) A honeybee", "C) The temperature and sunlight", "D) A mushroom"], a: 2 },
+            { q: "A \"Food Web\" is different from a \"Food Chain\" because a food web:", options: ["A) Only shows animals that live in the water", "B) Shows many overlapping and interconnected food chains in an ecosystem", "C) Shows only one path of energy", "D) Does not include producers"], a: 1 },
+            { q: "An animal that eats only other animals is known as a:", options: ["A) Herbivore", "B) Omnivore", "C) Carnivore", "D) Producer"], a: 2 },
+            { q: "If a disease wipes out the majority of the \"Primary Consumers\" (herbivores) in an ecosystem, what is the most likely effect on the \"Producers\"?", options: ["A) The producer population will decrease", "B) The producer population will increase because fewer animals are eating them", "C) The producers will turn into carnivores", "D) Nothing will change"], a: 1 },
+            { q: "What is an \"Apex Predator\"?", options: ["A) An animal at the bottom of the food chain", "B) An animal at the very top of the food chain with no natural predators", "C) A plant that eats insects", "D) A decomposer that lives underwater"], a: 1 },
+            { q: "In the energy pyramid, which level contains the most overall energy and the largest number of organisms?", options: ["A) Top Predators", "B) Secondary Consumers", "C) Producers (the base)", "D) Primary Consumers"], a: 2 },
+            { q: "An \"Omnivore\" is an organism that survives by eating:", options: ["A) Only sunlight", "B) Only meat", "C) Only plants", "D) Both plants and animals"], a: 3 },
+            { q: "Which of these is an example of a \"Biotic\" factor interacting with an \"Abiotic\" factor?", options: ["A) A wolf hunting a deer", "B) A plant using sunlight to grow", "C) A fungus growing on a dead log", "D) A fish eating a smaller fish"], a: 1 },
+            { q: "What is a \"Niche\" in an ecosystem?", options: ["A) The physical place where an animal sleeps", "B) The specific role or \"job\" an organism has in its habitat", "C) A type of weather pattern", "D) The total number of animals in a forest"], a: 1 },
+            { q: "Which organism would be considered a \"Primary Consumer\" in a meadow ecosystem?", options: ["A) A hawk", "B) A grasshopper", "C) A snake", "D) The grass"], a: 1 },
+            { q: "Energy enters most ecosystems on Earth through:", options: ["A) Deep-sea vents", "B) Rainfall", "C) Sunlight", "D) Volcanic eruptions"], a: 2 },
+            { q: "What is \"Competition\" in an ecosystem?", options: ["A) When two organisms work together to find food", "B) When organisms struggle for the same limited resources (like food, water, or space)", "C) When an animal goes to sleep for the winter", "D) When a plant loses its leaves"], a: 1 },
+            { q: "A \"Parasite\" is an organism that:", options: ["A) Helps its host survive", "B) Lives on or in another organism and harms it to get food", "C) Makes food for other animals", "D) Breaks down rocks into soil"], a: 1 },
+            { q: "Which of these would be a \"Secondary Consumer\" in a pond?", options: ["A) Algae", "B) A small fish that eats algae", "C) A large fish that eats the small fish", "D) A turtle eating a strawberry"], a: 2 },
+            { q: "What happens to the \"Biomass\" (the total mass of living things) as you move up an energy pyramid?", options: ["A) It increases", "B) It decreases", "C) It stays the same", "D) It turns into gas"], a: 1 },
+            { q: "Which of the following is a \"Symbiotic\" relationship where both organisms benefit (Mutualism)?", options: ["A) A tick drinking blood from a dog", "B) A bee pollinating a flower while getting nectar", "C) An owl catching a mouse", "D) A lion fighting a hyena for a zebra"], a: 1 }
+        ];
+
+        let currentRound = 1;
+        let currentQuestionIndex = 0;
+        let userResults = [];
+        let roundScores = [0, 0];
+
+        function loadRound(round) {
+            currentRound = round;
+            currentQuestionIndex = (round - 1) * 10;
+            document.getElementById('round-info').textContent = `Round ${round}`;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const question = allQuestions[currentQuestionIndex];
+            document.getElementById('question').textContent = question.q;
+            const optionsUl = document.getElementById('options');
+            optionsUl.innerHTML = '';
+            question.options.forEach((option, index) => {
+                const li = document.createElement('li');
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.onclick = () => checkAnswer(index);
+                li.appendChild(button);
+                optionsUl.appendChild(li);
+            });
+            document.getElementById('feedback').style.display = 'none';
+            updateProgress();
+        }
+
+        function checkAnswer(selectedIndex) {
+            const correctIndex = allQuestions[currentQuestionIndex].a;
+            const feedback = document.getElementById('feedback');
+            if (selectedIndex === correctIndex) {
+                feedback.textContent = 'Correct!';
+                feedback.className = 'feedback correct';
+                roundScores[currentRound - 1]++;
+            } else {
+                feedback.textContent = `Wrong! The correct answer is: ${allQuestions[currentQuestionIndex].options[correctIndex]}`;
+                feedback.className = 'feedback wrong';
+            }
+            feedback.style.display = 'block';
+            userResults.push(selectedIndex === correctIndex);
+            setTimeout(() => {
+                nextQuestion();
+            }, 2000);
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < allQuestions.length) {
+                if (currentQuestionIndex % 10 === 0) {
+                    // End of round
+                    if (currentRound < 2) {
+                        loadRound(currentRound + 1);
+                    } else {
+                        showSummary();
+                    }
+                } else {
+                    loadQuestion();
+                }
+            } else {
+                showSummary();
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestionIndex % 10) + 1) / 10 * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+        }
+
+        function showSummary() {
+            document.getElementById('active-quiz').style.display = 'none';
+            document.getElementById('summary').style.display = 'block';
+            const totalCorrect = roundScores[0] + roundScores[1];
+            document.getElementById('final-score').textContent = `You got ${totalCorrect} out of 20 questions correct.`;
+            document.getElementById('round-scores').textContent = `Round 1: ${roundScores[0]}/10, Round 2: ${roundScores[1]}/10`;
+        }
+
+        loadRound(1);
+    </script>
+</body>
+</html>

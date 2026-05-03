@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 5 Elite: Vocabulary & Context Clues Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #ddd;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: #4CAF50;
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.3s;
+        }
+        .question {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+        .options li {
+            margin-bottom: 10px;
+        }
+        .options button {
+            width: 100%;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .options button:hover {
+            background-color: #e9e9e9;
+        }
+        .feedback {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .wrong {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .round-info {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .summary {
+            display: none;
+            text-align: center;
+        }
+        .summary h2 {
+            color: #333;
+        }
+        .summary p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+            font-size: 16px;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Grade 5 Elite: Vocabulary & Context Clues Quiz</h1>
+        <div id="active-quiz">
+            <div class="round-info" id="round-info">Round 1</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="question" id="question"></div>
+            <ul class="options" id="options"></ul>
+            <div class="feedback" id="feedback"></div>
+        </div>
+        <div class="summary" id="summary">
+            <h2>Quiz Complete!</h2>
+            <p id="final-score"></p>
+            <p id="round-scores"></p>
+            <a href="../grade5-reading-topics.html" class="back-link">Back to Reading Topics</a>
+        </div>
+    </div>
+
+    <script>
+        const allQuestions = [
+            { q: "The Greek root \"graph\" means \"to write.\" Based on this, what is the best definition of a \"bibliography\"?", options: ["A) A person who writes books about life", "B) A list of books and sources used as research in a report", "C) A machine that sends written messages over long distances", "D) A drawing of a person's life story"], a: 1 },
+            { q: "The root \"port\" means \"to carry.\" In the sentence, \"The country decided to export its extra grain to other nations,\" what does \"export\" mean?", options: ["A) To carry goods out of a country to sell elsewhere", "B) To bring goods into a country from another place", "C) To carry a heavy load uphill", "D) To hide goods so they cannot be found"], a: 0 },
+            { q: "Context Clues: \"The hiker was exhausted after the arduous climb up the steep, rocky mountain.\" Based on the clues in the sentence, what does \"arduous\" mean?", options: ["A) Fun and exciting", "B) Difficult and requiring much effort", "C) Very fast and short", "D) Cold and snowy"], a: 1 },
+            { q: "The Latin root \"sect\" means \"to cut.\" What is the definition of a \"bisect\"?", options: ["A) To cut something into three equal parts", "B) To cut something into two equal pieces", "C) To glue two pieces of wood together", "D) To draw a circle around an object"], a: 1 },
+            { q: "The root \"spect\" means \"to look.\" If a detective is \"circumspect,\" what is he doing?", options: ["A) Running in circles", "B) Looking around carefully and being cautious", "C) Refusing to look at the evidence", "D) Looking only at one small detail"], a: 1 },
+            { q: "Context Clues: \"Unlike his boisterous sister who loved to shout and run, Leo was very quiet and liked to read.\" What does \"boisterous\" mean?", options: ["A) Lazy and sleepy", "B) Noisy, energetic, and cheerful", "C) Mean and unfriendly", "D) Very smart and talented"], a: 1 },
+            { q: "The root \"phon\" means \"sound.\" What is \"phonics\"?", options: ["A) A method of teaching reading by matching sounds with letters", "B) A small device used to record music", "C) A quiet room where no sound can enter", "D) The study of how light travels"], a: 0 },
+            { q: "The Latin root \"struct\" means \"to build.\" What does it mean to \"reconstruct\" a fossil?", options: ["A) To break the fossil into smaller pieces", "B) To build or put the fossil back together again", "C) To find a fossil in the ground", "D) To throw a fossil away"], a: 1 },
+            { q: "The root \"tele\" means \"far.\" A \"telethon\" is a long television program used to raise money. Why is \"tele\" used in this word?", options: ["A) Because the money is very old", "B) Because the program reaches people over a long distance", "C) Because the program is very short", "D) Because only scientists watch it"], a: 1 },
+            { q: "Context Clues: \"The principal's voice was barely audible over the din of the cheering students in the gym.\" What does \"din\" mean?", options: ["A) A type of school uniform", "B) A loud, unpleasant, and prolonged noise", "C) A very quiet whisper", "D) A large trophy"], a: 1 },
+            { q: "The root \"dict\" means \"to speak.\" What is a \"dictator\"?", options: ["A) A person who writes beautiful poetry", "B) A ruler who has total power and whose word is law", "C) A machine that plays music", "D) A person who speaks many languages"], a: 1 },
+            { q: "The Latin root \"rupt\" means \"to break.\" If a conversation is \"interrupted,\" what has happened?", options: ["A) The conversation has become very interesting", "B) The conversation has been broken into or stopped by something else", "C) The people are speaking a different language", "D) The people have finished talking"], a: 1 },
+            { q: "Context Clues: \"The desert climate is arid, making it very difficult for most plants to grow without a lot of extra water.\" What does \"arid\" mean?", options: ["A) Very cold and icy", "B) Extremely dry and having little rain", "C) Tropical and rainy", "D) High up in the mountains"], a: 1 },
+            { q: "The root \"micro\" means \"small\" and \"scope\" means \"to see.\" What does a \"microscope\" do?", options: ["A) It allows you to see things that are very far away", "B) It makes tiny objects look much larger so they can be seen", "C) It takes pictures of the clouds", "D) It measures the temperature of a liquid"], a: 1 },
+            { q: "The Latin root \"scrib\" means \"to write.\" What is a \"manuscript\"?", options: ["A) A machine used to move heavy objects", "B) A document or book that was originally written by hand", "C) A person who reads stories to children", "D) A type of fast-moving car"], a: 1 },
+            { q: "Context Clues: \"The player was disqualified from the game for a flagrant foul that everyone in the stands could plainly see.\" What does \"flagrant\" mean?", options: ["A) Hidden and secret", "B) Obvious, shocking, and impossible to ignore", "C) Accidental and small", "D) Helpful and kind"], a: 1 },
+            { q: "The root \"auto\" means \"self.\" If a car has an \"automatic\" transmission, what does it do?", options: ["A) It requires the driver to do everything by hand", "B) It moves or operates by itself without constant manual control", "C) It only works when the sun is shining", "D) It can fly through the air"], a: 1 },
+            { q: "The Latin root \"tract\" means \"to pull.\" What does a \"tractor\" do on a farm?", options: ["A) It plants seeds in the ground", "B) It pulls heavy loads or farm machinery", "C) It scares away birds", "D) It turns water into steam"], a: 1 },
+            { q: "Context Clues: \"The scientist noted that the liquid was transparent, like a clear window, allowing her to see the bottom of the beaker.\" What does \"transparent\" mean?", options: ["A) Dark and cloudy", "B) Allowing light to pass through so objects behind can be seen", "C) Very thick and sticky", "D) Changing colors quickly"], a: 1 },
+            { q: "The root \"bio\" means \"life.\" What is an \"antibiotic\" used for?", options: ["A) To help plants grow faster", "B) To kill or stop the growth of living bacteria that cause infections", "C) To study the history of the Earth", "D) To measure the speed of a living animal"], a: 1 }
+        ];
+
+        let currentRound = 1;
+        let currentQuestionIndex = 0;
+        let userResults = [];
+        let roundScores = [0, 0];
+
+        function loadRound(round) {
+            currentRound = round;
+            currentQuestionIndex = (round - 1) * 10;
+            document.getElementById('round-info').textContent = `Round ${round}`;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const question = allQuestions[currentQuestionIndex];
+            document.getElementById('question').textContent = question.q;
+            const optionsUl = document.getElementById('options');
+            optionsUl.innerHTML = '';
+            question.options.forEach((option, index) => {
+                const li = document.createElement('li');
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.onclick = () => checkAnswer(index);
+                li.appendChild(button);
+                optionsUl.appendChild(li);
+            });
+            document.getElementById('feedback').style.display = 'none';
+            updateProgress();
+        }
+
+        function checkAnswer(selectedIndex) {
+            const correctIndex = allQuestions[currentQuestionIndex].a;
+            const feedback = document.getElementById('feedback');
+            if (selectedIndex === correctIndex) {
+                feedback.textContent = 'Correct!';
+                feedback.className = 'feedback correct';
+                roundScores[currentRound - 1]++;
+            } else {
+                feedback.textContent = `Wrong! The correct answer is: ${allQuestions[currentQuestionIndex].options[correctIndex]}`;
+                feedback.className = 'feedback wrong';
+            }
+            feedback.style.display = 'block';
+            userResults.push(selectedIndex === correctIndex);
+            setTimeout(() => {
+                nextQuestion();
+            }, 2000);
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < allQuestions.length) {
+                if (currentQuestionIndex % 10 === 0) {
+                    // End of round
+                    if (currentRound < 2) {
+                        loadRound(currentRound + 1);
+                    } else {
+                        showSummary();
+                    }
+                } else {
+                    loadQuestion();
+                }
+            } else {
+                showSummary();
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestionIndex % 10) + 1) / 10 * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+        }
+
+        function showSummary() {
+            document.getElementById('active-quiz').style.display = 'none';
+            document.getElementById('summary').style.display = 'block';
+            const totalCorrect = roundScores[0] + roundScores[1];
+            document.getElementById('final-score').textContent = `You got ${totalCorrect} out of 20 questions correct.`;
+            document.getElementById('round-scores').textContent = `Round 1: ${roundScores[0]}/10, Round 2: ${roundScores[1]}/10`;
+        }
+
+        loadRound(1);
+    </script>
+</body>
+</html>

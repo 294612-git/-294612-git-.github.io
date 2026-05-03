@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 6 English Quiz: Grammar and Sentence Structure</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        #quiz-container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        #round-indicator {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        #progress-bar {
+            width: 100%;
+            background-color: #f0f0f0;
+            height: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        #progress {
+            height: 100%;
+            background-color: #4CAF50;
+            width: 0%;
+            border-radius: 10px;
+            transition: width 0.3s;
+        }
+        #question-container {
+            margin-bottom: 20px;
+        }
+        #question {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        #options button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #e7e7e7;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #options button:hover {
+            background-color: #d4d4d4;
+        }
+        #options button.correct {
+            background-color: #4CAF50;
+            color: white;
+        }
+        #options button.wrong {
+            background-color: #f44336;
+            color: white;
+        }
+        #next-btn {
+            display: none;
+            width: 100%;
+            padding: 10px;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #next-btn:hover {
+            background-color: #0b7dda;
+        }
+        #summary {
+            max-width: 600px;
+            margin: auto;
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        #summary h2 {
+            color: #333;
+        }
+        #summary a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #2196F3;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        #summary a:hover {
+            background-color: #0b7dda;
+        }
+    </style>
+</head>
+<body>
+    <div id="quiz-container">
+        <h1>Grade 6 English Quiz: Grammar and Sentence Structure</h1>
+        <div id="round-indicator">Round 1 of 2</div>
+        <div id="progress-bar">
+            <div id="progress"></div>
+        </div>
+        <div id="question-container">
+            <p id="question"></p>
+            <div id="options"></div>
+        </div>
+        <button id="next-btn" onclick="nextQuestion()">Next</button>
+    </div>
+    <div id="summary" style="display:none;">
+        <h2>Quiz Complete!</h2>
+        <p id="final-score"></p>
+        <p id="round-scores"></p>
+        <a href="grade6-english-topics.html">Back to English Topics</a>
+    </div>
+    <script>
+        const allQuestions = [
+            [
+                {
+                    q: "What is the \"Subordinating Conjunction\" in this sentence? \"Since it was raining, we stayed inside.\"",
+                    options: ["A) It", "B) Was", "C) Since", "D) Inside"],
+                    a: 2
+                },
+                {
+                    q: "A \"Gerund\" is a verb form ending in -ing that acts as a:",
+                    options: ["A) Verb", "B) Noun", "C) Adjective", "D) Adverb"],
+                    a: 1
+                },
+                {
+                    q: "Identify the \"Relative Pronoun\": \"The book that I bought was expensive.\"",
+                    options: ["A) The", "B) That", "C) I", "D) Was"],
+                    a: 1
+                },
+                {
+                    q: "Which of these is an \"Infinitive\"?",
+                    options: ["A) Running", "B) To run", "C) Ran", "D) Run"],
+                    a: 1
+                },
+                {
+                    q: "A \"Restrictive Clause\" is one that:",
+                    options: ["A) Is not necessary to the sentence", "B) Is essential to the meaning of the sentence and has no commas", "C) Is always at the end", "D) Contains an interjection"],
+                    a: 1
+                },
+                {
+                    q: "What is \"Parallel Structure\"?",
+                    options: ["A) Using two lines", "B) Using the same grammatical form for items in a list", "C) Making a sentence long", "D) Using only adjectives"],
+                    a: 1
+                },
+                {
+                    q: "Identify the \"Appositive\": \"My friend, a talented artist, won the prize.\"",
+                    options: ["A) My friend", "B) A talented artist", "C) Won the prize", "D) The prize"],
+                    a: 1
+                },
+                {
+                    q: "Which sentence uses a \"Semicolon\" correctly?",
+                    options: ["A) I went to the store; because I was hungry.", "B) The weather was beautiful; however, we stayed in.", "C) I like: apples; oranges; and grapes.", "D) He said; \"Hello.\""],
+                    a: 1
+                },
+                {
+                    q: "\"Active Voice\" means:",
+                    options: ["A) The sentence is loud", "B) The subject performs the action", "C) The subject receives the action", "D) There is no verb"],
+                    a: 1
+                },
+                {
+                    q: "Identify the \"Predicate Adjective\": \"The soup tasted delicious.\"",
+                    options: ["A) Soup", "B) Tasted", "C) Delicious", "D) The"],
+                    a: 2
+                }
+            ],
+            [
+                {
+                    q: "A \"Comma Splice\" occurs when:",
+                    options: ["A) A comma is missing", "B) Two independent clauses are joined by only a comma", "C) A comma is used before a conjunction", "D) There are too many commas"],
+                    a: 1
+                },
+                {
+                    q: "\"Whom\" should be used when the word is:",
+                    options: ["A) The subject of the sentence", "B) The object of a verb or preposition", "C) A possessive", "D) An action"],
+                    a: 1
+                },
+                {
+                    q: "What is an \"Intransitive Verb\"?",
+                    options: ["A) A verb that takes a direct object", "B) A verb that does not take a direct object (e.g., \"She slept\")", "C) A verb with no tense", "D) A helping verb"],
+                    a: 1
+                },
+                {
+                    q: "In the sentence \"He gave her a flower,\" what is \"her\"?",
+                    options: ["A) Subject", "B) Direct Object", "C) Indirect Object", "D) Preposition"],
+                    a: 2
+                },
+                {
+                    q: "Which of these is a \"Modal Verb\"?",
+                    options: ["A) Run", "B) Should", "C) Quickly", "D) Blue"],
+                    a: 1
+                },
+                {
+                    q: "A \"Participle\" used as an adjective is seen in:",
+                    options: ["A) He is crying.", "B) The crying baby was loud.", "C) To cry is human.", "D) Stop crying."],
+                    a: 1
+                },
+                {
+                    q: "Identify the \"Coordinating Conjunction\":",
+                    options: ["A) Although", "B) And", "C) Because", "D) Since"],
+                    a: 1
+                },
+                {
+                    q: "\"Ellipsis\" (...) is used to:",
+                    options: ["A) End a sentence", "B) Indicate omitted words or a pause", "C) List items", "D) Show excitement"],
+                    a: 1
+                },
+                {
+                    q: "Which sentence is in the \"Imperative Mood\"?",
+                    options: ["A) I am eating.", "B) Will you eat?", "C) Eat your dinner.", "D) I wish I could eat."],
+                    a: 2
+                },
+                {
+                    q: "\"Misplaced Modifier\" means:",
+                    options: ["A) A word is spelled wrong", "B) A describing phrase is too far from the word it describes", "C) There is no subject", "D) The verb tense is wrong"],
+                    a: 1
+                }
+            ]
+        ];
+
+        let currentRound = 0;
+        let currentQuestion = 0;
+        let score = 0;
+        let roundScores = [0, 0];
+
+        function loadRound() {
+            currentQuestion = 0;
+            document.getElementById('round-indicator').textContent = `Round ${currentRound + 1} of 2`;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const q = allQuestions[currentRound][currentQuestion];
+            document.getElementById('question').textContent = q.q;
+            const optionsDiv = document.getElementById('options');
+            optionsDiv.innerHTML = '';
+            q.options.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.textContent = opt;
+                btn.onclick = () => checkAnswer(i);
+                optionsDiv.appendChild(btn);
+            });
+            updateProgress();
+        }
+
+        function checkAnswer(selected) {
+            const correct = allQuestions[currentRound][currentQuestion].a;
+            const buttons = document.querySelectorAll('#options button');
+            buttons.forEach(btn => btn.disabled = true);
+            if (selected === correct) {
+                buttons[selected].classList.add('correct');
+                score++;
+                roundScores[currentRound]++;
+            } else {
+                buttons[selected].classList.add('wrong');
+                buttons[correct].classList.add('correct');
+            }
+            document.getElementById('next-btn').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < allQuestions[currentRound].length) {
+                loadQuestion();
+                document.getElementById('next-btn').style.display = 'none';
+            } else {
+                currentRound++;
+                if (currentRound < allQuestions.length) {
+                    loadRound();
+                } else {
+                    showSummary();
+                }
+            }
+        }
+
+        function updateProgress() {
+            const totalQuestions = allQuestions.flat().length;
+            const answered = currentRound * 10 + currentQuestion;
+            const percent = (answered / totalQuestions) * 100;
+            document.getElementById('progress').style.width = percent + '%';
+        }
+
+        function showSummary() {
+            document.getElementById('quiz-container').style.display = 'none';
+            document.getElementById('summary').style.display = 'block';
+            document.getElementById('final-score').textContent = `Final Score: ${score} out of 20`;
+            document.getElementById('round-scores').textContent = `Round 1: ${roundScores[0]}/10, Round 2: ${roundScores[1]}/10`;
+        }
+
+        loadRound();
+    </script>
+</body>
+</html>
