@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plants & Animals / Ecosystems Quiz - Study Buddy</title>
+    <title>Reading Strategies Quiz - Study Buddy</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
         .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 500px; text-align: center; }
@@ -32,22 +32,36 @@
         <h2>Quiz Complete!</h2>
         <div id="results-list"></div>
         <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
-        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade4-science-topics.html'">Back to Topics</button>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade2-reading-topics.html'">Back to Topics</button>
     </div>
 
     <script>
-        const questionPool = [
-            { q: "How do plants make their own food?", a: "Photosynthesis", options: ["Photosynthesis", "Eating other plants"] },
-            { q: "What do animals need to survive?", a: "Food, water, air", options: ["Food, water, air", "Rocks"] },
-            { q: "What is a herbivore?", a: "Eats plants", options: ["Eats plants", "Eats meat"] },
-            { q: "What is a carnivore?", a: "Eats meat", options: ["Eats meat", "Eats plants"] },
-            { q: "What is an omnivore?", a: "Eats both plants and meat", options: ["Eats both plants and meat", "Eats only meat"] },
-            { q: "What is a producer?", a: "Makes its own food", options: ["Makes its own food", "Eats other organisms"] },
-            { q: "What is a habitat?", a: "Place where an organism lives", options: ["Place where an organism lives", "Place where food is made"] },
-            { q: "What is adaptation?", a: "Change to survive", options: ["Change to survive", "Change in color"] },
-            { q: "What do plants need to grow?", a: "Sunlight, water, air", options: ["Sunlight, water, air", "Rocks"] },
-            { q: "What is pollination?", a: "Transfer of pollen", options: ["Transfer of pollen", "Making seeds"] }
+        const quizData = [
+            { q: "The 'Main Idea' of a story is...", a: "What the story is mostly about", options: ["The names of all the characters", "What the story is mostly about", "The very last sentence"] },
+            { q: "Where and when a story takes place is called the...", a: "Setting", options: ["Plot", "Setting", "Theme"] },
+            { q: "If you 'predict' what happens next, you are...", a: "Making a smart guess", options: ["Telling a secret", "Making a smart guess", "Reading the end first"] },
+            { q: "The people or animals in a story are called...", a: "Characters", options: ["Characters", "Authors", "Illustrators"] },
+            { q: "Which part of a story usually has the 'problem'?", a: "Middle", options: ["Beginning", "Middle", "Ending"] },
+            { q: "When you use clues to figure out something the author didn't say, you...", a: "Infer", options: ["Retell", "Infer", "Scan"] },
+            { q: "The person who writes the book is the...", a: "Author", options: ["Illustrator", "Author", "Publisher"] },
+            { q: "What is a 'Retell'?", a: "Telling the story in your own words", options: ["Telling the story in your own words", "Making up a new story", "Reading the same book twice"] },
+            { q: "In a story, the 'Solution' is...", a: "How the problem is fixed", options: ["How the problem is fixed", "The name of the cat", "The pictures in the book"] },
+            { q: "Non-fiction books are...", a: "Books with real facts", options: ["Made up stories", "Books with real facts", "Books that only have poems"] },
+            { q: "A 'Caption' in a book is...", a: "Words near a picture that explain it", options: ["The title on the cover", "Words near a picture that explain it", "The list of chapters"] },
+            { q: "Which strategy helps you understand a hard word?", a: "Looking at the pictures for clues", options: ["Looking at the pictures for clues", "Closing your eyes", "Skipping the whole page"] },
+            { q: "What is the 'Table of Contents' used for?", a: "To find where chapters start", options: ["To see who wrote the book", "To find where chapters start", "To see the glossary"] },
+            { q: "If a character is crying, we can infer they are...", a: "Sad", options: ["Happy", "Sad", "Hungry"] },
+            { q: "What is a 'Lesson' or 'Moral' of a story?", a: "Something the character learned", options: ["The time it took to read", "Something the character learned", "The number of pages"] },
+            { q: "Why do authors use bold words?", a: "To show they are important", options: ["To make them look pretty", "To show they are important", "By accident"] },
+            { q: "A 'Summary' should be...", a: "Short and include the main parts", options: ["Short and include the main parts", "Very long and include every word", "Just the title"] },
+            { q: "Characters' 'Traits' are...", a: "How they look and act", options: ["Their names", "How they look and act", "Their favorite food"] },
+            { q: "Comparing two things means...", a: "Finding how they are different", options: ["Finding how they are different", "Finding how they are the same", "Counting them"] },
+            { q: "Contrasting two things means...", a: "Finding how they are different", options: ["Finding how they are different", "Finding how they are the same", "Ignoring them"] }
         ];
+
+        let currentIdx = 0;
+        let score = 0;
+        let userResults = [];
 
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
@@ -56,11 +70,24 @@
             }
         }
 
-        const quizData = shuffleArray(questionPool.slice()).slice(0, 5);
+        function ensureTryAgainButton() {
+            const summaryBox = document.getElementById("summary-box");
+            if (summaryBox && !summaryBox.querySelector('button[onclick="location.reload()"]')) {
+                const button = document.createElement('button');
+                button.className = 'next-btn';
+                button.style.display = 'block';
+                button.style.marginTop = '20px';
+                button.innerText = 'Try Again';
+                button.onclick = function() { location.reload(); };
+                const backButton = summaryBox.querySelector('button[onclick^="location.href"]');
+                summaryBox.insertBefore(button, backButton || null);
+            }
+        }
 
-        let currentIdx = 0;
-        let score = 0;
-        let userResults = [];
+        function initializeQuiz() {
+            shuffleArray(quizData);
+            loadQuestion();
+        }
 
         function loadQuestion() {
             const current = quizData[currentIdx];
@@ -113,6 +140,7 @@
             document.getElementById("quiz-box").classList.add("hidden");
             const summaryBox = document.getElementById("summary-box");
             summaryBox.classList.remove("hidden");
+            ensureTryAgainButton();
             
             const list = document.getElementById("results-list");
             list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
@@ -126,7 +154,7 @@
         }
 
         // Start the quiz
-        loadQuestion();
+        initializeQuiz();
     </script>
 </body>
 </html>

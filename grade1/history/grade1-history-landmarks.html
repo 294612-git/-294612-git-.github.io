@@ -31,16 +31,35 @@
     <div class="quiz-container hidden" id="summary-box">
         <h2>Quiz Complete!</h2>
         <div id="results-list"></div>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
         <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade1-history.html'">Back to History Topics</button>
     </div>
 
     <script>
-        const quizData = [
-            { q: "The Statue of Liberty is in ___.", a: "New York", options: ["New York", "Texas"] },
-            { q: "The White House is where the ___ lives.", a: "President", options: ["President", "Teacher"] },
-            { q: "Mount Rushmore has faces of ___.", a: "Presidents", options: ["Presidents", "Actors"] },
-            { q: "The Liberty Bell is in ___.", a: "Pennsylvania", options: ["Pennsylvania", "Florida"] }
+        const questionPool = [
+            { q: "What is the Statue of Liberty?", a: "freedom statue", options: ["war statue", "freedom statue", "peace statue"] },
+            { q: "Where is the Statue of Liberty?", a: "New York Harbor", options: ["Los Angeles", "New York Harbor", "Chicago"] },
+            { q: "What is the White House?", a: "president's house", options: ["king's house", "president's house", "soldier's house"] },
+            { q: "Where is the White House?", a: "Washington DC", options: ["New York", "Washington DC", "Boston"] },
+            { q: "What is the Capitol?", a: "law building", options: ["school", "law building", "hospital"] },
+            { q: "Where is the Capitol?", a: "Washington DC", options: ["New York", "Washington DC", "Philadelphia"] },
+            { q: "What is Mount Rushmore?", a: "mountain with faces", options: ["mountain with trees", "mountain with faces", "mountain with water"] },
+            { q: "Where is Mount Rushmore?", a: "South Dakota", options: ["North Dakota", "South Dakota", "Montana"] },
+            { q: "What is the Liberty Bell?", a: "independence bell", options: ["freedom bell", "independence bell", "peace bell"] },
+            { q: "Where is the Liberty Bell?", a: "Philadelphia", options: ["Boston", "Philadelphia", "Baltimore"] },
+            { q: "What is the Gateway Arch?", a: "St. Louis monument", options: ["Chicago monument", "St. Louis monument", "Detroit monument"] },
+            { q: "Where is the Gateway Arch?", a: "St. Louis", options: ["St. Paul", "St. Louis", "St. Joseph"] },
+            { q: "What is the Alamo?", a: "Texas mission", options: ["California mission", "Texas mission", "Arizona mission"] },
+            { q: "Where is the Alamo?", a: "San Antonio", options: ["San Diego", "San Antonio", "San Jose"] },
+            { q: "What is the Grand Canyon?", a: "big canyon", options: ["small canyon", "big canyon", "medium canyon"] },
+            { q: "Where is the Grand Canyon?", a: "Arizona", options: ["Nevada", "Arizona", "Utah"] },
+            { q: "What is Yellowstone?", a: "first national park", options: ["last national park", "first national park", "second national park"] },
+            { q: "Where is Yellowstone?", a: "Wyoming", options: ["Montana", "Wyoming", "Idaho"] },
+            { q: "What is the Golden Gate Bridge?", a: "famous bridge", options: ["small bridge", "famous bridge", "old bridge"] },
+            { q: "Where is the Golden Gate Bridge?", a: "San Francisco", options: ["Los Angeles", "San Francisco", "Seattle"] }
         ];
+
+        const quizData = shuffleArray(questionPool.slice()).slice(0, 5);
 
         let currentIdx = 0;
         let score = 0;
@@ -53,24 +72,7 @@
             }
         }
 
-        function ensureTryAgainButton() {
-            const summaryBox = document.getElementById("summary-box");
-            if (summaryBox && !summaryBox.querySelector('button[onclick="location.reload()"]')) {
-                const button = document.createElement('button');
-                button.className = 'next-btn';
-                button.style.display = 'block';
-                button.style.marginTop = '20px';
-                button.innerText = 'Try Again';
-                button.onclick = function() { location.reload(); };
-                const backButton = summaryBox.querySelector('button[onclick^="location.href"]');
-                summaryBox.insertBefore(button, backButton || null);
-            }
-        }
 
-        function initializeQuiz() {
-            shuffleArray(quizData);
-            loadQuestion();
-        }
 
         function loadQuestion() {
             const current = quizData[currentIdx];
@@ -121,7 +123,6 @@
             document.getElementById("quiz-box").classList.add("hidden");
             const summaryBox = document.getElementById("summary-box");
             summaryBox.classList.remove("hidden");
-            ensureTryAgainButton();
             const list = document.getElementById("results-list");
             list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
             userResults.forEach(item => {
@@ -132,7 +133,7 @@
             });
         }
 
-        initializeQuiz();
+        loadQuestion();
     </script>
 </body>
 </html>

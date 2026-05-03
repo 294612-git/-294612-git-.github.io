@@ -49,14 +49,14 @@
             { q: "How can we save energy?", a: "Turn off lights", options: ["Turn off lights", "Leave lights on"] }
         ];
 
-        function shuffle(array) {
+        function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [array[i], array[j]] = [array[j], array[i]];
             }
         }
 
-        const quizData = shuffle(questionPool.slice()).slice(0, 5);
+        const quizData = shuffleArray(questionPool.slice()).slice(0, 5);
 
         let currentIdx = 0;
         let score = 0;

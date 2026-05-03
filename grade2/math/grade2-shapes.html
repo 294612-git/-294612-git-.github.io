@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plants Quiz - Study Buddy</title>
+    <title>Shapes Quiz - Study Buddy</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
         .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 500px; text-align: center; }
@@ -32,15 +32,31 @@
         <h2>Quiz Complete!</h2>
         <div id="results-list"></div>
         <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
-        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade2-science-topics.html'">Back to Science Topics</button>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade2-math-topics.html'">Back to Topics</button>
     </div>
 
     <script>
         const quizData = [
-            { q: "What do plants need to make food?", a: "Sunlight", options: ["Sunlight", "Rocks", "Plastic"] },
-            { q: "Which part of a plant makes seeds?", a: "Flower", options: ["Flower", "Root", "Stem"] },
-            { q: "The first stage of a plant’s life cycle is a ___.", a: "Seed", options: ["Seed", "Leaf", "Fruit"] },
-            { q: "Roots help a plant ___.", a: "Absorb water", options: ["Absorb water", "Fly", "Move"] }
+            { q: "How many vertices (corners) does a cube have?", a: "8", options: ["4", "6", "8"] },
+            { q: "Which shape has 0 sides and 0 corners?", a: "Circle", options: ["Square", "Circle", "Triangle"] },
+            { q: "A hexagon has how many sides?", a: "6", options: ["5", "6", "8"] },
+            { q: "Which tool do you use to measure the length of a book?", a: "Ruler", options: ["Scale", "Ruler", "Thermometer"] },
+            { q: "How many inches are in 1 foot?", a: "12", options: ["10", "12", "24"] },
+            { q: "Which is longer: 1 yard or 1 foot?", a: "1 yard", options: ["1 yard", "1 foot"] },
+            { q: "What do you call a 3D shape that looks like a ball?", a: "Sphere", options: ["Cylinder", "Cone", "Sphere"] },
+            { q: "How many faces does a standard box (rectangular prism) have?", a: "6", options: ["4", "6", "8"] },
+            { q: "If a square has one side that is 3 inches, how long are the other sides?", a: "3 inches", options: ["3 inches", "6 inches", "4 inches"] },
+            { q: "Which unit is best to measure the weight of an elephant?", a: "Tons", options: ["Ounces", "Pounds", "Tons"] },
+            { q: "A triangle has 3 sides. How many angles does it have?", a: "3", options: ["2", "3", "4"] },
+            { q: "What shape is a 'stop sign'?", a: "Octagon", options: ["Hexagon", "Octagon", "Pentagon"] },
+            { q: "Which shape can roll easily?", a: "Cylinder", options: ["Cube", "Cylinder", "Pyramid"] },
+            { q: "If you measure a desk, would you use inches or miles?", a: "Inches", options: ["Inches", "Miles"] },
+            { q: "What is the perimeter of a square with 2-inch sides?", a: "8 inches", options: ["4 inches", "8 inches", "6 inches"] },
+            { q: "A soda can is an example of which 3D shape?", a: "Cylinder", options: ["Cone", "Sphere", "Cylinder"] },
+            { q: "What do we call a shape with 4 equal sides and 4 right angles?", a: "Square", options: ["Rectangle", "Square", "Rhombus"] },
+            { q: "How many centimeters are in a meter?", a: "100", options: ["10", "100", "1000"] },
+            { q: "Which shape has 4 sides but they are not all equal?", a: "Rectangle", options: ["Square", "Rectangle", "Triangle"] },
+            { q: "A party hat is which 3D shape?", a: "Cone", options: ["Cylinder", "Cone", "Pyramid"] }
         ];
 
         let currentIdx = 0;
@@ -94,6 +110,8 @@
             const current = quizData[currentIdx];
             const feedback = document.getElementById("feedback");
             const btns = document.querySelectorAll(".option-btn");
+            
+            // Disable buttons after answer
             btns.forEach(b => b.disabled = true);
 
             if (selected === current.a) {
@@ -102,7 +120,7 @@
                 score++;
                 userResults.push({ q: current.q, res: "Correct", class: "correct" });
             } else {
-                feedback.innerText = "Oops! The correct answer was " + current.a + ".";
+                feedback.innerText = "Oops! The correct answer was " + current.a;
                 feedback.className = "feedback wrong";
                 userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
             }
@@ -123,8 +141,10 @@
             const summaryBox = document.getElementById("summary-box");
             summaryBox.classList.remove("hidden");
             ensureTryAgainButton();
+            
             const list = document.getElementById("results-list");
             list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
+            
             userResults.forEach(item => {
                 const div = document.createElement("div");
                 div.className = "summary-item";
@@ -133,6 +153,7 @@
             });
         }
 
+        // Start the quiz
         initializeQuiz();
     </script>
 </body>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shapes Quiz - Study Buddy</title>
+    <title>Vocabulary Quiz - Study Buddy</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
         .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 500px; text-align: center; }
@@ -32,15 +32,31 @@
         <h2>Quiz Complete!</h2>
         <div id="results-list"></div>
         <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
-        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade2-math-topics.html'">Back to Topics</button>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade2-reading-topics.html'">Back to Topics</button>
     </div>
 
     <script>
         const quizData = [
-            { q: "How many sides does a hexagon have?", a: "6", options: ["5", "6", "7"] },
-            { q: "Which shape has 4 equal sides and 4 corners?", a: "Square", options: ["Rectangle", "Square", "Triangle"] },
-            { q: "A cylinder looks like a ___.", a: "Can", options: ["Can", "Ball", "Box"] },
-            { q: "A sphere looks like a ___.", a: "Ball", options: ["Cube", "Ball", "Rectangle"] }
+            { q: "A synonym for 'happy' is...", a: "Glad", options: ["Sad", "Glad", "Angry"] },
+            { q: "An antonym for 'hot' is...", a: "Cold", options: ["Warm", "Cold", "Burning"] },
+            { q: "What does the prefix 'un-' mean (like in 'unhappy')?", a: "Not", options: ["Very", "Not", "Again"] },
+            { q: "What does the prefix 're-' mean (like in 'retell')?", a: "Again", options: ["Before", "Again", "Not"] },
+            { q: "Which word is a 'homophone' for 'sea'?", a: "See", options: ["Blue", "See", "Ocean"] },
+            { q: "A 'Glossary' is found...", a: "At the back of a book to define words", options: ["On the cover", "At the back of a book to define words", "In the middle of a sentence"] },
+            { q: "What does 'enormous' mean?", a: "Very big", options: ["Very small", "Very big", "Very loud"] },
+            { q: "Which suffix means 'full of' (like in 'joyful')?", a: "-ful", options: ["-less", "-ful", "-ed"] },
+            { q: "Which word is a synonym for 'small'?", a: "Tiny", options: ["Tiny", "Huge", "Wide"] },
+            { q: "The word 'bat' can mean an animal or sports equipment. This is a...", a: "Multiple-meaning word", options: ["Multiple-meaning word", "Rhyming word", "Long word"] },
+            { q: "What does 'scared' mean?", a: "Afraid", options: ["Brave", "Afraid", "Silly"] },
+            { q: "Which word is an antonym for 'fast'?", a: "Slow", options: ["Quick", "Slow", "Speedy"] },
+            { q: "What does the suffix '-less' mean (like in 'fearless')?", a: "Without", options: ["Without", "Full of", "More"] },
+            { q: "A synonym for 'shout' is...", a: "Yell", options: ["Whisper", "Yell", "Think"] },
+            { q: "What is a 'Context Clue'?", a: "A hint in the sentence to help find a word's meaning", options: ["A hint in the sentence to help find a word's meaning", "A red crayon", "The author's name"] },
+            { q: "Which word means 'to look at closely'?", a: "Examine", options: ["Ignore", "Examine", "Sleep"] },
+            { q: "An antonym for 'quiet' is...", a: "Noisy", options: ["Silent", "Noisy", "Soft"] },
+            { q: "What does 'ancient' mean?", a: "Very old", options: ["Brand new", "Very old", "Shiny"] },
+            { q: "Which word means a 'place where books are kept'?", a: "Library", options: ["Kitchen", "Library", "Park"] },
+            { q: "If you are 'exhausted,' you are...", a: "Very tired", options: ["Very tired", "Very excited", "Very tall"] }
         ];
 
         let currentIdx = 0;

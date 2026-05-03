@@ -37,9 +37,26 @@
 
     <script>
         const quizData = [
-            { q: "Who was the first president?", a: "George Washington", options: ["George Washington", "Abraham Lincoln"] },
-            { q: "The American flag has ___ stripes", a: "13", options: ["13", "50"] },
-            { q: "Independence Day is in ___", a: "July", options: ["July", "December"] }
+            { q: "Who was the first president?", a: "George Washington", options: ["George Washington", "Abraham Lincoln", "Thomas Jefferson", "John Adams"] },
+            { q: "The American flag has ___ stripes", a: "13", options: ["13", "50", "7", "20"] },
+            { q: "Independence Day is in ___", a: "July", options: ["July", "December", "January", "October"] },
+            { q: "What is the capital of the USA?", a: "Washington, D.C.", options: ["New York", "Washington, D.C.", "Los Angeles", "Chicago"] },
+            { q: "Who wrote the Declaration of Independence?", a: "Thomas Jefferson", options: ["George Washington", "Thomas Jefferson", "Benjamin Franklin", "John Hancock"] },
+            { q: "What year was America founded?", a: "1776", options: ["1492", "1776", "1865", "2000"] },
+            { q: "What is the Statue of Liberty?", a: "A symbol of freedom", options: ["A bridge", "A symbol of freedom", "A mountain", "A river"] },
+            { q: "Who fought in the Civil War?", a: "North vs South", options: ["East vs West", "North vs South", "Red vs Blue", "Cats vs Dogs"] },
+            { q: "What is the Constitution?", a: "The main law of the USA", options: ["A book", "The main law of the USA", "A map", "A flag"] },
+            { q: "Who was Abraham Lincoln?", a: "A president who freed slaves", options: ["A general", "A president who freed slaves", "An explorer", "A teacher"] },
+            { q: "What is Thanksgiving?", a: "A holiday to give thanks", options: ["A birthday", "A holiday to give thanks", "A sports day", "A school day"] },
+            { q: "What is the White House?", a: "Where the president lives", options: ["A school", "Where the president lives", "A park", "A library"] },
+            { q: "What is the Supreme Court?", a: "The highest court", options: ["A playground", "The highest court", "A hospital", "A store"] },
+            { q: "What is a pioneer?", a: "Someone who explores new land", options: ["Someone who builds houses", "Someone who explores new land", "Someone who cooks", "Someone who sings"] },
+            { q: "What is the Bill of Rights?", a: "First 10 amendments", options: ["A list of foods", "First 10 amendments", "A map of rights", "A book of stories"] },
+            { q: "Who was Christopher Columbus?", a: "Explorer who sailed to America", options: ["A president", "Explorer who sailed to America", "A scientist", "A musician"] },
+            { q: "What is the Liberty Bell?", a: "A symbol of freedom", options: ["A clock", "A symbol of freedom", "A bell for school", "A toy"] },
+            { q: "What is the Gettysburg Address?", a: "A famous speech by Lincoln", options: ["A letter", "A famous speech by Lincoln", "A book", "A map"] },
+            { q: "What is the Boston Tea Party?", a: "A protest against taxes", options: ["A party with tea", "A protest against taxes", "A birthday party", "A dance party"] },
+            { q: "What is the Emancipation Proclamation?", a: "Document that freed slaves", options: ["A map", "Document that freed slaves", "A flag", "A coin"] }
         ];
 
         let currentIdx = 0;

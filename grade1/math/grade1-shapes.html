@@ -38,104 +38,79 @@
        </div>
    </div>
 
-   <script>
-       const quizData = [
-           { q: "Which shape is round and has no corners?", a: "Circle", options: ["Triangle", "Square", "Circle", "Rectangle"] },
-           { q: "Which shape has 4 equal sides (all sides are the same)?", a: "Square", options: ["Square", "Oval", "Triangle", "Star"] },
-           { q: "How many corners does a triangle have?", a: "3", options: ["1", "2", "3", "4"] },
-           { q: "Which shape looks most like a box?", a: "Square", options: ["Circle", "Square", "Oval", "Heart"] },
-           { q: "Which shape looks like a stretched-out circle or an egg?", a: "Oval", options: ["Rectangle", "Square", "Oval", "Triangle"] },
-           { q: "How many sides does a rectangle have?", a: "4", options: ["2", "3", "4", "5"] },
-           { q: "A slice of pizza is usually the shape of a:", a: "Triangle", options: ["Circle", "Triangle", "Square", "Rectangle"] },
-           { q: "Which shape has 5 points and shines in the sky?", a: "Star", options: ["Diamond", "Moon", "Star", "Circle"] },
-           { q: "Which shape has 4 sides, but 2 are long and 2 are short?", a: "Rectangle", options: ["Square", "Rectangle", "Triangle", "Circle"] },
-           { q: "What do we call a shape with 0 sides?", a: "Circle", options: ["Square", "Triangle", "Circle", "Diamond"] },
-           { q: "Which shape looks like a diamond?", a: "Rhombus", options: ["Rhombus", "Circle", "Rectangle", "Oval"] },
-           { q: "How many corners does a square have?", a: "4", options: ["3", "4", "5", "0"] },
-           { q: "Which shape is used for a 'Yield' road sign?", a: "Triangle", options: ["Circle", "Square", "Triangle", "Rectangle"] },
-           { q: "If you put two triangles together side-by-side, what shape might they make?", a: "Square or Diamond", options: ["Circle", "Square or Diamond", "Oval", "Heart"] },
-           { q: "Which of these is a 3D shape (like a ball)?", a: "Sphere", options: ["Circle", "Sphere", "Triangle", "Square"] },
-           { q: "Which shape has 6 sides?", a: "Hexagon", options: ["Pentagon", "Hexagon", "Square", "Triangle"] },
-           { q: "A door is usually the shape of a:", a: "Rectangle", options: ["Circle", "Triangle", "Rectangle", "Oval"] },
-           { q: "A 'corner' is also called a:", a: "Vertex", options: ["Line", "Side", "Vertex", "Middle"] },
-           { q: "Which shape looks like a roof on a house?", a: "Triangle", options: ["Triangle", "Circle", "Oval", "Rectangle"] },
-           { q: "Which shape is often used to show love?", a: "Heart", options: ["Square", "Star", "Heart", "Triangle"] }
-       ];
+    <script>
+        const quizData = [
+            { q: "How many sides does a triangle have?", a: "3", options: ["3", "4", "5"] },
+            { q: "How many sides does a square have?", a: "4", options: ["3", "4", "5"] },
+            { q: "How many sides does a circle have?", a: "0", options: ["0", "1", "many"] },
+            { q: "Which shape has 5 sides?", a: "pentagon", options: ["triangle", "square", "pentagon"] }
+        ];
 
-       let currentIdx = 0;
-       let score = 0;
-       let userResults = [];
+        let currentIdx = 0;
+        let score = 0;
+        let userResults = [];
 
-       function shuffleArray(array) {
-           for (let i = array.length - 1; i > 0; i--) {
-               const j = Math.floor(Math.random() * (i + 1));
-               [array[i], array[j]] = [array[j], array[i]];
-           }
-       }
+        function ensureTryAgainButton() {
+            const summaryBox = document.getElementById("summary-box");
+            if (!summaryBox) return;
+            if (summaryBox.querySelector('button.try-again-btn')) return;
 
-       function initializeQuiz() {
-           shuffleArray(quizData);
-           loadQuestion();
-       }
+            const button = document.createElement("button");
+            button.className = "next-btn try-again-btn";
+            button.style.display = "block";
+            button.style.marginTop = "20px";
+            button.innerText = "Try Again";
+            button.onclick = () => location.reload();
+            summaryBox.insertBefore(button, summaryBox.querySelector('a') || null);
+        }
 
-       function loadQuestion() {
-           const current = quizData[currentIdx];
-           document.getElementById("question").innerText = current.q;
-           document.getElementById("feedback").innerText = "";
-           document.getElementById("next-button").style.display = "none";
-          
-           const optionsContainer = document.getElementById("options");
-           optionsContainer.innerHTML = "";
-          
-           current.options.forEach(option => {
-               const btn = document.createElement("button");
-               btn.className = "option-btn";
-               btn.innerText = option;
-               btn.onclick = () => checkAnswer(option);
-               optionsContainer.appendChild(btn);
-           });
-       }
+        function loadQuestion() {
+            const current = quizData[currentIdx];
+            document.getElementById("question").innerText = current.q;
+            document.getElementById("feedback").innerText = "";
+            document.getElementById("next-button").style.display = "none";
+           
+            const optionsContainer = document.getElementById("options");
+            optionsContainer.innerHTML = "";
+           
+            current.options.forEach(option => {
+                const btn = document.createElement("button");
+                btn.className = "option-btn";
+                btn.innerText = option;
+                btn.onclick = () => checkAnswer(option);
+                optionsContainer.appendChild(btn);
+            });
+        }
 
-       function checkAnswer(selected) {
-           const current = quizData[currentIdx];
-           const feedback = document.getElementById("feedback");
-           const btns = document.querySelectorAll(".option-btn");
-           btns.forEach(b => b.disabled = true);
-          
-           if (selected === current.a) {
-               feedback.innerText = "Correct! 🎉";
-               feedback.className = "feedback correct";
-               score++;
-               userResults.push({ q: current.q, res: "Correct", class: "correct" });
-           } else {
-               feedback.innerText = "Oops! The correct answer was " + current.a;
-               feedback.className = "feedback wrong";
-               userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
-           }
-           document.getElementById("next-button").style.display = "block";
-       }
+        function initializeQuiz() {
+            loadQuestion();
+        }
 
-       function loadNextQuestion() {
-           currentIdx++;
-           if (currentIdx < quizData.length) {
-               loadQuestion();
-           } else {
-               showSummary();
-           }
-       }
+        function checkAnswer(selected) {
+            const current = quizData[currentIdx];
+            const feedback = document.getElementById("feedback");
+            
+            if (selected === current.a) {
+                feedback.innerText = "Correct! 🎉";
+                feedback.className = "feedback correct";
+                score++;
+                userResults.push({ q: current.q, res: "Correct", class: "correct" });
+            } else {
+                feedback.innerText = "Oops! The correct answer was " + current.a;
+                feedback.className = "feedback wrong";
+                userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
+            }
+            document.getElementById("next-button").style.display = "block";
+        }
 
-       function ensureTryAgainButton() {
-           const summaryBox = document.getElementById("summary-box");
-           if (summaryBox && !summaryBox.querySelector('.try-again-btn')) {
-               const button = document.createElement('button');
-               button.className = 'next-btn try-again-btn';
-               button.style.display = 'block';
-               button.style.marginTop = '20px';
-               button.innerText = 'Try Again';
-               button.onclick = function() { location.reload(); };
-               summaryBox.appendChild(button);
-           }
-       }
+        function loadNextQuestion() {
+            currentIdx++;
+            if (currentIdx < quizData.length) {
+                loadQuestion();
+            } else {
+                showSummary();
+            }
+        }
 
        function showSummary() {
            document.getElementById("quiz-box").classList.add("hidden");

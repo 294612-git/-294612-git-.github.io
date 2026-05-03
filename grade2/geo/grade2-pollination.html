@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Addition & Subtraction Quiz - Study Buddy</title>
+    <title>Pollination Quiz - Study Buddy</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
         .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 500px; text-align: center; }
@@ -32,10 +32,37 @@
         <h2>Quiz Complete!</h2>
         <div id="results-list"></div>
         <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
-        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade3-math-topics.html'">Back to Topics</button>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade2-science-topics.html'">Back to Topics</button>
     </div>
 
     <script>
+        const quizData = [
+            { q: "What is pollination?", a: "Moving pollen to help plants make seeds", options: ["Moving pollen to help plants make seeds", "Planting seeds in the dirt", "Watering a flower"] },
+            { q: "What is the yellow powder inside a flower called?", a: "Pollen", options: ["Dust", "Pollen", "Flour"] },
+            { q: "Which of these is a common pollinator?", a: "A bee", options: ["A bee", "A spider", "A worm"] },
+            { q: "Why do bees visit flowers?", a: "To drink nectar (sweet juice)", options: ["To take a nap", "To drink nectar (sweet juice)", "To hide from the sun"] },
+            { q: "What sticks to a bee's fuzzy body when it visits a flower?", a: "Pollen", options: ["Dirt", "Pollen", "Leaves"] },
+            { q: "Which of these can move pollen besides animals?", a: "The wind", options: ["The wind", "Rocks", "Moonlight"] },
+            { q: "What part of the flower makes the pollen?", a: "The stamen", options: ["The petals", "The stamen", "The roots"] },
+            { q: "Where must the pollen land for a seed to grow?", a: "On the pistil", options: ["On the leaves", "On the pistil", "In the grass"] },
+            { q: "Why are flowers bright and colorful?", a: "To attract pollinators", options: ["To stay warm", "To attract pollinators", "To look like the sun"] },
+            { q: "Which bird is a famous pollinator?", a: "Hummingbird", options: ["Penguin", "Hummingbird", "Owl"] },
+            { q: "Do butterflies help with pollination?", a: "Yes", options: ["Yes", "No"] },
+            { q: "What grows after a flower is pollinated?", a: "A seed or fruit", options: ["A new stem", "A seed or fruit", "A rock"] },
+            { q: "Some flowers smell like stinky meat to attract...", a: "Flies", options: ["Bees", "Flies", "Butterflies"] },
+            { q: "Which animal pollinates at night?", a: "A bat", options: ["A bat", "A squirrel", "A blue jay"] },
+            { q: "What is nectar?", a: "A sugary liquid flowers make", options: ["A type of pollen", "A sugary liquid flowers make", "A part of a leaf"] },
+            { q: "Can water help pollinate some plants?", a: "Yes", options: ["Yes", "No"] },
+            { q: "What happens if there are no pollinators?", a: "Many plants cannot make seeds or fruit", options: ["Plants grow more flowers", "Many plants cannot make seeds or fruit", "The sun stops shining"] },
+            { q: "Pollen is usually...", a: "Sticky or dusty", options: ["Sticky or dusty", "Wet and heavy", "Made of metal"] },
+            { q: "Where do bees carry extra pollen?", a: "In 'pockets' on their legs", options: ["In their mouths", "In 'pockets' on their legs", "In their wings"] },
+            { q: "Is a dog a common pollinator?", a: "No, usually insects, birds, and bats are", options: ["No, usually insects, birds, and bats are", "Yes, always"] }
+        ];
+
+        let currentIdx = 0;
+        let score = 0;
+        let userResults = [];
+
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -43,34 +70,24 @@
             }
         }
 
-        const questionPool = [
-            { q: "Solve: 456 + 234.", a: "690", options: ["680", "690", "700", "590"] },
-            { q: "What is 900 - 457?", a: "443", options: ["443", "543", "453", "553"] },
-            { q: "Find the sum of 1,200 and 300.", a: "1,500", options: ["1,500", "900", "1,230", "4,200"] },
-            { q: "Subtract 89 from 100.", a: "11", options: ["21", "11", "19", "9"] },
-            { q: "What is 25 + 25 + 25 + 25?", a: "100", options: ["75", "100", "125", "50"] },
-            { q: "Solve: 672 - 0.", a: "672", options: ["0", "672", "1", "671"] },
-            { q: "Add: 30 + 40 + 50.", a: "120", options: ["100", "120", "110", "90"] },
-            { q: "If a book has 200 pages and you read 145, how many are left?", a: "55", options: ["65", "55", "45", "75"] },
-            { q: "What is 5,000 + 4,000?", a: "9,000", options: ["9,000", "1,000", "900", "10,000"] },
-            { q: "Solve: 85 - 29.", a: "56", options: ["66", "56", "64", "54"] },
-            { q: "What is 123 + 321?", a: "444", options: ["444", "555", "456", "345"] },
-            { q: "Find the difference between 50 and 18.", a: "32", options: ["32", "42", "38", "40"] },
-            { q: "Solve: 10 + (20 + 30).", a: "60", options: ["50", "60", "40", "70"] },
-            { q: "If you have $20 and buy a toy for $12, how much change do you get?", a: "$8", options: ["$8", "$10", "$7", "$12"] },
-            { q: "Add: 150 + 150.", a: "300", options: ["250", "300", "350", "400"] },
-            { q: "1,000 - 500 = ___?", a: "500", options: ["400", "500", "600", "100"] },
-            { q: "What is 99 + 11?", a: "110", options: ["100", "110", "120", "109"] },
-            { q: "Solve: 78 - 34.", a: "44", options: ["44", "34", "54", "42"] },
-            { q: "Add 5 to 995.", a: "1,000", options: ["1,000", "990", "1,005", "900"] },
-            { q: "200 - ___ = 150.", a: "50", options: ["100", "50", "150", "40"] }
-        ];
+        function ensureTryAgainButton() {
+            const summaryBox = document.getElementById("summary-box");
+            if (summaryBox && !summaryBox.querySelector('button[onclick="location.reload()"]')) {
+                const button = document.createElement('button');
+                button.className = 'next-btn';
+                button.style.display = 'block';
+                button.style.marginTop = '20px';
+                button.innerText = 'Try Again';
+                button.onclick = function() { location.reload(); };
+                const backButton = summaryBox.querySelector('button[onclick^="location.href"]');
+                summaryBox.insertBefore(button, backButton || null);
+            }
+        }
 
-        const quizData = shuffleArray(questionPool.slice()).slice(0, 5);
-
-        let currentIdx = 0;
-        let score = 0;
-        let userResults = [];
+        function initializeQuiz() {
+            shuffleArray(quizData);
+            loadQuestion();
+        }
 
         function loadQuestion() {
             const current = quizData[currentIdx];
@@ -98,12 +115,12 @@
             btns.forEach(b => b.disabled = true);
 
             if (selected === current.a) {
-                feedback.innerText = "Splashtastic! Correct.";
+                feedback.innerText = "Correct! Well done.";
                 feedback.className = "feedback correct";
                 score++;
                 userResults.push({ q: current.q, res: "Correct", class: "correct" });
             } else {
-                feedback.innerText = "Glub! The correct answer was " + current.a;
+                feedback.innerText = "Oops! The correct answer was " + current.a;
                 feedback.className = "feedback wrong";
                 userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
             }
@@ -123,6 +140,7 @@
             document.getElementById("quiz-box").classList.add("hidden");
             const summaryBox = document.getElementById("summary-box");
             summaryBox.classList.remove("hidden");
+            ensureTryAgainButton();
             
             const list = document.getElementById("results-list");
             list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
@@ -136,7 +154,7 @@
         }
 
         // Start the quiz
-        loadQuestion();
+        initializeQuiz();
     </script>
 </body>
 </html>

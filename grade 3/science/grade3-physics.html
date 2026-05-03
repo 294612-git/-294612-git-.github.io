@@ -37,10 +37,26 @@
 
     <script>
         const quizData = [
-            { q: "A push or pull is a ___", a: "Force", options: ["Force", "Energy"] },
-            { q: "Light helps us ___", a: "See", options: ["See", "Hear"] },
-            { q: "Electricity flows through ___", a: "Wires", options: ["Wires", "Rocks"] },
-            { q: "Magnets attract ___", a: "Metal", options: ["Metal", "Plastic"] }
+            { q: "Gravity is a force that pulls objects...", a: "Toward the center of the Earth", options: ["Up", "Toward the center of the Earth", "Sideways"] },
+            { q: "Friction is a force that occurs when two objects...", a: "Rub together", options: ["Pull apart", "Rub together", "Melt"] },
+            { q: "A magnet has a North pole and a ___ pole.", a: "South", options: ["East", "West", "South"] },
+            { q: "Which material is a good conductor of electricity?", a: "Copper", options: ["Rubber", "Copper", "Plastic", "Wood"] },
+            { q: "When light bounces off a mirror, it is...", a: "Reflection", options: ["Refraction", "Reflection", "Absorption"] },
+            { q: "What is a \"push\" or a \"pull\"?", a: "Force", options: ["Velocity", "Force", "Energy"] },
+            { q: "To move a heavy object, you need ___ force.", a: "More", options: ["Less", "More", "No"] },
+            { q: "Like poles of a magnet (N and N) will...", a: "Repel", options: ["Attract", "Repel", "Explode"] },
+            { q: "A path that electricity flows through is a...", a: "Circuit", options: ["Circle", "Circuit", "Wire"] },
+            { q: "What slows down a rolling ball on grass?", a: "Friction", options: ["Gravity", "Friction", "Light"] },
+            { q: "Materials that do NOT let electricity pass through are...", a: "Insulators", options: ["Conductors", "Insulators", "Magnets"] },
+            { q: "White light is actually made of ___ colors.", a: "All colors of the rainbow", options: ["Zero", "Three", "All colors of the rainbow"] },
+            { q: "When light bends as it passes through water, it is...", a: "Refraction", options: ["Reflection", "Refraction", "Blocking"] },
+            { q: "Shadows are formed when light is...", a: "Blocked", options: ["Bending", "Blocked", "Speeding up"] },
+            { q: "The faster an object moves, the more ___ energy it has.", a: "Kinetic", options: ["Potential", "Kinetic", "Electrical"] },
+            { q: "Static electricity can make your hair...", a: "Stand up", options: ["Fall out", "Stand up", "Change color"] },
+            { q: "Magnets attract objects made of...", a: "Iron", options: ["Aluminum", "Iron", "Gold", "Silver"] },
+            { q: "The loudness of a sound is its...", a: "Volume", options: ["Pitch", "Volume", "Echo"] },
+            { q: "Sound is caused by...", a: "Vibrations", options: ["Light", "Vibrations", "Magnets"] },
+            { q: "A battery is a source of ___ energy.", a: "Chemical", options: ["Light", "Chemical", "Sound"] }
         ];
 
         let currentIdx = 0;
@@ -99,12 +115,12 @@
             btns.forEach(b => b.disabled = true);
 
             if (selected === current.a) {
-                feedback.innerText = "Correct! Well done.";
+                feedback.innerText = "Splashtastic! Correct.";
                 feedback.className = "feedback correct";
                 score++;
                 userResults.push({ q: current.q, res: "Correct", class: "correct" });
             } else {
-                feedback.innerText = "Oops! The correct answer was " + current.a;
+                feedback.innerText = "Glub! The correct answer was " + current.a;
                 feedback.className = "feedback wrong";
                 userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
             }

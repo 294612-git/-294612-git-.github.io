@@ -31,16 +31,35 @@
     <div class="quiz-container hidden" id="summary-box">
         <h2>Quiz Complete!</h2>
         <div id="results-list"></div>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
         <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade1-history.html'">Back to History Topics</button>
     </div>
 
     <script>
-        const quizData = [
-            { q: "What are the red, white, and blue colors on?", a: "Flag", options: ["Flag", "Book"] },
-            { q: "What bird is a symbol of the United States?", a: "Eagle", options: ["Eagle", "Parrot"] },
-            { q: "The Statue of Liberty holds a ___.", a: "Torch", options: ["Torch", "Ball"] },
-            { q: "What does the flag stand for?", a: "Our country", options: ["Our country", "A game"] }
+        const questionPool = [
+            { q: "What is the American flag?", a: "symbol of country", options: ["toy", "symbol of country", "game"] },
+            { q: "What colors are on the flag?", a: "red white blue", options: ["green yellow red", "red white blue", "blue black white"] },
+            { q: "What is the bald eagle?", a: "national bird", options: ["pet bird", "national bird", "farm bird"] },
+            { q: "What is the Statue of Liberty?", a: "symbol of freedom", options: ["statue of war", "symbol of freedom", "statue of peace"] },
+            { q: "What does the torch represent?", a: "light of freedom", options: ["light of darkness", "light of freedom", "light of fire"] },
+            { q: "What is the Liberty Bell?", a: "symbol of independence", options: ["symbol of slavery", "symbol of independence", "symbol of war"] },
+            { q: "What is the White House?", a: "president's home", options: ["king's home", "president's home", "soldier's home"] },
+            { q: "What is the Capitol building?", a: "law making place", options: ["school", "law making place", "hospital"] },
+            { q: "What are stars on the flag?", a: "states", options: ["cities", "states", "countries"] },
+            { q: "What are stripes on the flag?", a: "original colonies", options: ["roads", "original colonies", "rivers"] },
+            { q: "What is the Pledge of Allegiance?", a: "promise to country", options: ["song", "promise to country", "dance"] },
+            { q: "What is patriotism?", a: "love for country", options: ["hate for country", "love for country", "fear of country"] },
+            { q: "What is a monument?", a: "memorial structure", options: ["play structure", "memorial structure", "living structure"] },
+            { q: "What is a holiday?", a: "special day", options: ["work day", "special day", "sleep day"] },
+            { q: "What is Independence Day?", a: "July 4th", options: ["Christmas", "July 4th", "Halloween"] },
+            { q: "What is Thanksgiving?", a: "harvest festival", options: ["birthday party", "harvest festival", "wedding"] },
+            { q: "What is Veterans Day?", a: "honor soldiers", options: ["honor teachers", "honor soldiers", "honor doctors"] },
+            { q: "What is Memorial Day?", a: "remember dead", options: ["remember alive", "remember dead", "remember sick"] },
+            { q: "What is Columbus Day?", a: "explorer day", options: ["farmer day", "explorer day", "teacher day"] },
+            { q: "What is Martin Luther King Day?", a: "civil rights leader", options: ["president day", "civil rights leader", "soldier day"] }
         ];
+
+        const quizData = shuffleArray(questionPool.slice()).slice(0, 5);
 
         let currentIdx = 0;
         let score = 0;
@@ -53,24 +72,9 @@
             }
         }
 
-        function ensureTryAgainButton() {
-            const summaryBox = document.getElementById("summary-box");
-            if (summaryBox && !summaryBox.querySelector('button[onclick="location.reload()"]')) {
-                const button = document.createElement('button');
-                button.className = 'next-btn';
-                button.style.display = 'block';
-                button.style.marginTop = '20px';
-                button.innerText = 'Try Again';
-                button.onclick = function() { location.reload(); };
-                const backButton = summaryBox.querySelector('button[onclick^="location.href"]');
-                summaryBox.insertBefore(button, backButton || null);
-            }
-        }
 
-        function initializeQuiz() {
-            shuffleArray(quizData);
-            loadQuestion();
-        }
+
+
 
         function loadQuestion() {
             const current = quizData[currentIdx];
@@ -121,7 +125,6 @@
             document.getElementById("quiz-box").classList.add("hidden");
             const summaryBox = document.getElementById("summary-box");
             summaryBox.classList.remove("hidden");
-            ensureTryAgainButton();
             const list = document.getElementById("results-list");
             list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
             userResults.forEach(item => {
@@ -132,7 +135,7 @@
             });
         }
 
-        initializeQuiz();
+        loadQuestion();
     </script>
 </body>
 </html>

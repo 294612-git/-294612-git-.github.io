@@ -37,8 +37,26 @@
 
     <script>
         const quizData = [
-            { q: "Round 47 to the nearest ten.", a: "50", options: ["40", "50", "60"] },
-            { q: "Which is closest to 198?", a: "200", options: ["100", "200", "300"] }
+            { q: "Round 47 to the nearest ten.", a: "50", options: ["40", "50", "45", "100"] },
+            { q: "Estimate 21 + 79 by rounding to the nearest ten.", a: "100", options: ["100", "90", "110", "80"] },
+            { q: "Round 342 to the nearest hundred.", a: "300", options: ["300", "400", "340", "350"] },
+            { q: "Estimate 59 × 2 by rounding 59 to the nearest ten.", a: "120", options: ["100", "120", "110", "60"] },
+            { q: "Is 85 closer to 80 or 90?", a: "80", options: ["80", "90"] },
+            { q: "Estimate 812 - 395 by rounding to hundreds.", a: "400", options: ["500", "400", "300", "600"] },
+            { q: "Round 1,560 to the nearest thousand.", a: "2,000", options: ["1,000", "2,000", "1,500", "1,600"] },
+            { q: "Which is the best estimate for the weight of a pencil?", a: "1 ounce", options: ["1 pound", "1 ounce", "1 ton"] },
+            { q: "Estimate the sum of $4.95 and $3.05.", a: "$8", options: ["$7", "$8", "$9", "$10"] },
+            { q: "Round 9 to the nearest ten.", a: "10", options: ["0", "10", "5", "20"] },
+            { q: "Estimate 24 + 24 by rounding to tens.", a: "50", options: ["40", "50", "60", "30"] },
+            { q: "Round 749 to the nearest hundred.", a: "700", options: ["800", "700", "750", "740"] },
+            { q: "A jar has 512 beans. About how many beans are in the jar?", a: "500", options: ["500", "600", "400", "510"] },
+            { q: "Estimate 93 - 21 by rounding to tens.", a: "70", options: ["70", "80", "60", "110"] },
+            { q: "Round 55 to the nearest ten.", a: "60", options: ["50", "60", "55", "100"] },
+            { q: "Which number rounds to 400 when rounded to the nearest hundred?", a: "399", options: ["349", "451", "399", "460"] },
+            { q: "Estimate the cost of 3 items that are $1.99 each.", a: "$6", options: ["$3", "$6", "$9", "$2"] },
+            { q: "Round 8,201 to the nearest thousand.", a: "8,000", options: ["8,000", "9,000", "8,200", "8,300"] },
+            { q: "Is 12 closer to 10 or 20?", a: "10", options: ["10", "20"] },
+            { q: "Estimate 487 + 112 by rounding to hundreds.", a: "600", options: ["500", "600", "700", "400"] }
         ];
 
         let currentIdx = 0;
@@ -97,12 +115,12 @@
             btns.forEach(b => b.disabled = true);
 
             if (selected === current.a) {
-                feedback.innerText = "Correct! Well done.";
+                feedback.innerText = "Splashtastic! Correct.";
                 feedback.className = "feedback correct";
                 score++;
                 userResults.push({ q: current.q, res: "Correct", class: "correct" });
             } else {
-                feedback.innerText = "Oops! The correct answer was " + current.a;
+                feedback.innerText = "Glub! The correct answer was " + current.a;
                 feedback.className = "feedback wrong";
                 userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
             }

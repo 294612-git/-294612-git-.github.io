@@ -37,10 +37,26 @@
 
     <script>
         const quizData = [
-            { q: "What sound does “B” make?", a: "ba", options: ["ba", "sa", "la"] },
-            { q: "Which word starts with “S”?", a: "Sun", options: ["Cat", "Dog", "Sun"] },
-            { q: "Which word has a short “a” sound?", a: "Cat", options: ["Cat", "Carrot"] },
-            { q: "What two letters make the “sh” sound?", a: "sh", options: ["sh", "ch", "th"] }
+            { q: "What sound does 'A' make?", a: "ah", options: ["eh", "ah", "ih"] },
+            { q: "What sound does 'B' make?", a: "buh", options: ["duh", "buh", "guh"] },
+            { q: "What sound does 'C' make?", a: "kuh", options: ["suh", "kuh", "tuh"] },
+            { q: "What sound does 'D' make?", a: "duh", options: ["buh", "duh", "fuh"] },
+            { q: "What sound does 'E' make?", a: "eh", options: ["ah", "eh", "uh"] },
+            { q: "What sound does 'F' make?", a: "fuh", options: ["guh", "fuh", "huh"] },
+            { q: "What sound does 'G' make?", a: "guh", options: ["fuh", "guh", "juh"] },
+            { q: "What sound does 'H' make?", a: "huh", options: ["guh", "huh", "ih"] },
+            { q: "What sound does 'I' make?", a: "ih", options: ["eh", "ih", "oh"] },
+            { q: "What sound does 'J' make?", a: "juh", options: ["ih", "juh", "kuh"] },
+            { q: "What sound does 'K' make?", a: "kuh", options: ["juh", "kuh", "luh"] },
+            { q: "What sound does 'L' make?", a: "luh", options: ["kuh", "luh", "muh"] },
+            { q: "What sound does 'M' make?", a: "muh", options: ["luh", "muh", "nuh"] },
+            { q: "What sound does 'N' make?", a: "nuh", options: ["muh", "nuh", "oh"] },
+            { q: "What sound does 'O' make?", a: "oh", options: ["nuh", "oh", "puh"] },
+            { q: "What sound does 'P' make?", a: "puh", options: ["oh", "puh", "kwuh"] },
+            { q: "What sound does 'Q' make?", a: "kwuh", options: ["puh", "kwuh", "ruh"] },
+            { q: "What sound does 'R' make?", a: "ruh", options: ["kwuh", "ruh", "suh"] },
+            { q: "What sound does 'S' make?", a: "suh", options: ["ruh", "suh", "tuh"] },
+            { q: "What sound does 'T' make?", a: "tuh", options: ["suh", "tuh", "ah"] }
         ];
 
         let currentIdx = 0;
@@ -99,12 +115,12 @@
             btns.forEach(b => b.disabled = true);
 
             if (selected === current.a) {
-                feedback.innerText = "Correct! Well done.";
+                feedback.innerText = "Splashtastic! Correct.";
                 feedback.className = "feedback correct";
                 score++;
                 userResults.push({ q: current.q, res: "Correct", class: "correct" });
             } else {
-                feedback.innerText = "Oops! The correct answer was " + current.a;
+                feedback.innerText = "Glub! Incorrect.";
                 feedback.className = "feedback wrong";
                 userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
             }

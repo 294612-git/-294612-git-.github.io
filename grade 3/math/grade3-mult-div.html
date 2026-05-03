@@ -37,10 +37,26 @@
 
     <script>
         const quizData = [
-            { q: "What is 6 × 4?", a: "24", options: ["24", "20", "18"] },
-            { q: "What is 15 ÷ 3?", a: "5", options: ["3", "5", "6"] },
-            { q: "What is 7 × 5?", a: "35", options: ["30", "35", "40"] },
-            { q: "What is 20 ÷ 4?", a: "5", options: ["4", "6", "5"] }
+            { q: "What is the product of 7 and 6?", a: "42", options: ["13", "42", "49", "36"] },
+            { q: "If you have 24 markers and put them into 4 equal boxes, how many markers are in each box?", a: "6", options: ["6", "8", "4", "12"] },
+            { q: "Solve for n: n × 9 = 81.", a: "9", options: ["8", "7", "9", "10"] },
+            { q: "What is 56 ÷ 8?", a: "7", options: ["6", "7", "8", "9"] },
+            { q: "Which property says 3 × 4 = 4 × 3?", a: "Commutative", options: ["Identity", "Commutative", "Associative", "Zero"] },
+            { q: "A spider has 8 legs. How many legs do 5 spiders have in total?", a: "40", options: ["13", "40", "32", "48"] },
+            { q: "What is 0 × 125?", a: "0", options: ["125", "1", "0", "100"] },
+            { q: "If 4 × 10 = 40, then 40 ÷ 10 = ___?", a: "4", options: ["4", "10", "400", "30"] },
+            { q: "Which is a way to show 3 × 5?", a: "3 + 3 + 3 + 3 + 3", options: ["3 + 3 + 3", "5 + 5 + 5", "3 + 5", "5 - 3"] },
+            { q: "A classroom has 6 rows of desks with 5 desks in each row. How many desks are there?", a: "30", options: ["11", "25", "30", "35"] },
+            { q: "What is 12 ÷ 1?", a: "12", options: ["1", "0", "12", "11"] },
+            { q: "Which of these is a multiple of 3?", a: "15", options: ["10", "15", "7", "14"] },
+            { q: "Find the missing factor: ___ × 2 = 18.", a: "9", options: ["8", "10", "9", "7"] },
+            { q: "What is 9 × 4?", a: "36", options: ["32", "36", "45", "27"] },
+            { q: "If you divide 15 by 3, what is the quotient?", a: "5", options: ["5", "3", "18", "12"] },
+            { q: "Which equation represents 'twice as many as 8'?", a: "8 × 2", options: ["8 + 2", "8 ÷ 2", "8 × 2", "8 - 2"] },
+            { q: "What is 63 ÷ 9?", a: "7", options: ["6", "7", "8", "9"] },
+            { q: "10 × 7 is the same as...", a: "70", options: ["17", "70", "107", "3"] },
+            { q: "Share 12 cookies among 6 people. Each gets...", a: "2", options: ["6", "3", "2", "4"] },
+            { q: "8 × 1 = ___?", a: "8", options: ["1", "8", "0", "9"] }
         ];
 
         let currentIdx = 0;
@@ -99,12 +115,12 @@
             btns.forEach(b => b.disabled = true);
 
             if (selected === current.a) {
-                feedback.innerText = "Correct! Well done.";
+                feedback.innerText = "Splashtastic! Correct.";
                 feedback.className = "feedback correct";
                 score++;
                 userResults.push({ q: current.q, res: "Correct", class: "correct" });
             } else {
-                feedback.innerText = "Oops! The correct answer was " + current.a;
+                feedback.innerText = "Glub! The correct answer was " + current.a;
                 feedback.className = "feedback wrong";
                 userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
             }

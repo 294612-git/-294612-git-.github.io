@@ -70,7 +70,7 @@ public class Main {
                 return null;
             }
 
-            Path projectRoot = Paths.get("").toAbsolutePath().normalize();
+            Path projectRoot = getProjectRoot();
             Path resourcePath = projectRoot.resolve("src/main/resources").resolve(normalized).normalize();
             if (Files.exists(resourcePath) && !Files.isDirectory(resourcePath)) {
                 return resourcePath;
@@ -81,21 +81,26 @@ public class Main {
                 return rootPath;
             }
 
-            if (!trimmed.contains(".") || trimmed.endsWith(".html")) {
+            if (!trimmed.contains(".")) {
                 Path alt = projectRoot.resolve(trimmed + ".html").normalize();
                 if (Files.exists(alt) && !Files.isDirectory(alt)) {
                     return alt;
                 }
             }
 
-            if ("grade2/grade2-plants.html".equals(trimmed)) {
-                Path alt = projectRoot.resolve("grade2/grade2-plants.html.html").normalize();
-                if (Files.exists(alt) && !Files.isDirectory(alt)) {
-                    return alt;
-                }
-            }
-
             return null;
+        }
+
+        private Path getProjectRoot() {
+            try {
+                Path codeLocation = Paths.get(Main.class.getProtectionDomain().getCodeSource().getLocation().toURI()).normalize();
+                if (Files.isDirectory(codeLocation)) {
+                    return codeLocation.getParent().getParent().normalize();
+                }
+                return codeLocation.getParent().normalize();
+            } catch (Exception e) {
+                return Paths.get("").toAbsolutePath().normalize();
+            }
         }
 
         private String getContentType(Path path) {

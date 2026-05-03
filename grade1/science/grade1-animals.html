@@ -71,16 +71,34 @@
     <div class="quiz-container hidden" id="summary-box">
         <h2>You're a Whale of a Scientist!</h2>
         <div id="results-list"></div>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
         <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade1-science-topics.html'">Back to Dolphin Science</button>
     </div>
 
     <script>
-        const quizData = [
-            { q: "Which animal lives in water?", a: "Fish", options: ["Dog", "Cat", "Fish"] },
-            { q: "Which animal says “moo”?", a: "Cow", options: ["Cow", "Pig"] },
-            { q: "What do birds have?", a: "Wings", options: ["Fur", "Scales", "Wings"] },
-            { q: "Which animal is a pet?", a: "Dog", options: ["Cat", "Tiger"] }
+        const questionPool = [
+            { q: "What is a dolphin?", a: "mammal", options: ["fish", "mammal", "bird"] },
+            { q: "Where do fish live?", a: "water", options: ["land", "water", "air"] },
+            { q: "What do sharks have?", a: "fins", options: ["wings", "fins", "legs"] },
+            { q: "What is a whale?", a: "mammal", options: ["fish", "mammal", "reptile"] },
+            { q: "How do fish breathe?", a: "gills", options: ["lungs", "gills", "nose"] },
+            { q: "What do octopuses have?", a: "tentacles", options: ["fins", "tentacles", "wings"] },
+            { q: "What is a starfish?", a: "sea star", options: ["fish", "sea star", "mammal"] },
+            { q: "Where do sea turtles live?", a: "ocean", options: ["desert", "ocean", "forest"] },
+            { q: "What do crabs have?", a: "claws", options: ["fins", "claws", "tentacles"] },
+            { q: "What is a seahorse?", a: "fish", options: ["mammal", "fish", "bird"] },
+            { q: "How do whales breathe?", a: "blowhole", options: ["gills", "blowhole", "lungs"] },
+            { q: "What do jellyfish have?", a: "stingers", options: ["fins", "stingers", "claws"] },
+            { q: "What is a clam?", a: "shellfish", options: ["fish", "shellfish", "mammal"] },
+            { q: "Where do lobsters live?", a: "ocean", options: ["pond", "ocean", "river"] },
+            { q: "What do eels have?", a: "slimy skin", options: ["fur", "slimy skin", "feathers"] },
+            { q: "What is a manatee?", a: "mammal", options: ["fish", "mammal", "reptile"] },
+            { q: "How do sea urchins move?", a: "spines", options: ["fins", "spines", "legs"] },
+            { q: "What do seals have?", a: "flippers", options: ["wings", "flippers", "arms"] },
+            { q: "What is a coral?", a: "animal", options: ["plant", "animal", "rock"] },
+            { q: "Where do penguins live?", a: "water", options: ["desert", "water", "mountain"] }
         ];
+        const quizData = shuffleArray(questionPool.slice()).slice(0, 5);
         let currentIdx = 0; let score = 0; let userResults = [];
 
         function shuffleArray(array) {
@@ -90,22 +108,7 @@
             }
         }
 
-        function ensureTryAgainButton() {
-            const summaryBox = document.getElementById("summary-box");
-            if (summaryBox && !summaryBox.querySelector('button[onclick="location.reload()"]')) {
-                const button = document.createElement('button');
-                button.className = 'next-btn';
-                button.style.display = 'block';
-                button.style.marginTop = '20px';
-                button.innerText = 'Try Again';
-                button.onclick = function() { location.reload(); };
-                const backButton = summaryBox.querySelector('button[onclick^="location.href"]');
-                summaryBox.insertBefore(button, backButton || null);
-            }
-        }
-
         function initializeQuiz() {
-            shuffleArray(quizData);
             loadQuestion();
         }
 
@@ -131,12 +134,12 @@
             const btns = document.querySelectorAll(".option-btn");
             btns.forEach(b => b.disabled = true);
             if (selected === current.a) {
-                feedback.innerText = "Flipper-tastic! Correct.";
+                feedback.innerText = "Splashtastic! Correct.";
                 feedback.className = "feedback correct";
                 score++;
                 userResults.push({ q: current.q, res: "Correct", class: "correct" });
             } else {
-                feedback.innerText = "Oops! The correct answer was " + current.a;
+                feedback.innerText = "Glub! Incorrect.";
                 feedback.className = "feedback wrong";
                 userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
             }
@@ -153,7 +156,6 @@
             document.getElementById("quiz-box").classList.add("hidden");
             const summaryBox = document.getElementById("summary-box");
             summaryBox.classList.remove("hidden");
-            ensureTryAgainButton();
             const list = document.getElementById("results-list");
             list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
             userResults.forEach(item => {

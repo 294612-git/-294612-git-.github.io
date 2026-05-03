@@ -36,10 +36,26 @@
 
     <script>
         const quizData = [
-            { q: "The dog ran fast. What did the dog do?", a: "Ran", options: ["Ran", "Jumped", "Climbed"] },
-            { q: "The sun is hot. What is hot??", a: "The sun", options: ["The sun", "The moon", "The stars"] },
-            { q: "Tim has a red hat. What color is the hat?", a: "Red", options: ["Red", "Blue", "Green"] },
-            { q: "The cat sat on the mat. Where did the cat sit?", a: "The mat", options: ["The mat", "The chair", "The bed"] }
+            { q: "The cat is on the mat. Where is the cat?", a: "on the mat", options: ["under the mat", "on the mat", "beside the mat"] },
+            { q: "Sam has a big dog. What does Sam have?", a: "big dog", options: ["small dog", "big dog", "cat"] },
+            { q: "The sun is bright. What is bright?", a: "the sun", options: ["the moon", "the sun", "the stars"] },
+            { q: "Mary likes to read. What does Mary like?", a: "to read", options: ["to write", "to read", "to draw"] },
+            { q: "The bird can fly. What can the bird do?", a: "fly", options: ["swim", "fly", "run"] },
+            { q: "Tom is happy. How does Tom feel?", a: "happy", options: ["sad", "happy", "angry"] },
+            { q: "The apple is red. What color is the apple?", a: "red", options: ["green", "red", "yellow"] },
+            { q: "The car is fast. What is fast?", a: "the car", options: ["the bike", "the car", "the bus"] },
+            { q: "Lisa has blue eyes. What color are Lisa's eyes?", a: "blue", options: ["brown", "blue", "green"] },
+            { q: "The tree is tall. What is tall?", a: "the tree", options: ["the flower", "the tree", "the grass"] },
+            { q: "The fish swims in water. Where does the fish swim?", a: "in water", options: ["on land", "in water", "in air"] },
+            { q: "Dad cooks dinner. Who cooks dinner?", a: "Dad", options: ["Mom", "Dad", "Sister"] },
+            { q: "The moon is in the sky. Where is the moon?", a: "in the sky", options: ["on ground", "in the sky", "in water"] },
+            { q: "The book has pictures. What does the book have?", a: "pictures", options: ["words", "pictures", "music"] },
+            { q: "The boy runs fast. How does the boy run?", a: "fast", options: ["slow", "fast", "walk"] },
+            { q: "The girl sings a song. What does the girl do?", a: "sings a song", options: ["dances", "sings a song", "reads"] },
+            { q: "The house is big. What is big?", a: "the house", options: ["the door", "the house", "the window"] },
+            { q: "The dog barks loud. How does the dog bark?", a: "loud", options: ["quiet", "loud", "soft"] },
+            { q: "The flower is pretty. What is pretty?", a: "the flower", options: ["the leaf", "the flower", "the stem"] },
+            { q: "The ice is cold. What is cold?", a: "the ice", options: ["the fire", "the ice", "the sun"] }
         ];
 
         let currentIdx = 0;
@@ -98,12 +114,12 @@
             btns.forEach(b => b.disabled = true);
 
             if (selected === current.a) {
-                feedback.innerText = "Correct! Well done.";
+                feedback.innerText = "Splashtastic! Correct.";
                 feedback.className = "feedback correct";
                 score++;
                 userResults.push({ q: current.q, res: "Correct", class: "correct" });
             } else {
-                feedback.innerText = "Oops! The correct answer was " + current.a;
+                feedback.innerText = "Glub! Incorrect.";
                 feedback.className = "feedback wrong";
                 userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
             }
