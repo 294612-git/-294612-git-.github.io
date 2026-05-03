@@ -1,109 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pollination Quiz - Study Buddy</title>
-    <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 500px; text-align: center; }
-        h2 { color: #667eea; }
-        .options-container { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
-        .option-btn { padding: 12px; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; font-size: 1.1rem; transition: 0.2s; }
-        .option-btn:hover { border-color: #667eea; background: #f0f2ff; }
-        .feedback { margin: 15px 0; font-weight: bold; min-height: 24px; }
-        .correct { color: #28a745; }
-        .wrong { color: #dc3545; }
-        .next-btn { background: #667eea; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; display: none; margin: 0 auto; }
-        .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #eee; }
-        .hidden { display: none; }
-    </style>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Pollination Quiz - Study Buddy</title>
+   <style>
+       body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+       .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 500px; text-align: center; }
+       h2 { color: #667eea; }
+       .options-container { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+       .option-btn { padding: 12px; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; font-size: 1.1rem; transition: 0.2s; text-align: left; }
+       .option-btn:hover { border-color: #667eea; background: #f0f2ff; }
+       .feedback { margin: 15px 0; font-weight: bold; min-height: 24px; }
+       .correct { color: #28a745; }
+       .wrong { color: #dc3545; }
+       .next-btn { background: #667eea; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; display: none; margin: 0 auto; }
+       .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #eee; }
+       .hidden { display: none; }
+   </style>
 </head>
 <body>
-    <div class="quiz-container" id="quiz-box">
-        <h2 id="question-text">Question</h2>
-        <div class="options-container" id="options"></div>
-        <div id="feedback" class="feedback"></div>
-        <button id="next-button" class="next-btn" onclick="loadNextQuestion()">Next Question</button>
-    </div>
+   <div class="quiz-container" id="quiz-box">
+       <h2 id="question-text">Question</h2>
+       <div class="options-container" id="options"></div>
+       <div id="feedback" class="feedback"></div>
+       <button id="next-button" class="next-btn" onclick="loadNextQuestion()">Next Question</button>
+   </div>
 
-    <div class="quiz-container hidden" id="summary-box">
-        <h2>Quiz Complete!</h2>
-        <div id="results-list"></div>
-        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
-        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade2-science-topics.html'">Back to Science Topics</button>
-    </div>
+   <div class="quiz-container hidden" id="summary-box">
+       <h2>Quiz Complete!</h2>
+       <div id="results-list"></div>
+       <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
+       <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade2-science-topics.html'">Back to Topics</button>
+   </div>
 
-    <script>
-        const quizData = [
-            { q: "Pollination helps plants make ___.", a: "Seeds", options: ["Seeds", "Rocks"] },
-            { q: "Bees help with ___.", a: "Pollination", options: ["Pollination", "Swimming"] },
-            { q: "Pollen moves from one flower to another by ___.", a: "Wind", options: ["Wind", "Tables"] },
-            { q: "Pollination is important because it helps plants ___.", a: "Reproduce", options: ["Reproduce", "Disappear"] }
-        ];
+   <script>
+       const quizData = [
+           { q: "Pollination is a very important process that helps plants make ____.", a: "Seeds", options: ["Rocks", "Seeds", "Toys", "Shoes"] },
+           { q: "Which of these animals is a famous 'pollinator' that helps move pollen?", a: "A Bee", options: ["A Bee", "A Shark", "A Tiger", "A Dog"] },
+           { q: "Pollen can move from one flower to another by the help of animals or the ____.", a: "Wind", options: ["Wind", "Tables", "Clouds", "Sidewalk"] },
+           { q: "Pollination is important because it is how plants ____.", a: "Reproduce (make new plants)", options: ["Reproduce (make new plants)", "Disappear", "Sleep", "Turn into animals"] },
+           { q: "Where is pollen usually found in a flower?", a: "On the stamen (the middle part)", options: ["On the roots", "On the stamen (the middle part)", "Under the dirt", "In the stem"] },
+           { q: "Why do bees and butterflies visit flowers in the first place?", a: "To drink sweet nectar", options: ["To hide from the rain", "To drink sweet nectar", "To take a nap", "To change their color"] },
+           { q: "What happens to a flower after it has been successfully pollinated?", a: "It turns into a seed or a fruit", options: ["It turns into a seed or a fruit", "It falls off and never grows back", "It turns into a leaf", "It grows legs"] },
+           { q: "Which of these is NOT a common pollinator?", a: "Earthworm", options: ["Butterfly", "Hummingbird", "Earthworm", "Bat"] },
+           { q: "Pollen often looks like a fine, yellow ____.", a: "Powder", options: ["Liquid", "Powder", "Rock", "String"] },
+           { q: "When pollen sticks to a bee's fuzzy body, the bee is ____.", a: "Carrying it to the next flower", options: ["Carrying it to the next flower", "Trying to eat it all", "Getting sick", "Washing it off"] },
+           { q: "Some plants have bright colors and nice smells to ____.", a: "Attract pollinators", options: ["Scare away birds", "Attract pollinators", "Stay cool in the sun", "Hide from the wind"] },
+           { q: "What part of the flower receives the pollen?", a: "The Pistil", options: ["The Root", "The Pistil", "The Leaf", "The Stem"] },
+           { q: "Can flowers make seeds without pollination?", a: "No, they need pollination to make seeds", options: ["Yes, always", "No, they need pollination to make seeds", "Only if they are very tall", "Only in the winter"] },
+           { q: "Which bird is known for using its long beak to drink nectar and move pollen?", a: "Hummingbird", options: ["Owl", "Hummingbird", "Penguin", "Duck"] },
+           { q: "What do we call the 'fruit' that forms to protect seeds after pollination?", a: "A seedpod or fruit", options: ["A vegetable", "A seedpod or fruit", "A flower petal", "A root vegetable"] },
+           { q: "Is pollination part of the plant's life cycle?", a: "Yes, it's how the cycle starts again", options: ["Yes, it's how the cycle starts again", "No, it happens after the cycle is over", "Only for trees", "Only for grass"] },
+           { q: "Why is wind-pollination common for grass and tall trees?", a: "Because they don't have pretty flowers to attract bugs", options: ["Because they don't have pretty flowers to attract bugs", "Because they are too tall for bees", "Because they like to dance", "Because they don't need seeds"] },
+           { q: "Pollen must move from the stamen to the ____ for a seed to grow.", a: "Stigma", options: ["Petal", "Stigma", "Ground", "Air"] },
+           { q: "How do animals like squirrels help with a different part of the cycle (seed dispersal)?", a: "By burying seeds in new places", options: ["By eating the flowers", "By burying seeds in new places", "By climbing trees", "By drinking water"] },
+           { q: "Without pollinators, what would happen to many of our favorite foods like apples and berries?", a: "They would be hard to find because plants couldn't make them", options: ["They would grow bigger", "They would be hard to find because plants couldn't make them", "They would taste like chocolate", "Nothing would change"] }
+       ];
 
-        let currentIdx = 0;
-        let score = 0;
-        let userResults = [];
+       let currentIdx = 0;
+       let score = 0;
+       let userResults = [];
 
-        function loadQuestion() {
-            const current = quizData[currentIdx];
-            document.getElementById("question-text").innerText = current.q;
-            const optionsDiv = document.getElementById("options");
-            optionsDiv.innerHTML = "";
-            document.getElementById("feedback").innerText = "";
-            document.getElementById("next-button").style.display = "none";
-            current.options.forEach(opt => {
-                const btn = document.createElement("button");
-                btn.innerText = opt;
-                btn.className = "option-btn";
-                btn.onclick = () => checkAnswer(opt);
-                optionsDiv.appendChild(btn);
-            });
-        }
+       function shuffleArray(array) {
+           for (let i = array.length - 1; i > 0; i--) {
+               const j = Math.floor(Math.random() * (i + 1));
+               [array[i], array[j]] = [array[j], array[i]];
+           }
+       }
 
-        function checkAnswer(selected) {
-            const current = quizData[currentIdx];
-            const feedback = document.getElementById("feedback");
-            const btns = document.querySelectorAll(".option-btn");
-            btns.forEach(b => b.disabled = true);
-            if (selected === current.a) {
-                feedback.innerText = "Correct! Great job.";
-                feedback.className = "feedback correct";
-                score++;
-                userResults.push({ q: current.q, res: "Correct", class: "correct" });
-            } else {
-                feedback.innerText = "Oops! The correct answer was " + current.a + ".";
-                feedback.className = "feedback wrong";
-                userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
-            }
-            document.getElementById("next-button").style.display = "block";
-        }
+       function initializeQuiz() {
+           shuffleArray(quizData);
+           loadQuestion();
+       }
 
-        function loadNextQuestion() {
-            currentIdx++;
-            if (currentIdx < quizData.length) {
-                loadQuestion();
-            } else {
-                showSummary();
-            }
-        }
+       function loadQuestion() {
+           const current = quizData[currentIdx];
+           document.getElementById("question-text").innerText = current.q;
+           const optionsDiv = document.getElementById("options");
+           optionsDiv.innerHTML = "";
+           document.getElementById("feedback").innerText = "";
+           document.getElementById("next-button").style.display = "none";
 
-        function showSummary() {
-            document.getElementById("quiz-box").classList.add("hidden");
-            const summaryBox = document.getElementById("summary-box");
-            summaryBox.classList.remove("hidden");
-            const list = document.getElementById("results-list");
-            list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
-            userResults.forEach(item => {
-                const div = document.createElement("div");
-                div.className = "summary-item";
-                div.innerHTML = `<strong>${item.q}</strong> - <span class="${item.class}">${item.res}</span>`;
-                list.appendChild(div);
-            });
-        }
+           current.options.forEach(opt => {
+               const btn = document.createElement("button");
+               btn.innerText = opt;
+               btn.className = "option-btn";
+               btn.onclick = () => checkAnswer(opt);
+               optionsDiv.appendChild(btn);
+           });
+       }
 
-        loadQuestion();
-    </script>
+       function checkAnswer(selected) {
+           const current = quizData[currentIdx];
+           const feedback = document.getElementById("feedback");
+           const btns = document.querySelectorAll(".option-btn");
+           btns.forEach(b => b.disabled = true);
+
+           if (selected === current.a) {
+               feedback.innerText = "Correct!";
+               feedback.className = "feedback correct";
+               score++;
+               userResults.push({ q: current.q, res: "Correct", class: "correct" });
+           } else {
+               feedback.innerText = "The correct answer was: " + current.a;
+               feedback.className = "feedback wrong";
+               userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
+           }
+           document.getElementById("next-button").style.display = "block";
+       }
+
+       function loadNextQuestion() {
+           currentIdx++;
+           if (currentIdx < quizData.length) {
+               loadQuestion();
+           } else {
+               showSummary();
+           }
+       }
+
+       function showSummary() {
+           document.getElementById("quiz-box").classList.add("hidden");
+           const summaryBox = document.getElementById("summary-box");
+           summaryBox.classList.remove("hidden");
+           const list = document.getElementById("results-list");
+           list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
+           userResults.forEach(item => {
+               const div = document.createElement("div");
+               div.className = "summary-item";
+               div.innerHTML = `<strong>${item.q}</strong> - <span class="${item.class}">${item.res}</span>`;
+               list.appendChild(div);
+           });
+       }
+
+       initializeQuiz();
+   </script>
 </body>
 </html>
