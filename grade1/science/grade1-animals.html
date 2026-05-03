@@ -1,171 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dolphin Animals Quiz - Study Buddy</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        body { 
-            font-family: 'Quicksand', sans-serif; 
-            background-color: #e3f2fd; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            min-height: 100vh; 
-            margin: 0; 
-        }
-        .quiz-container { 
-            background: white; 
-            padding: 2rem; 
-            border-radius: 20px; 
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1); 
-            width: 90%; 
-            max-width: 500px; 
-            text-align: center; 
-            border: 4px dashed #1976d2;
-        }
-        h2 { font-family: 'Fredoka', cursive; color: #1565c0; }
-        .options-container { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
-        .option-btn { 
-            padding: 12px; 
-            border: 3px solid #bbdefb; 
-            border-radius: 50px; 
-            background: white; 
-            cursor: pointer; 
-            font-size: 1.1rem; 
-            font-weight: 600;
-            transition: 0.2s; 
-            color: #1565c0;
-        }
-        .option-btn:hover { border-color: #1976d2; background: #e3f2fd; }
-        .feedback { margin: 15px 0; font-weight: bold; min-height: 24px; }
-        .correct { color: #1b5e20; }
-        .wrong { color: #b71c1c; }
-        .next-btn { 
-            background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%); 
-            color: white; 
-            border: none; 
-            padding: 12px 25px; 
-            border-radius: 50px; 
-            cursor: pointer; 
-            display: none; 
-            margin: 0 auto; 
-            font-weight: bold;
-            box-shadow: 0 4px 0px #0d47a1;
-        }
-        .next-btn:active { transform: translateY(4px); box-shadow: none; }
-        .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #bbdefb; }
-        .hidden { display: none; }
-    </style>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Animal Quiz - Study Buddy</title>
+   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+   <style>
+       body {
+           font-family: 'Quicksand', sans-serif;
+           background-color: #e3f2fd;
+           display: flex;
+           justify-content: center;
+           align-items: center;
+           min-height: 100vh;
+           margin: 0;
+       }
+       .quiz-container {
+           background: white;
+           padding: 2rem;
+           border-radius: 20px;
+           box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+           width: 90%;
+           max-width: 500px;
+           text-align: center;
+           border: 4px dashed #1976d2;
+       }
+       h2 { font-family: 'Fredoka', cursive; color: #1565c0; }
+       .options-container { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+       .option-btn {
+           padding: 12px;
+           border: 3px solid #bbdefb;
+           border-radius: 50px;
+           background: white;
+           cursor: pointer;
+           font-size: 1.1rem;
+           font-weight: 600;
+           transition: 0.2s;
+           color: #1565c0;
+       }
+       .option-btn:hover { border-color: #1976d2; background: #e3f2fd; }
+       .feedback { margin: 15px 0; font-weight: bold; min-height: 24px; }
+       .correct { color: #1b5e20; }
+       .wrong { color: #b71c1c; }
+       .next-btn {
+           background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
+           color: white;
+           border: none;
+           padding: 12px 25px;
+           border-radius: 50px;
+           cursor: pointer;
+           display: none;
+           margin: 0 auto;
+           font-weight: bold;
+           box-shadow: 0 4px 0px #0d47a1;
+       }
+       .next-btn:active { transform: translateY(4px); box-shadow: none; }
+       .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #bbdefb; }
+       .hidden { display: none; }
+   </style>
 </head>
 <body>
-    <div class="quiz-container" id="quiz-box">
-        <h2>🐬 Dolphin Animals Quiz</h2>
-        <h2 id="question-text" style="color: #333;">Question</h2>
-        <div class="options-container" id="options"></div>
-        <div id="feedback" class="feedback"></div>
-        <button id="next-button" class="next-btn" onclick="loadNextQuestion()">Dive to Next</button>
-    </div>
+   <div class="quiz-container" id="quiz-box">
+       <h2>🐬 Animal Discovery Quiz</h2>
+       <h2 id="question-text" style="color: #333;">Question</h2>
+       <div class="options-container" id="options"></div>
+       <div id="feedback" class="feedback"></div>
+       <button id="next-button" class="next-btn" onclick="loadNextQuestion()">Dive to Next</button>
+   </div>
 
-    <div class="quiz-container hidden" id="summary-box">
-        <h2>You're a Whale of a Scientist!</h2>
-        <div id="results-list"></div>
-        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
-        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade1-science-topics.html'">Back to Dolphin Science</button>
-    </div>
+   <div class="quiz-container hidden" id="summary-box">
+       <h2>You're a Whale of a Scientist!</h2>
+       <div id="results-list"></div>
+       <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
+       <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade1-science-topics.html'">Back to Dolphin Science</button>
+   </div>
 
-    <script>
-        const questionPool = [
-            { q: "What is a dolphin?", a: "mammal", options: ["fish", "mammal", "bird"] },
-            { q: "Where do fish live?", a: "water", options: ["land", "water", "air"] },
-            { q: "What do sharks have?", a: "fins", options: ["wings", "fins", "legs"] },
-            { q: "What is a whale?", a: "mammal", options: ["fish", "mammal", "reptile"] },
-            { q: "How do fish breathe?", a: "gills", options: ["lungs", "gills", "nose"] },
-            { q: "What do octopuses have?", a: "tentacles", options: ["fins", "tentacles", "wings"] },
-            { q: "What is a starfish?", a: "sea star", options: ["fish", "sea star", "mammal"] },
-            { q: "Where do sea turtles live?", a: "ocean", options: ["desert", "ocean", "forest"] },
-            { q: "What do crabs have?", a: "claws", options: ["fins", "claws", "tentacles"] },
-            { q: "What is a seahorse?", a: "fish", options: ["mammal", "fish", "bird"] },
-            { q: "How do whales breathe?", a: "blowhole", options: ["gills", "blowhole", "lungs"] },
-            { q: "What do jellyfish have?", a: "stingers", options: ["fins", "stingers", "claws"] },
-            { q: "What is a clam?", a: "shellfish", options: ["fish", "shellfish", "mammal"] },
-            { q: "Where do lobsters live?", a: "ocean", options: ["pond", "ocean", "river"] },
-            { q: "What do eels have?", a: "slimy skin", options: ["fur", "slimy skin", "feathers"] },
-            { q: "What is a manatee?", a: "mammal", options: ["fish", "mammal", "reptile"] },
-            { q: "How do sea urchins move?", a: "spines", options: ["fins", "spines", "legs"] },
-            { q: "What do seals have?", a: "flippers", options: ["wings", "flippers", "arms"] },
-            { q: "What is a coral?", a: "animal", options: ["plant", "animal", "rock"] },
-            { q: "Where do penguins live?", a: "water", options: ["desert", "water", "mountain"] }
-        ];
-        const quizData = shuffleArray(questionPool.slice()).slice(0, 5);
-        let currentIdx = 0; let score = 0; let userResults = [];
+   <script>
+       const questionPool = [
+           { q: "Which animal lives in the water and uses gills to breathe?", a: "Fish", options: ["Cat", "Fish", "Bird", "Dog"] },
+           { q: "Which animal lives on a farm and says 'moo'?", a: "Cow", options: ["Duck", "Sheep", "Cow", "Horse"] },
+           { q: "What do birds use to fly high in the sky?", a: "Wings", options: ["Fins", "Wings", "Paws", "Hands"] },
+           { q: "Which animal is usually a pet that lives in a house?", a: "Dog", options: ["Tiger", "Bear", "Dog", "Elephant"] },
+           { q: "Which animal is known for having a very long neck to reach leaves?", a: "Giraffe", options: ["Hippo", "Giraffe", "Lion", "Monkey"] },
+           { q: "What do we call an animal that eats only meat?", a: "Carnivore", options: ["Herbivore", "Carnivore", "Pizza-vore", "Sleepy-vore"] },
+           { q: "Which animal says 'quack' and loves to swim in ponds?", a: "Duck", options: ["Pig", "Chicken", "Duck", "Frog"] },
+           { q: "Where does a lion usually live?", a: "The Savanna (Grassland)", options: ["The Ocean", "The Rainforest", "The Savanna (Grassland)", "A Snowy Mountain"] },
+           { q: "What is a baby cat called?", a: "Kitten", options: ["Puppy", "Cub", "Kitten", "Calf"] },
+           { q: "Which animal hops and carries its baby in a pouch?", a: "Kangaroo", options: ["Rabbit", "Kangaroo", "Frog", "Grasshopper"] },
+           { q: "What do fish use to swim through the water?", a: "Fins", options: ["Legs", "Fins", "Feathers", "Toes"] },
+           { q: "Which animal is famous for being very slow?", a: "Turtle", options: ["Cheetah", "Turtle", "Rabbit", "Horse"] },
+           { q: "What kind of animal is a frog?", a: "Amphibian", options: ["Mammal", "Bird", "Amphibian", "Fish"] },
+           { q: "Which animal has a trunk that it uses like a hand?", a: "Elephant", options: ["Rhino", "Elephant", "Zebra", "Gorilla"] },
+           { q: "What do we call animals that sleep during the day and are awake at night?", a: "Nocturnal", options: ["Diurnal", "Nocturnal", "Hungry", "Fast"] },
+           { q: "Which animal gives us wool to make sweaters?", a: "Sheep", options: ["Pig", "Sheep", "Cow", "Horse"] },
+           { q: "What do snakes use to move since they don't have legs?", a: "Slithering with their bodies", options: ["Their tails", "Slithering with their bodies", "Small wheels", "They jump"] },
+           { q: "Which bird cannot fly but is a very fast runner?", a: "Ostrich", options: ["Eagle", "Ostrich", "Parrot", "Robin"] },
+           { q: "What covers a bird's body?", a: "Feathers", options: ["Fur", "Scales", "Feathers", "Shells"] },
+           { q: "Which animal is known as 'The King of the Jungle'?", a: "Lion", options: ["Tiger", "Lion", "Monkey", "Snake"] }
+       ];
 
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-        }
+       function shuffleArray(array) {
+           for (let i = array.length - 1; i > 0; i--) {
+               const j = Math.floor(Math.random() * (i + 1));
+               [array[i], array[j]] = [array[j], array[i]];
+           }
+           return array;
+       }
 
-        function initializeQuiz() {
-            loadQuestion();
-        }
+       const quizData = shuffleArray(questionPool.slice()).slice(0, 20);
+       let currentIdx = 0; let score = 0; let userResults = [];
 
-        function loadQuestion() {
-            const current = quizData[currentIdx];
-            document.getElementById("question-text").innerText = current.q;
-            const optionsDiv = document.getElementById("options");
-            optionsDiv.innerHTML = "";
-            document.getElementById("feedback").innerText = "";
-            document.getElementById("next-button").style.display = "none";
-            current.options.forEach(opt => {
-                const btn = document.createElement("button");
-                btn.innerText = opt;
-                btn.className = "option-btn";
-                btn.onclick = () => checkAnswer(opt);
-                optionsDiv.appendChild(btn);
-            });
-        }
+       function initializeQuiz() {
+           loadQuestion();
+       }
 
-        function checkAnswer(selected) {
-            const current = quizData[currentIdx];
-            const feedback = document.getElementById("feedback");
-            const btns = document.querySelectorAll(".option-btn");
-            btns.forEach(b => b.disabled = true);
-            if (selected === current.a) {
-                feedback.innerText = "Splashtastic! Correct.";
-                feedback.className = "feedback correct";
-                score++;
-                userResults.push({ q: current.q, res: "Correct", class: "correct" });
-            } else {
-                feedback.innerText = "Glub! Incorrect.";
-                feedback.className = "feedback wrong";
-                userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
-            }
-            document.getElementById("next-button").style.display = "block";
-        }
+       function loadQuestion() {
+           const current = quizData[currentIdx];
+           document.getElementById("question-text").innerText = current.q;
+           const optionsDiv = document.getElementById("options");
+           optionsDiv.innerHTML = "";
+           document.getElementById("feedback").innerText = "";
+           document.getElementById("next-button").style.display = "none";
+           current.options.forEach(opt => {
+               const btn = document.createElement("button");
+               btn.innerText = opt;
+               btn.className = "option-btn";
+               btn.onclick = () => checkAnswer(opt);
+               optionsDiv.appendChild(btn);
+           });
+       }
 
-        function loadNextQuestion() {
-            currentIdx++;
-            if (currentIdx < quizData.length) { loadQuestion(); } 
-            else { showSummary(); }
-        }
+       function checkAnswer(selected) {
+           const current = quizData[currentIdx];
+           const feedback = document.getElementById("feedback");
+           const btns = document.querySelectorAll(".option-btn");
+           btns.forEach(b => b.disabled = true);
+           if (selected === current.a) {
+               feedback.innerText = "Splashtastic! Correct.";
+               feedback.className = "feedback correct";
+               score++;
+               userResults.push({ q: current.q, res: "Correct", class: "correct" });
+           } else {
+               feedback.innerText = "Glub! Incorrect.";
+               feedback.className = "feedback wrong";
+               userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
+           }
+           document.getElementById("next-button").style.display = "block";
+       }
 
-        function showSummary() {
-            document.getElementById("quiz-box").classList.add("hidden");
-            const summaryBox = document.getElementById("summary-box");
-            summaryBox.classList.remove("hidden");
-            const list = document.getElementById("results-list");
-            list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
-            userResults.forEach(item => {
-                const div = document.createElement("div");
-                div.className = "summary-item";
-                div.innerHTML = `<strong>${item.q}</strong> - <span class="${item.class}">${item.res}</span>`;
-                list.appendChild(div);
-            });
-        }
-        initializeQuiz();
-    </script>
+       function loadNextQuestion() {
+           currentIdx++;
+           if (currentIdx < quizData.length) { loadQuestion(); }
+           else { showSummary(); }
+       }
+
+       function showSummary() {
+           document.getElementById("quiz-box").classList.add("hidden");
+           const summaryBox = document.getElementById("summary-box");
+           summaryBox.classList.remove("hidden");
+           const list = document.getElementById("results-list");
+           list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
+           userResults.forEach(item => {
+               const div = document.createElement("div");
+               div.className = "summary-item";
+               div.innerHTML = `<strong>${item.q}</strong> - <span class="${item.class}">${item.res}</span>`;
+               list.appendChild(div);
+           });
+       }
+       initializeQuiz();
+   </script>
 </body>
 </html>

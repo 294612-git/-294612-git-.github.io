@@ -1,159 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plants Quiz - Study Buddy</title>
-    <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 500px; text-align: center; }
-        h2 { color: #667eea; }
-        .options-container { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
-        .option-btn { padding: 12px; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; font-size: 1.1rem; transition: 0.2s; }
-        .option-btn:hover { border-color: #667eea; background: #f0f2ff; }
-        .feedback { margin: 15px 0; font-weight: bold; min-height: 24px; }
-        .correct { color: #28a745; }
-        .wrong { color: #dc3545; }
-        .next-btn { background: #667eea; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; display: none; margin: 0 auto; }
-        .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #eee; }
-        .hidden { display: none; }
-    </style>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Plants Quiz - Study Buddy</title>
+   <style>
+       body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+       .quiz-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 500px; text-align: center; }
+       h2 { color: #667eea; }
+       .options-container { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+       .option-btn { padding: 12px; border: 2px solid #ddd; border-radius: 8px; background: white; cursor: pointer; font-size: 1.1rem; transition: 0.2s; }
+       .option-btn:hover { border-color: #667eea; background: #f0f2ff; }
+       .feedback { margin: 15px 0; font-weight: bold; min-height: 24px; }
+       .correct { color: #28a745; }
+       .wrong { color: #dc3545; }
+       .next-btn { background: #667eea; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; display: none; margin: 0 auto; }
+       .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #eee; }
+       .hidden { display: none; }
+   </style>
 </head>
 <body>
 
-    <div class="quiz-container" id="quiz-box">
-        <h2 id="question-text">Question</h2>
-        <div class="options-container" id="options"></div>
-        <div id="feedback" class="feedback"></div>
-        <button id="next-button" class="next-btn" onclick="loadNextQuestion()">Next Question</button>
-    </div>
+   <div class="quiz-container" id="quiz-box">
+       <h2 id="question-text">Question</h2>
+       <div class="options-container" id="options"></div>
+       <div id="feedback" class="feedback"></div>
+       <button id="next-button" class="next-btn" onclick="loadNextQuestion()">Next Question</button>
+   </div>
 
-    <div class="quiz-container hidden" id="summary-box">
-        <h2>Quiz Complete!</h2>
-        <div id="results-list"></div>
-        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade1-science-topics.html'">Back to Topics</button>
-    </div>
+   <div class="quiz-container hidden" id="summary-box">
+       <h2>Quiz Complete!</h2>
+       <div id="results-list"></div>
+       <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
+       <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade1-science-topics.html'">Back to Topics</button>
+   </div>
 
-    <script>
-        const quizData = [
-            { q: "What is seaweed?", a: "plant", options: ["animal", "plant", "rock"] },
-            { q: "Where does seaweed grow?", a: "ocean", options: ["desert", "ocean", "forest"] },
-            { q: "What color is seaweed?", a: "green", options: ["red", "green", "blue"] },
-            { q: "What do seaweeds use to make food?", a: "sunlight", options: ["moonlight", "sunlight", "stars"] },
-            { q: "What is kelp?", a: "seaweed", options: ["fish", "seaweed", "shell"] },
-            { q: "How does seaweed move?", a: "waves", options: ["legs", "waves", "wings"] },
-            { q: "What animals eat seaweed?", a: "fish", options: ["birds", "fish", "dogs"] },
-            { q: "What is algae?", a: "seaweed", options: ["fish", "seaweed", "coral"] },
-            { q: "Where is seaweed found?", a: "shallow water", options: ["deep ocean", "shallow water", "mountains"] },
-            { q: "What does seaweed need to grow?", a: "water", options: ["sand", "water", "air"] },
-            { q: "What is nori?", a: "seaweed", options: ["fish", "seaweed", "crab"] },
-            { q: "How does seaweed reproduce?", a: "spores", options: ["eggs", "spores", "seeds"] },
-            { q: "What is seaweed made of?", a: "cells", options: ["rocks", "cells", "plastic"] },
-            { q: "What color can seaweed be?", a: "brown", options: ["purple", "brown", "yellow"] },
-            { q: "What do sea otters eat?", a: "seaweed", options: ["fish", "seaweed", "shells"] },
-            { q: "What is sargassum?", a: "seaweed", options: ["fish", "seaweed", "jellyfish"] },
-            { q: "How long can seaweed grow?", a: "long", options: ["short", "long", "tiny"] },
-            { q: "What is seaweed used for?", a: "food", options: ["toys", "food", "clothes"] },
-            { q: "What is a holdfast?", a: "root", options: ["leaf", "root", "stem"] },
-            { q: "What is bladderwrack?", a: "seaweed", options: ["fish", "seaweed", "starfish"] }
-        ];
+   <script>
+       const quizData = [
+           { q: "What do plants need to stay healthy and grow?", a: "Water and sunlight", options: ["Candy and soda", "Water and sunlight", "Toys and books", "Milk and cookies"] },
+           { q: "Plants are special because they can make their own ____.", a: "Food", options: ["Toys", "Clothes", "Food", "Houses"] },
+           { q: "Which part of the plant is usually green and catches sunlight?", a: "The Leaves", options: ["The Roots", "The Stem", "The Leaves", "The Seeds"] },
+           { q: "Most plants grow their roots deep into the ____.", a: "Soil (Dirt)", options: ["Sky", "Soil (Dirt)", "Water", "Clouds"] },
+           { q: "What part of the plant holds it up straight, like a straw?", a: "The Stem", options: ["The Flower", "The Stem", "The Leaf", "The Fruit"] },
+           { q: "What do we call the colorful part of a plant that smells nice?", a: "The Flower", options: ["The Stem", "The Flower", "The Root", "The Bark"] },
+           { q: "A tiny plant starts its life inside a ____.", a: "Seed", options: ["Box", "Seed", "Cup", "Egg"] },
+           { q: "Which part of the plant drinks up water from the ground?", a: "The Roots", options: ["The Petals", "The Roots", "The Leaves", "The Fruit"] },
+           { q: "What is the name of the yellow powder inside flowers that bees move around?", a: "Pollen", options: ["Dust", "Pollen", "Sand", "Sugar"] },
+           { q: "Which of these is a very tall plant with a woody trunk?", a: "A Tree", options: ["Grass", "A Flower", "A Tree", "A Bush"] },
+           { q: "What do plants breathe out that humans need to breathe in?", a: "Oxygen", options: ["Water", "Oxygen", "Smoke", "Helium"] },
+           { q: "What part of a tree protects the inside, like our skin?", a: "Bark", options: ["Leaves", "Bark", "Roots", "Flowers"] },
+           { q: "Which of these is a vegetable that grows under the ground?", a: "Carrot", options: ["Apple", "Carrot", "Banana", "Grape"] },
+           { q: "What happens to a plant if it gets no water at all?", a: "It wilts and dies", options: ["It grows faster", "It turns blue", "It wilts and dies", "It starts to sing"] },
+           { q: "What do we call a group of many trees growing together?", a: "A Forest", options: ["A Desert", "An Ocean", "A Forest", "A Playground"] },
+           { q: "Which season do most flowers begin to bloom?", a: "Spring", options: ["Winter", "Fall", "Spring", "Autumn"] },
+           { q: "What do we call the process of a seed starting to grow?", a: "Germination", options: ["Sleeping", "Germination", "Eating", "Running"] },
+           { q: "Some plants grow ____ that we can pick and eat, like strawberries.", a: "Fruit", options: ["Rocks", "Fruit", "Sticks", "Glass"] },
+           { q: "What do leaves use to turn sunlight into food?", a: "Chlorophyll", options: ["Chlorophyll", "Paint", "Water", "Soil"] },
+           { q: "Which insect helps plants by carrying pollen from flower to flower?", a: "Bees", options: ["Ants", "Spiders", "Bees", "Worms"] }
+       ];
 
-        let currentIdx = 0;
-        let score = 0;
-        let userResults = [];
+       let currentIdx = 0;
+       let score = 0;
+       let userResults = [];
 
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-        }
+       function shuffleArray(array) {
+           for (let i = array.length - 1; i > 0; i--) {
+               const j = Math.floor(Math.random() * (i + 1));
+               [array[i], array[j]] = [array[j], array[i]];
+           }
+       }
 
-        function ensureTryAgainButton() {
-            const summaryBox = document.getElementById("summary-box");
-            if (summaryBox && !summaryBox.querySelector('button[onclick="location.reload()"]')) {
-                const button = document.createElement('button');
-                button.className = 'next-btn';
-                button.style.display = 'block';
-                button.style.marginTop = '20px';
-                button.innerText = 'Try Again';
-                button.onclick = function() { location.reload(); };
-                const backButton = summaryBox.querySelector('button[onclick^="location.href"]');
-                summaryBox.insertBefore(button, backButton || null);
-            }
-        }
+       function ensureTryAgainButton() {
+           const summaryBox = document.getElementById("summary-box");
+           if (summaryBox && !summaryBox.querySelector('button[onclick="location.reload()"]')) {
+               const button = document.createElement('button');
+               button.className = 'next-btn';
+               button.style.display = 'block';
+               button.style.marginTop = '20px';
+               button.innerText = 'Try Again';
+               button.onclick = function() { location.reload(); };
+               const backButton = summaryBox.querySelector('button[onclick^="location.href"]');
+               summaryBox.insertBefore(button, backButton || null);
+           }
+       }
 
-        function initializeQuiz() {
-            shuffleArray(quizData);
-            loadQuestion();
-        }
+       function initializeQuiz() {
+           shuffleArray(quizData);
+           loadQuestion();
+       }
 
-        function loadQuestion() {
-            const current = quizData[currentIdx];
-            document.getElementById("question-text").innerText = current.q;
-            const optionsDiv = document.getElementById("options");
-            optionsDiv.innerHTML = "";
-            document.getElementById("feedback").innerText = "";
-            document.getElementById("next-button").style.display = "none";
+       function loadQuestion() {
+           const current = quizData[currentIdx];
+           document.getElementById("question-text").innerText = current.q;
+           const optionsDiv = document.getElementById("options");
+           optionsDiv.innerHTML = "";
+           document.getElementById("feedback").innerText = "";
+           document.getElementById("next-button").style.display = "none";
 
-            current.options.forEach(opt => {
-                const btn = document.createElement("button");
-                btn.innerText = opt;
-                btn.className = "option-btn";
-                btn.onclick = () => checkAnswer(opt);
-                optionsDiv.appendChild(btn);
-            });
-        }
+           current.options.forEach(opt => {
+               const btn = document.createElement("button");
+               btn.innerText = opt;
+               btn.className = "option-btn";
+               btn.onclick = () => checkAnswer(opt);
+               optionsDiv.appendChild(btn);
+           });
+       }
 
-        function checkAnswer(selected) {
-            const current = quizData[currentIdx];
-            const feedback = document.getElementById("feedback");
-            const btns = document.querySelectorAll(".option-btn");
-            
-            // Disable buttons after answer
-            btns.forEach(b => b.disabled = true);
+       function checkAnswer(selected) {
+           const current = quizData[currentIdx];
+           const feedback = document.getElementById("feedback");
+           const btns = document.querySelectorAll(".option-btn");
+          
+           btns.forEach(b => b.disabled = true);
 
-            if (selected === current.a) {
-                feedback.innerText = "Correct! Well done.";
-                feedback.className = "feedback correct";
-                score++;
-                userResults.push({ q: current.q, res: "Correct", class: "correct" });
-            } else {
-                feedback.innerText = "Oops! The correct answer was " + current.a;
-                feedback.className = "feedback wrong";
-                userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
-            }
-            document.getElementById("next-button").style.display = "block";
-        }
+           if (selected === current.a) {
+               feedback.innerText = "Correct! Well done.";
+               feedback.className = "feedback correct";
+               score++;
+               userResults.push({ q: current.q, res: "Correct", class: "correct" });
+           } else {
+               feedback.innerText = "Oops! The correct answer was " + current.a;
+               feedback.className = "feedback wrong";
+               userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
+           }
+           document.getElementById("next-button").style.display = "block";
+       }
 
-        function loadNextQuestion() {
-            currentIdx++;
-            if (currentIdx < quizData.length) {
-                loadQuestion();
-            } else {
-                showSummary();
-            }
-        }
+       function loadNextQuestion() {
+           currentIdx++;
+           if (currentIdx < quizData.length) {
+               loadQuestion();
+           } else {
+               showSummary();
+           }
+       }
 
-        function showSummary() {
-            document.getElementById("quiz-box").classList.add("hidden");
-            const summaryBox = document.getElementById("summary-box");
-            summaryBox.classList.remove("hidden");
-            ensureTryAgainButton();
-            
-            const list = document.getElementById("results-list");
-            list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
-            
-            userResults.forEach(item => {
-                const div = document.createElement("div");
-                div.className = "summary-item";
-                div.innerHTML = `<strong>${item.q}</strong> - <span class="${item.class}">${item.res}</span>`;
-                list.appendChild(div);
-            });
-        }
+       function showSummary() {
+           document.getElementById("quiz-box").classList.add("hidden");
+           const summaryBox = document.getElementById("summary-box");
+           summaryBox.classList.remove("hidden");
+           ensureTryAgainButton();
+          
+           const list = document.getElementById("results-list");
+           list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
+          
+           userResults.forEach(item => {
+               const div = document.createElement("div");
+               div.className = "summary-item";
+               div.innerHTML = `<strong>${item.q}</strong> - <span class="${item.class}">${item.res}</span>`;
+               list.appendChild(div);
+           });
+       }
 
-        // Start the quiz
-        initializeQuiz();
-    </script>
+       initializeQuiz();
+   </script>
 </body>
 </html>
