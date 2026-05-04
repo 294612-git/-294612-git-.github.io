@@ -3,71 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grade 2 Science - Study Buddy</title>
+    <title>Rainforest Dart Frog Science - Study Buddy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Segoe UI', sans-serif;
-            margin: 0;
+            font-family: 'Quicksand', sans-serif;
+            background-color: #e3f7f5;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-color: #f4f7f6;
+            min-height: 100vh;
+            margin: 0;
         }
-
-        .topics-container {
+        .topics-container, .quiz-container, .menu-container {
             background: white;
-            padding: 2.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            text-align: center;
-            max-width: 400px;
+            padding: 2.2rem;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
             width: 90%;
+            max-width: 560px;
+            text-align: center;
+            border: 4px dashed #0f6f63;
         }
-
-        h2 {
-            color: #667eea;
-            margin-bottom: 1.5rem;
+        h2 { font-family: 'Fredoka', cursive; color: #0d4d4b; }
+        p { color: #333; line-height: 1.5; }
+        .topic-link, .choice, .option-btn, .back-link {
+            transition: all 0.2s;
         }
-
-        .topic-link {
+        .topic-link, .choice {
             display: block;
             text-decoration: none;
-            background: #f8f9fa;
+            background: #f0fffd;
             color: #333;
             padding: 1rem;
             margin-bottom: 0.8rem;
-            border-radius: 8px;
-            border: 2px solid #eee;
-            font-weight: 600;
-            transition: all 0.2s;
+            border-radius: 18px;
+            border: 3px solid #4db6ac;
+            font-weight: 700;
         }
-
-        .topic-link:hover {
-            border-color: #667eea;
-            background: #f0f2ff;
+        .topic-link:hover, .choice:hover {
+            background: #c7f1ec;
             transform: translateY(-2px);
+            border-color: #0d4d4b;
         }
-
+        .option-btn {
+            padding: 14px;
+            border: 3px solid #4db6ac;
+            border-radius: 50px;
+            background: white;
+            color: #0d4d4b;
+            cursor: pointer;
+            font-size: 1.05rem;
+            font-weight: 600;
+        }
+        .option-btn:hover { background: #c7f1ec; border-color: #0d4d4b; }
         .back-link {
             display: inline-block;
-            margin-top: 1.5rem;
-            color: #667eea;
+            margin-top: 1.2rem;
+            color: #0d4d4b;
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            font-weight: 600;
         }
-    </style>
+        .feedback { margin: 15px 0; font-weight: bold; min-height: 24px; }
+        .correct { color: #2e7d32; }
+        .wrong { color: #c62828; }
+        .next-btn {
+            background: linear-gradient(135deg, #0d4d4b 0%, #4db6ac 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            display: none;
+            margin: 0 auto;
+            font-weight: bold;
+            box-shadow: 0 4px 0px rgba(0,0,0,0.15);
+        }
+        .next-btn:active { transform: translateY(4px); box-shadow: none; }
+        .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #b2dfdb; }
+        .hidden { display: none; }
+</style>
 </head>
 <body>
     <div class="topics-container">
-        <h2>Grade 2 Science</h2>
-        <p>Choose a topic to start your quiz!</p>
+        <h2>🐸 Dart Frog Science</h2>
+        <p>Choose a rainforest science quiz and hop into learning!</p>
         <a href="grade2-plants.html" class="topic-link">🌿 Plants Quiz</a>
         <a href="grade2-animals.html" class="topic-link">🐾 Animals Quiz</a>
         <a href="grade2-living.html" class="topic-link">🧠 Living vs. Non-Living Things Quiz</a>
         <a href="grade2-pollination.html" class="topic-link">🌸 Pollination Quiz</a>
 
-        <a href="../../startquiz.html" class="back-link">← Back to Quiz Selection</a>
+        <a href="../../startquiz.html" class="back-link">← Back to 🐸 Dart Frog Science Selection</a>
     </div>
 </body>
 </html>
