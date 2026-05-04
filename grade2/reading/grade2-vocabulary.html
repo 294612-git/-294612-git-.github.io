@@ -102,13 +102,21 @@
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "The prefix \"un-\" means ___.", a: "Not", options: ["Not", "Very"] },
             { q: "Which is a synonym for small?", a: "Tiny", options: ["Tiny", "Huge"] },
             { q: "Which is an antonym for hot?", a: "Cold", options: ["Cold", "Warm"] },
             { q: "Sunlight helped the plant grow. What does sunlight most likely mean?", a: "Light from the sun", options: ["Light from the sun", "A flashlight"] },
             { q: "Which word is a compound word?", a: "Toothbrush", options: ["Toothbrush", "Table"] }
         ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
         let currentIdx = 0;
         let score = 0;

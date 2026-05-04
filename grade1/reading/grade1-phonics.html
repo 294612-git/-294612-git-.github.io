@@ -90,7 +90,7 @@
    </div>
 
    <script>
-       const quizData = [
+       const questionPool = [
            { q: "What sound does the letter “B” make?", a: "/b/ as in bat", options: ["/s/ as in snake", "/b/ as in bat", "/t/ as in top", "/m/ as in moon"] },
            { q: "Which word starts with the letter “S”?", a: "Sun", options: ["Cat", "Dog", "Sun", "Ball"] },
            { q: "Which word has a short “a” sound (like in \"apple\")?", a: "Cat", options: ["Cake", "Rain", "Cat", "Play"] },
@@ -111,7 +111,15 @@
            { q: "What sound does the letter \"J\" make?", a: "/j/", options: ["/g/", "/j/", "/y/", "/h/"] },
            { q: "Which word has a \"magic e\" that makes the \"o\" say its name?", a: "Hope", options: ["Hop", "Hot", "Hope", "Hog"] },
            { q: "Which word starts with the same sound as \"Frog\"?", a: "Fish", options: ["Fish", "Pen", "Dog", "Star"] }
-       ];
+        ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
        let currentIdx = 0;
        let score = 0;

@@ -102,12 +102,20 @@
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "The 13 colonies were in ___", a: "America", options: ["America", "Europe"] },
             { q: "The American Revolution was against ___", a: "Britain", options: ["Britain", "France"] },
             { q: "The Constitution is a ___", a: "Plan of government", options: ["Plan of government", "Story"] },
             { q: "George Washington was ___", a: "First president", options: ["First president", "Explorer"] }
         ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
         let currentIdx = 0;
         let score = 0;

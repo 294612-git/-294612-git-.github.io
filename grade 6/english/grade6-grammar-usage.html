@@ -101,11 +101,19 @@
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "Which word is a noun in the sentence: 'The dog chased the ball'?", a: "dog", options: ["chased", "dog", "the"] },
             { q: "Choose the sentence with correct punctuation.", a: "She will arrive at 3:00 p.m.", options: ["She will arrive at 3:00 p.m.", "She will arrive at 3 00 p.m", "She will arrive at 300 p.m."] },
             { q: "Which word is an adjective?", a: "colorful", options: ["colorful", "jump", "quickly"] }
         ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
         let currentIdx = 0;
         let score = 0;

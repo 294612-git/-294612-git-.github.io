@@ -101,12 +101,20 @@
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "What is the area of a triangle with base 10 and height 5?", a: "25", options: ["50", "25", "15"] },
             { q: "The middle number in a sorted list of data is the ___.", a: "Median", options: ["Mean", "Median", "Mode"] },
             { q: "How many degrees are in a straight line?", a: "180°", options: ["90°", "180°", "360°"] },
             { q: "The average of 2, 4, and 6 is ___.", a: "4", options: ["4", "12", "6"] }
         ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
         let currentIdx = 0;
         let score = 0;

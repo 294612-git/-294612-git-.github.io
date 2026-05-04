@@ -103,7 +103,7 @@
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "A synonym for 'happy' is...", a: "Glad", options: ["Sad", "Glad", "Angry"] },
             { q: "An antonym for 'hot' is...", a: "Cold", options: ["Warm", "Cold", "Burning"] },
             { q: "What does the prefix 'un-' mean (like in 'unhappy')?", a: "Not", options: ["Very", "Not", "Again"] },
@@ -125,6 +125,14 @@
             { q: "Which word means a 'place where books are kept'?", a: "Library", options: ["Kitchen", "Library", "Park"] },
             { q: "If you are 'exhausted,' you are...", a: "Very tired", options: ["Very tired", "Very excited", "Very tall"] }
         ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
         let currentIdx = 0;
         let score = 0;

@@ -103,7 +103,7 @@
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "What is pollination?", a: "Moving pollen to help plants make seeds", options: ["Moving pollen to help plants make seeds", "Planting seeds in the dirt", "Watering a flower"] },
             { q: "What is the yellow powder inside a flower called?", a: "Pollen", options: ["Dust", "Pollen", "Flour"] },
             { q: "Which of these is a common pollinator?", a: "A bee", options: ["A bee", "A spider", "A worm"] },
@@ -125,6 +125,14 @@
             { q: "Where do bees carry extra pollen?", a: "In 'pockets' on their legs", options: ["In their mouths", "In 'pockets' on their legs", "In their wings"] },
             { q: "Is a dog a common pollinator?", a: "No, usually insects, birds, and bats are", options: ["No, usually insects, birds, and bats are", "Yes, always"] }
         ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
         let currentIdx = 0;
         let score = 0;

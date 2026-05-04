@@ -103,7 +103,7 @@
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "A map shows ___", a: "Places", options: ["Places", "Stories", "Food", "Games"] },
             { q: "The Earth has ___ continents", a: "7", options: ["5", "7", "10", "3"] },
             { q: "Past means ___", a: "Long ago", options: ["Long ago", "Now", "Tomorrow", "Yesterday only"] },
@@ -125,6 +125,14 @@
             { q: "What is history?", a: "Study of the past", options: ["Study of the past", "Study of the future", "Study of math", "Study of science"] },
             { q: "What is the future?", a: "Time to come", options: ["Time gone", "Time to come", "Time now", "Time stopped"] }
         ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
         let currentIdx = 0;
         let score = 0;

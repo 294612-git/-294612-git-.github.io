@@ -103,7 +103,7 @@
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "What is the perimeter of a square with 4-inch sides?", a: "16 in", options: ["8 in", "16 in", "12 in", "20 in"] },
             { q: "A rectangle has a length of 5 cm and a width of 3 cm. What is the area?", a: "15 sq cm", options: ["8 sq cm", "15 sq cm", "16 sq cm", "10 sq cm"] },
             { q: "Perimeter is the distance...", a: "Around a shape", options: ["Inside a shape", "Around a shape", "Through a shape"] },
@@ -125,6 +125,14 @@
             { q: "Which shape has 4 equal sides?", a: "Square", options: ["Rectangle", "Circle", "Square", "Triangle"] },
             { q: "Area of a square with side s is...", a: "s × s", options: ["s+s", "s × s", "4 × s", "s ÷ 4"] }
         ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
         let currentIdx = 0;
         let score = 0;

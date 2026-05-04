@@ -76,7 +76,7 @@
    </div>
 
    <script>
-       const quizData = [
+       const questionPool = [
            { q: "Count the apples: 🍎🍎🍎🍎🍎", a: "5", options: ["4", "5", "6", "7"] },
            { q: "What number comes before 12?", a: "11", options: ["10", "11", "13", "14"] },
            { q: "Count by 5s. What comes next? 5, 10, ___", a: "15", options: ["11", "12", "15", "20"] },
@@ -97,7 +97,15 @@
            { q: "What number is 10 and 2 more?", a: "12", options: ["10", "11", "12", "20"] },
            { q: "How many tally marks are here? ||||", a: "4", options: ["3", "4", "5", "6"] },
            { q: "What number comes right before 20?", a: "19", options: ["18", "19", "21", "10"] }
-       ];
+        ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
        let currentIdx = 0;
        let score = 0;

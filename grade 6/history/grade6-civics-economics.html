@@ -101,11 +101,19 @@
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "Which level of government makes laws for the whole country?", a: "National", options: ["Local", "State", "National"] },
             { q: "A person who votes in elections is called a ___.", a: "Voter", options: ["Leader", "Voter", "Citizen"] },
             { q: "The system for buying and selling goods is part of ___.", a: "Economics", options: ["Geography", "History", "Economics"] }
         ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
         let currentIdx = 0;
         let score = 0;

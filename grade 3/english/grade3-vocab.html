@@ -103,7 +103,7 @@
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "What is a \"Glossary\"?", a: "A mini-dictionary in the back of a book", options: ["A map", "A mini-dictionary in the back of a book", "The cover"] },
             { q: "Which word means \"very big\"?", a: "Enormous", options: ["Tiny", "Enormous", "Slim", "Average"] },
             { q: "To \"Persist\" means to...", a: "Keep trying", options: ["Give up", "Keep trying", "Sleep"] },
@@ -125,6 +125,14 @@
             { q: "\"Sturdy\" means...", a: "Strong", options: ["Weak", "Strong", "Soft"] },
             { q: "\"Brief\" means...", a: "Short", options: ["Long", "Short", "Old"] }
         ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
         let currentIdx = 0;
         let score = 0;

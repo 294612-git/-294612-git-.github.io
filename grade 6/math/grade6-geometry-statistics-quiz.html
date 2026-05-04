@@ -101,7 +101,7 @@
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "A triangle has an area of 35 sq cm and a base of 10 cm. What is its height?", a: "B) 7 cm", options: ["A) 3.5 cm", "B) 7 cm", "C) 14 cm", "D) 5 cm"] },
             { q: "How many small cubes with side length 1/2 inch can fit inside a larger cube with side length 2 inches?", a: "C) 64", options: ["A) 16", "B) 32", "C) 64", "D) 8"] },
             { q: "Data set: 10, 20, 30, 40, x. If the mean is 30, what is x?", a: "B) 50", options: ["A) 30", "B) 50", "C) 40", "D) 60"] },
@@ -123,6 +123,14 @@
             { q: "A cylindrical tank has a base area of 20 sq ft and a height of 5 ft. What is its volume?", a: "B) 100 cubic ft", options: ["A) 4 cubic ft", "B) 100 cubic ft", "C) 25 cubic ft", "D) 50 cubic ft"] },
             { q: "Which of these can be determined from a box plot?", a: "C) The Median", options: ["A) The Mean", "B) The exact number of data points", "C) The Median", "D) The Mode"] }
         ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
         let currentIdx = 0; let score = 0; let userResults = [];
 
         function shuffleArray(array) {

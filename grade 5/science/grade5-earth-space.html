@@ -102,12 +102,20 @@
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "The water cycle includes ___", a: "Evaporation", options: ["Evaporation", "Jumping"] },
             { q: "Earth spins causing ___", a: "Day/night", options: ["Day/night", "Seasons"] },
             { q: "The sun is a ___", a: "Star", options: ["Star", "Planet"] },
             { q: "Earth is the ___ planet from the sun", a: "3rd", options: ["3rd", "2nd"] }
         ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
         let currentIdx = 0;
         let score = 0;

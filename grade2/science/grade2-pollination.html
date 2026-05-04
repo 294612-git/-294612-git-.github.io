@@ -102,7 +102,7 @@
    </div>
 
    <script>
-       const quizData = [
+       const questionPool = [
            { q: "Pollination is a very important process that helps plants make ____.", a: "Seeds", options: ["Rocks", "Seeds", "Toys", "Shoes"] },
            { q: "Which of these animals is a famous 'pollinator' that helps move pollen?", a: "A Bee", options: ["A Bee", "A Shark", "A Tiger", "A Dog"] },
            { q: "Pollen can move from one flower to another by the help of animals or the ____.", a: "Wind", options: ["Wind", "Tables", "Clouds", "Sidewalk"] },
@@ -123,7 +123,15 @@
            { q: "Pollen must move from the stamen to the ____ for a seed to grow.", a: "Stigma", options: ["Petal", "Stigma", "Ground", "Air"] },
            { q: "How do animals like squirrels help with a different part of the cycle (seed dispersal)?", a: "By burying seeds in new places", options: ["By eating the flowers", "By burying seeds in new places", "By climbing trees", "By drinking water"] },
            { q: "Without pollinators, what would happen to many of our favorite foods like apples and berries?", a: "They would be hard to find because plants couldn't make them", options: ["They would grow bigger", "They would be hard to find because plants couldn't make them", "They would taste like chocolate", "Nothing would change"] }
-       ];
+        ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
        let currentIdx = 0;
        let score = 0;

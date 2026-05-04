@@ -110,12 +110,20 @@
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "Which part of the cell is known as the 'brain' or control center?", a: "Nucleus", options: ["Nucleus", "Mitochondria", "Cell Wall"] },
             { q: "Plants turn sunlight into energy through ___.", a: "Photosynthesis", options: ["Respiration", "Photosynthesis", "Digestion"] },
             { q: "Which kingdom do mushrooms belong to?", a: "Fungi", options: ["Plant", "Animal", "Fungi"] },
             { q: "A group of tissues working together is called an ___.", a: "Organ", options: ["Organ", "Atom", "Ecosystem"] }
         ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
         let currentIdx = 0;
         let score = 0;

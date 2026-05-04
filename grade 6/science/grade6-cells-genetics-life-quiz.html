@@ -101,7 +101,7 @@
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "Which organelle contains enzymes that break down waste materials and cellular debris?", a: "B) Lysosome", options: ["A) Ribosome", "B) Lysosome", "C) Vacuole", "D) Chloroplast"] },
             { q: "What is the specific function of the Nucleolus?", a: "C) Ribosome production", options: ["A) DNA replication", "B) Protein folding", "C) Ribosome production", "D) Waste disposal"] },
             { q: "\"Turgor pressure\" in a plant cell is maintained by which organelle?", a: "B) Large Central Vacuole", options: ["A) Cell Wall", "B) Large Central Vacuole", "C) Mitochondria", "D) Nucleus"] },
@@ -123,6 +123,14 @@
             { q: "A \"codominant\" trait is one where:", a: "C) Both traits are expressed equally (like a spotted cow)", options: ["A) Neither trait shows", "B) One trait completely hides the other", "C) Both traits are expressed equally (like a spotted cow)", "D) The traits blend (like pink flowers)"] },
             { q: "In the Hierarchical Classification system, which level is more specific than \"Class\" but less specific than \"Family\"?", a: "C) Order", options: ["A) Kingdom", "B) Phylum", "C) Order", "D) Genus"] }
         ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
         let currentIdx = 0; let score = 0; let userResults = [];
 
         function shuffleArray(array) {

@@ -100,7 +100,7 @@
     <div class="quiz-container hidden" id="summary-box">
         <h2>Quiz Complete!</h2>
         <div id="results-list"></div>
-        <button class="next-btn" style="display:block; margin-top:20px;" onclick="loadNewRound()">Try Again (New Round)</button>
+        <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
         <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade4-history-topics.html'">Back to 🐻 Polar Bear History Topics</button>
     </div>
 
@@ -130,37 +130,39 @@
             { q: "When studying a historical event, why is it important to look at multiple sources?", options: ["To make the homework take longer", "To get a more complete and accurate picture of what really happened", "Because the first book is usually wrong", "To see which author has the coolest name"], a: "To get a more complete and accurate picture of what really happened" }
         ];
 
-        let currentRound = 1;
+        const questionPool = allQuestions;
+        let quizData = [];
         let currentIdx = 0;
         let score = 0;
         let userResults = [];
-        let quizData = [];
 
-        function loadRound(roundNum) {
-            const startIdx = (roundNum - 1) * 10;
-            const endIdx = startIdx + 10;
-            quizData = allQuestions.slice(startIdx, endIdx);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function initializeQuiz() {
+            quizData = shufflePool(questionPool.slice()).slice(0, 5);
             currentIdx = 0;
             score = 0;
             userResults = [];
             document.getElementById("quiz-box").classList.remove("hidden");
             document.getElementById("summary-box").classList.add("hidden");
-            document.getElementById("round-indicator").innerText = `Round ${roundNum}`;
             loadQuestion();
         }
 
         function loadQuestion() {
             const current = quizData[currentIdx];
             document.getElementById("question-text").innerText = `Q${currentIdx + 1}: ${current.q}`;
-            
             const progress = ((currentIdx + 1) / quizData.length) * 100;
             document.getElementById("progress-fill").style.width = progress + "%";
-            
             const optionsDiv = document.getElementById("options");
             optionsDiv.innerHTML = "";
             document.getElementById("feedback").innerText = "";
             document.getElementById("next-button").style.display = "none";
-
             current.options.forEach((opt, idx) => {
                 const btn = document.createElement("button");
                 btn.innerText = String.fromCharCode(65 + idx) + ") " + opt;
@@ -174,9 +176,7 @@
             const current = quizData[currentIdx];
             const feedback = document.getElementById("feedback");
             const btns = document.querySelectorAll(".option-btn");
-            
             btns.forEach(b => b.disabled = true);
-
             if (selected === current.a) {
                 feedback.innerText = "✓ Correct! Well done.";
                 feedback.className = "feedback correct";
@@ -203,10 +203,8 @@
             document.getElementById("quiz-box").classList.add("hidden");
             const summaryBox = document.getElementById("summary-box");
             summaryBox.classList.remove("hidden");
-            
             const list = document.getElementById("results-list");
-            list.innerHTML = `<h3>Round ${currentRound} - Final Score: ${score}/10</h3>`;
-            
+            list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
             userResults.forEach((item, idx) => {
                 const div = document.createElement("div");
                 div.className = "summary-item";
@@ -215,18 +213,7 @@
             });
         }
 
-        function loadNewRound() {
-            currentRound++;
-            if (currentRound <= 2) {
-                loadRound(currentRound);
-            } else {
-                alert("No more rounds available. You've completed all questions!");
-                location.href = "grade4-history-topics.html";
-            }
-        }
-
-        // Start with Round 1
-        loadRound(1);
+        initializeQuiz();
     </script>
 </body>
 </html>

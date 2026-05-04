@@ -89,7 +89,7 @@
    </div>
 
    <script>
-       const quizData = [
+       const questionPool = [
            { q: "The dog ran fast. What did the dog do?", a: "Ran", options: ["Slept", "Ran", "Ate", "Sat"] },
            { q: "The sun is hot. What is hot?", a: "The Sun", options: ["The Moon", "The Sun", "The Rain", "The Snow"] },
            { q: "Tim has a red hat. What color is the hat?", a: "Red", options: ["Blue", "Green", "Red", "Yellow"] },
@@ -110,7 +110,15 @@
            { q: "The milk is in the cup. What is in the cup?", a: "Milk", options: ["Water", "Juice", "Milk", "Soda"] },
            { q: "How many syllables (beats) are in the word 'Apple'?", a: "2", options: ["1", "2", "3", "4"] },
            { q: "Which sentence is written correctly?", a: "The cat is black.", options: ["the cat is black.", "The cat is black", "The cat is black.", "the cat is Black"] }
-       ];
+        ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
        let currentIdx = 0;
        let score = 0;

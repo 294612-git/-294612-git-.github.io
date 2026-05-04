@@ -102,12 +102,20 @@
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "What is 0.5 × 4?", a: "2", options: ["2", "4", "1"] },
             { q: "What is 1/2 + 1/4?", a: "3/4", options: ["3/4", "2/4", "1"] },
             { q: "What is 3/5 × 10?", a: "6", options: ["5", "6", "7"] },
             { q: "What is 4.2 ÷ 2?", a: "2.1", options: ["2.1", "2.2", "2.3"] }
         ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
         let currentIdx = 0;
         let score = 0;

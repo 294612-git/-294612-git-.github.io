@@ -103,7 +103,7 @@
    </div>
 
    <script>
-       const quizData = [
+       const questionPool = [
            { q: "How many sides does a hexagon have?", a: "6", options: ["5", "6", "7", "8"] },
            { q: "Which shape has 4 equal sides and 4 corners?", a: "Square", options: ["Rectangle", "Square", "Triangle", "Circle"] },
            { q: "A 3D shape that looks like a soup can is called a ____.", a: "Cylinder", options: ["Cylinder", "Sphere", "Cube", "Cone"] },
@@ -124,7 +124,15 @@
            { q: "A stop sign is the shape of a(n) ____.", a: "Octagon", options: ["Hexagon", "Pentagon", "Octagon", "Rectangle"] },
            { q: "How many edges does a sphere have?", a: "0", options: ["0", "1", "2", "4"] },
            { q: "Which 2D shape has 4 sides, but is tilted so it looks like a diamond?", a: "Rhombus", options: ["Trapezoid", "Rhombus", "Pentagon", "Hexagon"] }
-       ];
+        ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
        let currentIdx = 0;
        let score = 0;

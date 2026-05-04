@@ -103,7 +103,7 @@
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "Who was the first president?", a: "George Washington", options: ["George Washington", "Abraham Lincoln", "Thomas Jefferson", "John Adams"] },
             { q: "The American flag has ___ stripes", a: "13", options: ["13", "50", "7", "20"] },
             { q: "Independence Day is in ___", a: "July", options: ["July", "December", "January", "October"] },
@@ -125,6 +125,14 @@
             { q: "What is the Boston Tea Party?", a: "A protest against taxes", options: ["A party with tea", "A protest against taxes", "A birthday party", "A dance party"] },
             { q: "What is the Emancipation Proclamation?", a: "Document that freed slaves", options: ["A map", "Document that freed slaves", "A flag", "A coin"] }
         ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
         let currentIdx = 0;
         let score = 0;

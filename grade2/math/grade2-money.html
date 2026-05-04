@@ -103,7 +103,7 @@
    </div>
 
    <script>
-       const quizData = [
+       const questionPool = [
            { q: "How much is one quarter worth?", a: "25¢", options: ["10¢", "25¢", "50¢", "5¢"] },
            { q: "How much are 2 dimes worth?", a: "20¢", options: ["10¢", "20¢", "30¢", "40¢"] },
            { q: "Which coin is worth 5¢?", a: "Nickel", options: ["Penny", "Nickel", "Dime", "Quarter"] },
@@ -124,7 +124,15 @@
            { q: "What is the total of 4 quarters?", a: "$1.00", options: ["75¢", "$1.00", "$2.00", "40¢"] },
            { q: "If you have 1 dime, 1 nickel, and 1 penny, how much do you have?", a: "16¢", options: ["11¢", "15¢", "16¢", "20¢"] },
            { q: "Which is the correct way to write fifty cents?", a: "$0.50", options: ["50$", "0.50¢", "$0.50", "5¢"] }
-       ];
+        ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
        let currentIdx = 0;
        let score = 0;

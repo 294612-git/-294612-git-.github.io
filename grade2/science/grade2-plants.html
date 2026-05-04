@@ -103,7 +103,7 @@
    </div>
 
    <script>
-       const quizData = [
+       const questionPool = [
            { q: "What do plants need to make their own food?", a: "Sunlight, water, and air", options: ["Sunlight, water, and air", "Rocks and dirt", "Plastic and metal", "Juice and soda"] },
            { q: "Which part of a plant is responsible for making seeds?", a: "The Flower", options: ["The Root", "The Stem", "The Flower", "The Leaf"] },
            { q: "The very first stage of a plant’s life cycle is a ____.", a: "Seed", options: ["Leaf", "Seed", "Fruit", "Flower"] },
@@ -124,7 +124,15 @@
            { q: "What do plants release into the air that humans need to breathe?", a: "Oxygen", options: ["Water", "Oxygen", "Smoke", "Helium"] },
            { q: "What is the 'skin' of a seed called?", a: "Seed coat", options: ["Seed coat", "Shell", "Wrapper", "Jacket"] },
            { q: "Plants are 'Producers' because they ____.", a: "Make their own food", options: ["Eat other plants", "Make their own food", "Buy food at the store", "Do not need food"] }
-       ];
+        ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
        let currentIdx = 0;
        let score = 0;

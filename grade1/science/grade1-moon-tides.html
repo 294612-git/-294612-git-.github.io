@@ -78,7 +78,7 @@
    </div>
 
    <script>
-       const quizData = [
+       const questionPool = [
            { q: "What is the moon?", a: "natural satellite", options: ["star", "natural satellite", "planet"] },
            { q: "What causes tides?", a: "moon", options: ["sun", "moon", "earth"] },
            { q: "How many phases does the moon have?", a: "8", options: ["4", "8", "12"] },
@@ -99,7 +99,15 @@
            { q: "How does the moon affect animals?", a: "behavior changes", options: ["no effect", "behavior changes", "makes them sleep"] },
            { q: "What is the moon's orbit?", a: "around earth", options: ["around sun", "around earth", "around mars"] },
            { q: "What is the tide cycle?", a: "twice a day", options: ["once a day", "twice a day", "once a month"] }
-       ];
+        ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
        let currentIdx = 0;
        let score = 0;

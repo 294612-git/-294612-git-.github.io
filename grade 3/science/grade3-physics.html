@@ -103,7 +103,7 @@
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "Gravity is a force that pulls objects...", a: "Toward the center of the Earth", options: ["Up", "Toward the center of the Earth", "Sideways"] },
             { q: "Friction is a force that occurs when two objects...", a: "Rub together", options: ["Pull apart", "Rub together", "Melt"] },
             { q: "A magnet has a North pole and a ___ pole.", a: "South", options: ["East", "West", "South"] },
@@ -125,6 +125,14 @@
             { q: "Sound is caused by...", a: "Vibrations", options: ["Light", "Vibrations", "Magnets"] },
             { q: "A battery is a source of ___ energy.", a: "Chemical", options: ["Light", "Chemical", "Sound"] }
         ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
         let currentIdx = 0;
         let score = 0;

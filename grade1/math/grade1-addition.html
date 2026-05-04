@@ -75,7 +75,7 @@
    </div>
 
    <script>
-       const quizData = [
+       const questionPool = [
            { q: "What is 4 + 2?", a: "6", options: ["5", "6", "7", "8"] },
            { q: "What is 3 + 5?", a: "8", options: ["7", "8", "9", "10"] },
            { q: "What is 7 + 1?", a: "8", options: ["6", "7", "8", "9"] },
@@ -96,7 +96,15 @@
            { q: "What is 5 + 8?", a: "13", options: ["12", "13", "14", "15"] },
            { q: "What is 10 + 10?", a: "20", options: ["15", "18", "20", "21"] },
            { q: "What is 3 + 14?", a: "17", options: ["16", "17", "18", "19"] }
-       ];
+        ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
        let currentIdx = 0;
        let score = 0;
        let userResults = [];

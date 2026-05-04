@@ -103,7 +103,7 @@
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "The \"Main Idea\" is...", a: "What the text is mostly about", options: ["A character's name", "What the text is mostly about", "The last sentence"] },
             { q: "Supporting details ___ the main idea.", a: "Describe or explain", options: ["Oppose", "Describe or explain", "Hide"] },
             { q: "When you \"predict,\" you guess what will happen...", a: "Next", options: ["In the past", "Next", "In another book"] },
@@ -130,6 +130,14 @@
             { q: "\"Visualizing\" means making a ___ in your mind.", a: "Picture", options: ["List", "Picture", "Sound"] },
             { q: "A \"Biography\" is a story about...", a: "A real person's life", options: ["A fake animal", "A real person's life", "How to cook"] }
         ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
         let currentIdx = 0;
         let score = 0;

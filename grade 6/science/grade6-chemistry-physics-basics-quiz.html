@@ -101,7 +101,7 @@
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "\"Isotopes\" are atoms of the same element that have different numbers of:", a: "C) Neutrons", options: ["A) Protons", "B) Electrons", "C) Neutrons", "D) Shells"] },
             { q: "Which type of bond involves the \"sharing\" of electrons between atoms?", a: "B) Covalent", options: ["A) Ionic", "B) Covalent", "C) Metallic", "D) Magnetic"] },
             { q: "\"Valence Electrons\" are located:", a: "B) In the outermost energy level", options: ["A) In the nucleus", "B) In the outermost energy level", "C) Next to the neutrons", "D) Outside the atom"] },
@@ -123,6 +123,14 @@
             { q: "Which simple machine is essentially an \"inclined plane wrapped around a cylinder\"?", a: "C) Screw", options: ["A) Wedge", "B) Lever", "C) Screw", "D) Wheel and Axle"] },
             { q: "In \"Nuclear Fission,\" energy is released by:", a: "B) Splitting a heavy nucleus", options: ["A) Joining two small nuclei", "B) Splitting a heavy nucleus", "C) Burning fuel", "D) Vibrating molecules"] }
         ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
         let currentIdx = 0; let score = 0; let userResults = [];
 
         function shuffleArray(array) {

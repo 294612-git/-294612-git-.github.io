@@ -128,20 +128,33 @@
             { q: "Which of the following is a \"Symbiotic\" relationship where both organisms benefit (Mutualism)?", options: ["A) A tick drinking blood from a dog", "B) A bee pollinating a flower while getting nectar", "C) An owl catching a mouse", "D) A lion fighting a hyena for a zebra"], a: 1 }
         ];
 
-        let currentRound = 1;
-        let currentQuestionIndex = 0;
+        const questionPool = allQuestions;
+        let quizData = [];
+        let currentIdx = 0;
+        let score = 0;
         let userResults = [];
-        let roundScores = [0, 0];
 
-        function loadRound(round) {
-            currentRound = round;
-            currentQuestionIndex = (round - 1) * 10;
-            document.getElementById('round-info').textContent = `Round ${round}`;
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function initializeQuiz() {
+            quizData = shufflePool(questionPool.slice()).slice(0, 5);
+            currentIdx = 0;
+            score = 0;
+            userResults = [];
+            document.getElementById('active-quiz').style.display = 'block';
+            document.getElementById('summary').style.display = 'none';
+            document.getElementById('round-info').textContent = `Question 1 of ${quizData.length}`;
             loadQuestion();
         }
 
         function loadQuestion() {
-            const question = allQuestions[currentQuestionIndex];
+            const question = quizData[currentIdx];
             document.getElementById('question').textContent = question.q;
             const optionsUl = document.getElementById('options');
             optionsUl.innerHTML = '';
@@ -158,55 +171,48 @@
         }
 
         function checkAnswer(selectedIndex) {
-            const correctIndex = allQuestions[currentQuestionIndex].a;
+            const current = quizData[currentIdx];
+            const correctIndex = current.a;
             const feedback = document.getElementById('feedback');
+            const buttons = document.querySelectorAll('#options button');
+            buttons.forEach(btn => btn.disabled = true);
             if (selectedIndex === correctIndex) {
                 feedback.textContent = 'Correct!';
                 feedback.className = 'feedback correct';
-                roundScores[currentRound - 1]++;
+                score++;
+                userResults.push({ q: current.q, res: 'Correct', class: 'correct' });
             } else {
-                feedback.textContent = `Wrong! The correct answer is: ${allQuestions[currentQuestionIndex].options[correctIndex]}`;
+                feedback.textContent = `Wrong! The correct answer is: ${current.options[correctIndex]}`;
                 feedback.className = 'feedback wrong';
+                userResults.push({ q: current.q, res: `Wrong (Answer: ${current.options[correctIndex]})`, class: 'wrong' });
             }
-            feedback.style.display = 'block';
-            userResults.push(selectedIndex === correctIndex);
-            setTimeout(() => {
-                nextQuestion();
-            }, 2000);
+            document.getElementById('next-btn').style.display = 'block';
         }
 
         function nextQuestion() {
-            currentQuestionIndex++;
-            if (currentQuestionIndex < allQuestions.length) {
-                if (currentQuestionIndex % 10 === 0) {
-                    // End of round
-                    if (currentRound < 2) {
-                        loadRound(currentRound + 1);
-                    } else {
-                        showSummary();
-                    }
-                } else {
-                    loadQuestion();
-                }
+            currentIdx++;
+            if (currentIdx < quizData.length) {
+                document.getElementById('round-info').textContent = `Question ${currentIdx + 1} of ${quizData.length}`;
+                loadQuestion();
+                document.getElementById('next-btn').style.display = 'none';
             } else {
                 showSummary();
             }
         }
 
         function updateProgress() {
-            const progress = ((currentQuestionIndex % 10) + 1) / 10 * 100;
-            document.getElementById('progress-fill').style.width = progress + '%';
+            const percent = ((currentIdx + 1) / quizData.length) * 100;
+            document.getElementById('progress-fill').style.width = `${percent}%`;
         }
 
         function showSummary() {
             document.getElementById('active-quiz').style.display = 'none';
             document.getElementById('summary').style.display = 'block';
-            const totalCorrect = roundScores[0] + roundScores[1];
-            document.getElementById('final-score').textContent = `You got ${totalCorrect} out of 20 questions correct.`;
-            document.getElementById('round-scores').textContent = `Round 1: ${roundScores[0]}/10, Round 2: ${roundScores[1]}/10`;
+            document.getElementById('final-score').textContent = `You got ${score} out of ${quizData.length} questions correct.`;
+            document.getElementById('round-scores').textContent = '';
         }
 
-        loadRound(1);
+        initializeQuiz();
     </script>
 </body>
 </html>

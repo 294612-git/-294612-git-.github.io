@@ -101,11 +101,19 @@
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "What does 'adapt' mean?", a: "To change to fit new conditions", options: ["To change to fit new conditions", "To copy exactly", "To disappear"] },
             { q: "Which word best fits: 'The answer was ___.'," a: "obvious", options: ["obvious", "happiness", "electric"] },
             { q: "A synonym for 'brave' is ___.", a: "courageous", options: ["courageous", "scared", "timid"] }
         ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
         let currentIdx = 0;
         let score = 0;

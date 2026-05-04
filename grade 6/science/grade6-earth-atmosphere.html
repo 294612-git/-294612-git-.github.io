@@ -110,12 +110,20 @@
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "Which layer of the Earth is the thinnest and outermost?", a: "Crust", options: ["Core", "Mantle", "Crust"] },
             { q: "The movement of tectonic plates can cause ___.", a: "Earthquakes", options: ["Earthquakes", "Rain", "Tides"] },
             { q: "What is the most abundant gas in Earth's atmosphere?", a: "Nitrogen", options: ["Oxygen", "Nitrogen", "Carbon Dioxide"] },
             { q: "The 'Greenhouse Effect' traps ___ in the atmosphere.", a: "Heat", options: ["Heat", "Cold", "Wind"] }
         ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
         let currentIdx = 0;
         let score = 0;

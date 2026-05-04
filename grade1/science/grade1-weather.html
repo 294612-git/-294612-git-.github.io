@@ -76,7 +76,7 @@
    </div>
 
    <script>
-       const quizData = [
+       const questionPool = [
            { q: "What falls from clouds when it is gray and wet outside?", a: "Rain", options: ["Rain", "Shoes", "Toys", "Juice"] },
            { q: "What do we use to stay dry when it rains?", a: "An Umbrella", options: ["Sunglasses", "A Hat", "An Umbrella", "A Scarf"] },
            { q: "Which season is usually the hottest time of the year?", a: "Summer", options: ["Winter", "Spring", "Summer", "Fall"] },
@@ -97,7 +97,15 @@
            { q: "Why should you never stand under a tree during a thunderstorm?", a: "Because of lightning", options: ["Because of lightning", "Because of squirrels", "Because of the leaves", "Because of the shade"] },
            { q: "What do we call a very long time with no rain?", a: "A Drought", options: ["A Flood", "A Drought", "A Season", "A Blizzard"] },
            { q: "Which of these would you use on a sunny day at the beach?", a: "Sunscreen", options: ["Snowboots", "Sunscreen", "A Raincoat", "A Winter hat"] }
-       ];
+        ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
        let currentIdx = 0;
        let score = 0;

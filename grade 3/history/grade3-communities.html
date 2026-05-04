@@ -103,7 +103,7 @@
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "A mayor leads a ___", a: "City", options: ["City", "Country", "School", "Park"] },
             { q: "Laws help keep people ___", a: "Safe", options: ["Safe", "Late", "Hungry", "Tired"] },
             { q: "Citizens should ___", a: "Follow rules", options: ["Follow rules", "Ignore rules", "Play games", "Sleep"] },
@@ -125,6 +125,14 @@
             { q: "What is a hospital?", a: "A place for sick people", options: ["A place for sick people", "A place for healthy people", "A place for animals", "A place for cars"] },
             { q: "What is a park?", a: "A place to play and relax", options: ["A place to work", "A place to play and relax", "A place to study", "A place to drive"] }
         ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
         let currentIdx = 0;
         let score = 0;

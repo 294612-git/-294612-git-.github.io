@@ -101,7 +101,7 @@
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "Evaluate 5x² - 3(x + 2) when x = 3.", a: "A) 30", options: ["A) 30", "B) 42", "C) 36", "D) 24"] },
             { q: "Simplify the expression by combining like terms: 8a + 2(3a - 4b) + 5b.", a: "A) 14a - 3b", options: ["A) 14a - 3b", "B) 11a + b", "C) 14a + 13b", "D) 11a - 3b"] },
             { q: "Solve for x: 3.2x - 4 = 12.", a: "A) 5", options: ["A) 5", "B) 4", "C) 2.5", "D) 6"] },
@@ -123,6 +123,14 @@
             { q: "Solve for y: 0.05y = 2.5.", a: "B) 50", options: ["A) 5", "B) 50", "C) 500", "D) 0.5"] },
             { q: "Evaluate x⁰ + x¹ + x² for x = 4.", a: "B) 21", options: ["A) 20", "B) 21", "C) 16", "D) 17"] }
         ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
         let currentIdx = 0; let score = 0; let userResults = [];
 
         function shuffleArray(array) {

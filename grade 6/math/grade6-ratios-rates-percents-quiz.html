@@ -101,7 +101,7 @@
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "A mixture contains 3 parts blue paint and 5 parts yellow paint. If you use 24 ounces of blue paint, what is the total weight of the final green mixture?", a: "B) 64 oz", options: ["A) 40 oz", "B) 64 oz", "C) 15 oz", "D) 48 oz"] },
             { q: "A cyclist travels 45 miles in 2.5 hours. At this same constant rate, how many minutes will it take them to travel 12 miles?", a: "A) 40 min", options: ["A) 40 min", "B) 60 min", "C) 30 min", "D) 20 min"] },
             { q: "If the ratio of x to y is 4:7, and y to z is 14:3, what is the ratio of x to z?", a: "B) 8:3", options: ["A) 4:3", "B) 8:3", "C) 2:1", "D) 5:2"] },
@@ -123,6 +123,14 @@
             { q: "A worker makes 1,200 dollars a week. They receive a 5% raise, but then have 20% of their new pay taken for taxes. What is their take-home pay?", a: "A) 1,008 dollars", options: ["A) 1,008 dollars", "B) 1,050 dollars", "C) 1,260 dollars", "D) 960 dollars"] },
             { q: "The ratio of the length to the width of a rectangle is 5:3. If the perimeter is 64 cm, what is the area?", a: "A) 240 sq cm", options: ["A) 240 sq cm", "B) 120 sq cm", "C) 15 sq cm", "D) 480 sq cm"] }
         ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
         let currentIdx = 0; let score = 0; let userResults = [];
 
         function shuffleArray(array) {

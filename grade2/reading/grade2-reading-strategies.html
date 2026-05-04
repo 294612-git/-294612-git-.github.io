@@ -103,7 +103,7 @@
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "The 'Main Idea' of a story is...", a: "What the story is mostly about", options: ["The names of all the characters", "What the story is mostly about", "The very last sentence"] },
             { q: "Where and when a story takes place is called the...", a: "Setting", options: ["Plot", "Setting", "Theme"] },
             { q: "If you 'predict' what happens next, you are...", a: "Making a smart guess", options: ["Telling a secret", "Making a smart guess", "Reading the end first"] },
@@ -125,6 +125,14 @@
             { q: "Comparing two things means...", a: "Finding how they are different", options: ["Finding how they are different", "Finding how they are the same", "Counting them"] },
             { q: "Contrasting two things means...", a: "Finding how they are different", options: ["Finding how they are different", "Finding how they are the same", "Ignoring them"] }
         ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
         let currentIdx = 0;
         let score = 0;

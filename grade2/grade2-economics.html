@@ -102,13 +102,21 @@
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "Natural resources come from ___.", a: "Earth", options: ["Earth", "Factories"] },
             { q: "A baker makes bread. The bread is a ___.", a: "Good", options: ["Good", "Service"] },
             { q: "A teacher provides a ___.", a: "Service", options: ["Service", "Good"] },
             { q: "A producer makes ___.", a: "Goods", options: ["Goods", "Nothing"] },
             { q: "A consumer is someone who ___.", a: "Buys goods", options: ["Buys goods", "Makes goods"] }
         ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
         let currentIdx = 0;
         let score = 0;

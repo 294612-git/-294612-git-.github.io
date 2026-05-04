@@ -103,7 +103,7 @@
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "What is a giant area of land on Earth called?", a: "Continent", options: ["Ocean", "Continent", "Island"] },
             { q: "How many continents are there on Earth?", a: "7", options: ["5", "7", "10"] },
             { q: "Which is the largest body of salt water on Earth?", a: "Ocean", options: ["Lake", "River", "Ocean"] },
@@ -125,6 +125,14 @@
             { q: "Which landform is raised but usually smaller and more rounded than a mountain?", a: "Hill", options: ["Hill", "Valley", "Plateau"] },
             { q: "What is the coldest continent on Earth?", a: "Antarctica", options: ["South America", "Antarctica", "Australia"] }
         ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
         let currentIdx = 0;
         let score = 0;

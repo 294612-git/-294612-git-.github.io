@@ -102,12 +102,20 @@
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "What comes first in a story?", a: "Beginning", options: ["Beginning", "Ending"] },
             { q: "If it rains, the ground gets wet. Rain is the ___.", a: "Cause", options: ["Cause", "Effect"] },
             { q: "The main idea tells what the story is mostly about.", a: "True", options: ["True", "False"] },
             { q: "If a character shares toys, we can infer they are ___.", a: "Kind", options: ["Kind", "Mean"] }
         ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
         let currentIdx = 0;
         let score = 0;

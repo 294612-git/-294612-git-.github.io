@@ -101,11 +101,19 @@
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "Which river helped civilizations grow in ancient Egypt?", a: "The Nile", options: ["The Amazon", "The Nile", "The Mississippi"] },
             { q: "The ancient Maya built large stone ___ for ceremonies.", a: "Pyramids", options: ["Pyramids", "Tunnels", "Bridges"] },
             { q: "A famous ancient civilization in India was the ___.", a: "Indus Valley", options: ["Maya", "Indus Valley", "Aztec"] }
         ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
         let currentIdx = 0;
         let score = 0;

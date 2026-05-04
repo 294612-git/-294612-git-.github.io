@@ -101,11 +101,19 @@
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "A paragraph that gives the main idea and lets the reader know what the text is about is called the ___.", a: "Topic sentence", options: ["Closing sentence", "Topic sentence", "Supporting detail"] },
             { q: "What is the meaning of 'infer'?", a: "To figure out using clues", options: ["To copy exactly", "To figure out using clues", "To write quickly"] },
             { q: "Which sentence is an opinion?", a: "I think the book was exciting.", options: ["I think the book was exciting.", "The sky is blue.", "Water boils at 100°C."] }
         ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
         let currentIdx = 0;
         let score = 0;

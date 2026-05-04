@@ -103,7 +103,7 @@
    </div>
 
    <script>
-       const quizData = [
+       const questionPool = [
            { q: "What do all animals need to survive?", a: "Food, water, air, and shelter", options: ["Food, water, air, and shelter", "Toys, beds, and television", "Soda, candy, and backpacks", "Shoes and hats"] },
            { q: "A camel is best suited to live in which habitat?", a: "The Desert", options: ["The Ocean", "The Desert", "The Rainforest", "The Tundra"] },
            { q: "What is a physical characteristic that all birds share?", a: "They all have feathers", options: ["They all have gills", "They all have feathers", "They all have fur", "They all have four legs"] },
@@ -124,7 +124,15 @@
            { q: "A 'nocturnal' animal is one that is ____.", a: "Active at night", options: ["Active during the day", "Active at night", "Always sleeping", "Very fast"] },
            { q: "What is the main reason a polar bear has a thick layer of blubber (fat)?", a: "To keep it warm in the cold", options: ["To help it swim faster", "To keep it warm in the cold", "To make it look scary", "To help it catch fish"] },
            { q: "Which of these animals would you most likely find in a rainforest?", a: "A Toucan", options: ["A Polar Bear", "A Toucan", "A Camel", "A Cow"] }
-       ];
+        ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
        let currentIdx = 0;
        let score = 0;

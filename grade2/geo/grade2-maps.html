@@ -103,7 +103,7 @@
     </div>
 
     <script>
-        const quizData = [
+        const questionPool = [
             { q: "What is a drawing of a place from above called?", a: "Map", options: ["Photograph", "Map", "Portrait"] },
             { q: "What tells you what the symbols on a map mean?", a: "Map Key (Legend)", options: ["Map Key (Legend)", "Title", "Compass Rose"] },
             { q: "What part of a map shows the directions North, South, East, and West?", a: "Compass Rose", options: ["Ruler", "Compass Rose", "Map Key"] },
@@ -125,6 +125,14 @@
             { q: "A collection of maps in a book is called an...", a: "Atlas", options: ["Encyclopedia", "Atlas", "Dictionary"] },
             { q: "What is a mental map?", a: "A map you have in your head of your neighborhood", options: ["A map you draw on paper", "A map you have in your head of your neighborhood", "A map found on a computer"] }
         ];
+        const quizData = shufflePool(questionPool.slice()).slice(0, 5);
+        function shufflePool(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
         let currentIdx = 0;
         let score = 0;
