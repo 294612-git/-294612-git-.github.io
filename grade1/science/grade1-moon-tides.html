@@ -1,161 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moon and Tides Quiz - Study Buddy</title>
-    <style>
-        body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; position: relative; overflow: hidden; }
-        body::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="60" cy="80" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="60" r="2.5" fill="rgba(255,255,255,0.1)"/></svg>') repeat; animation: float 20s infinite linear; }
-        @keyframes float { 0% { transform: translateY(0); } 100% { transform: translateY(-100px); } }
-        .quiz-container { background: rgba(255, 255, 255, 0.95); padding: 2rem; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); width: 90%; max-width: 500px; text-align: center; position: relative; z-index: 1; backdrop-filter: blur(10px); }
-        h2 { color: #333; margin-bottom: 1.5rem; font-size: 2rem; }
-        .question { font-size: 1.3rem; margin: 20px 0; color: #555; }
-        .options-container { display: flex; flex-direction: column; gap: 12px; margin: 20px 0; }
-        .option-btn { padding: 14px; border: 2px solid #ddd; border-radius: 12px; background: white; cursor: pointer; font-size: 1.1rem; transition: all 0.3s ease; color: #333; }
-        .option-btn:hover { border-color: #667eea; background: #f0f2ff; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .option-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-        .feedback { margin: 15px 0; font-weight: bold; min-height: 24px; font-size: 1.1rem; }
-        .correct { color: #28a745; }
-        .wrong { color: #dc3545; }
-        .next-btn { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 12px 24px; border-radius: 25px; cursor: pointer; font-size: 1rem; margin: 20px auto 0; display: none; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); }
-        .next-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6); }
-        .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #eee; }
-        .hidden { display: none; }
-        .try-again-btn { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); margin-top: 10px; }
-        .back-btn { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); margin-top: 10px; }
-    </style>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Moon & Tides Quiz - Study Buddy</title>
+   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+   <style>
+       body {
+           font-family: 'Quicksand', sans-serif;
+           background-color: #e3f2fd;
+           display: flex;
+           justify-content: center;
+           align-items: center;
+           min-height: 100vh;
+           margin: 0;
+       }
+       .quiz-container {
+           background: white;
+           padding: 2rem;
+           border-radius: 20px;
+           box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+           width: 90%;
+           max-width: 500px;
+           text-align: center;
+           border: 4px dashed #1976d2;
+       }
+       h2 { font-family: 'Fredoka', cursive; color: #1565c0; }
+       .question { font-size: 1.2rem; margin: 20px 0; color: #333; }
+       .options-container { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+       .option-btn {
+           padding: 12px;
+           border: 3px solid #bbdefb;
+           border-radius: 50px;
+           background: white;
+           cursor: pointer;
+           font-size: 1.1rem;
+           font-weight: 600;
+           transition: 0.2s;
+           color: #1565c0;
+       }
+       .option-btn:hover { border-color: #1976d2; background: #e3f2fd; }
+       .feedback { margin: 15px 0; font-weight: bold; min-height: 24px; }
+       .correct { color: #1b5e20; }
+       .wrong { color: #b71c1c; }
+       .next-btn {
+           background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
+           color: white;
+           border: none;
+           padding: 12px 25px;
+           border-radius: 50px;
+           cursor: pointer;
+           display: none;
+           margin: 0 auto;
+           font-weight: bold;
+           box-shadow: 0 4px 0px #0d47a1;
+       }
+       .next-btn:active { transform: translateY(4px); box-shadow: none; }
+       .summary-item { text-align: left; padding: 10px; border-bottom: 1px solid #bbdefb; }
+       .hidden { display: none; }
+   </style>
 </head>
 <body>
-    <div class="quiz-container">
-        <h2>Moon and Tides Quiz</h2>
-        
-        <div id="quiz-box">
-            <div class="question" id="question-text"></div>
-            <div class="options-container" id="options"></div>
-            <div class="feedback" id="feedback"></div>
-            <button class="next-btn" id="next-button" onclick="loadNextQuestion()">Next Question</button>
-        </div>
-        
-        <div id="summary-box" class="hidden">
-            <h2>Quiz Complete!</h2>
-            <div id="results-list"></div>
-            <button class="try-again-btn next-btn" onclick="location.reload()">Try Again</button>
-            <a href="grade1-science-topics.html" style="display: inline-block; margin-top: 20px; color: #667eea; text-decoration: none;">← Back to Topics</a>
-        </div>
-    </div>
+   <div class="quiz-container">
+       <h2>🐬 Moon & Tides Quiz</h2>
+       <div id="quiz-box">
+           <div class="question" id="question-text"></div>
+           <div class="options-container" id="options"></div>
+           <div class="feedback" id="feedback"></div>
+           <button class="next-btn" id="next-button" onclick="loadNextQuestion()">Dive to Next</button>
+       </div>
+       <div id="summary-box" class="hidden">
+           <h2>You're a Dolphin Scientist!</h2>
+           <div id="results-list"></div>
+           <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.reload()">Try Again</button>
+           <button class="next-btn" style="display:block; margin-top:20px;" onclick="location.href='grade1-science-topics.html'">Back to Dolphin Science</button>
+       </div>
+   </div>
 
-    <script>
-        const quizData = [
-            { q: "What is the moon?", a: "natural satellite", options: ["star", "natural satellite", "planet"] },
-            { q: "What causes tides?", a: "moon", options: ["sun", "moon", "earth"] },
-            { q: "How many phases does the moon have?", a: "8", options: ["4", "8", "12"] },
-            { q: "What is a full moon?", a: "all lit up", options: ["half lit", "all lit up", "not lit"] },
-            { q: "What is a new moon?", a: "not visible", options: ["half visible", "not visible", "all visible"] },
-            { q: "What is the highest tide called?", a: "high tide", options: ["low tide", "high tide", "medium tide"] },
-            { q: "What is the lowest tide called?", a: "low tide", options: ["high tide", "low tide", "medium tide"] },
-            { q: "How long does a lunar cycle take?", a: "about a month", options: ["a week", "about a month", "a year"] },
-            { q: "What is the moon made of?", a: "rock", options: ["water", "rock", "gas"] },
-            { q: "What is a crescent moon?", a: "thin curve", options: ["full circle", "thin curve", "half circle"] },
-            { q: "What happens during spring tides?", a: "highest tides", options: ["lowest tides", "highest tides", "normal tides"] },
-            { q: "What happens during neap tides?", a: "lowest tides", options: ["highest tides", "lowest tides", "normal tides"] },
-            { q: "What is the moon's gravity?", a: "pulls on water", options: ["pushes water", "pulls on water", "ignores water"] },
-            { q: "When does the moon rise?", a: "different times", options: ["same time", "different times", "never"] },
-            { q: "What is the dark side of the moon?", a: "not facing earth", options: ["facing earth", "not facing earth", "always dark"] },
-            { q: "What is a lunar eclipse?", a: "earth shadows moon", options: ["moon shadows earth", "earth shadows moon", "sun shadows moon"] },
-            { q: "What is a solar eclipse?", a: "moon blocks sun", options: ["sun blocks moon", "moon blocks sun", "earth blocks sun"] },
-            { q: "How does the moon affect animals?", a: "behavior changes", options: ["no effect", "behavior changes", "makes them sleep"] },
-            { q: "What is the moon's orbit?", a: "around earth", options: ["around sun", "around earth", "around mars"] },
-            { q: "What is the tide cycle?", a: "twice a day", options: ["once a day", "twice a day", "once a month"] }
-        ];
+   <script>
+       const quizData = [
+           { q: "What is the moon?", a: "natural satellite", options: ["star", "natural satellite", "planet"] },
+           { q: "What causes tides?", a: "moon", options: ["sun", "moon", "earth"] },
+           { q: "How many phases does the moon have?", a: "8", options: ["4", "8", "12"] },
+           { q: "What is a full moon?", a: "all lit up", options: ["half lit", "all lit up", "not lit"] },
+           { q: "What is a new moon?", a: "not visible", options: ["half visible", "not visible", "all visible"] },
+           { q: "What is the highest tide called?", a: "high tide", options: ["low tide", "high tide", "medium tide"] },
+           { q: "What is the lowest tide called?", a: "low tide", options: ["high tide", "low tide", "medium tide"] },
+           { q: "How long does a lunar cycle take?", a: "about a month", options: ["a week", "about a month", "a year"] },
+           { q: "What is the moon made of?", a: "rock", options: ["water", "rock", "gas"] },
+           { q: "What is a crescent moon?", a: "thin curve", options: ["full circle", "thin curve", "half circle"] },
+           { q: "What happens during spring tides?", a: "highest tides", options: ["lowest tides", "highest tides", "normal tides"] },
+           { q: "What happens during neap tides?", a: "lowest tides", options: ["highest tides", "lowest tides", "normal tides"] },
+           { q: "What is the moon's gravity?", a: "pulls on water", options: ["pushes water", "pulls on water", "ignores water"] },
+           { q: "When does the moon rise?", a: "different times", options: ["same time", "different times", "never"] },
+           { q: "What is the dark side of the moon?", a: "not facing earth", options: ["facing earth", "not facing earth", "always dark"] },
+           { q: "What is a lunar eclipse?", a: "earth shadows moon", options: ["moon shadows earth", "earth shadows moon", "sun shadows moon"] },
+           { q: "What is a solar eclipse?", a: "moon blocks sun", options: ["sun blocks moon", "moon blocks sun", "earth blocks sun"] },
+           { q: "How does the moon affect animals?", a: "behavior changes", options: ["no effect", "behavior changes", "makes them sleep"] },
+           { q: "What is the moon's orbit?", a: "around earth", options: ["around sun", "around earth", "around mars"] },
+           { q: "What is the tide cycle?", a: "twice a day", options: ["once a day", "twice a day", "once a month"] }
+       ];
 
-        let currentIdx = 0;
-        let score = 0;
-        let userResults = [];
+       let currentIdx = 0;
+       let score = 0;
+       let userResults = [];
 
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-        }
+       function shuffleArray(array) {
+           for (let i = array.length - 1; i > 0; i--) {
+               const j = Math.floor(Math.random() * (i + 1));
+               [array[i], array[j]] = [array[j], array[i]];
+           }
+       }
 
-        function ensureTryAgainButton() {
-            const summaryBox = document.getElementById("summary-box");
-            if (summaryBox && !summaryBox.querySelector('button[onclick="location.reload()"]')) {
-                const button = document.createElement('button');
-                button.className = 'next-btn try-again-btn';
-                button.innerText = 'Try Again';
-                button.onclick = function() { location.reload(); };
-                const backButton = summaryBox.querySelector('a[href]');
-                summaryBox.insertBefore(button, backButton);
-            }
-        }
+       function initializeQuiz() {
+           shuffleArray(quizData);
+           loadQuestion();
+       }
 
-        function initializeQuiz() {
-            shuffleArray(quizData);
-            loadQuestion();
-        }
+       function loadQuestion() {
+           const current = quizData[currentIdx];
+           document.getElementById("question-text").innerText = current.q;
+           const optionsDiv = document.getElementById("options");
+           optionsDiv.innerHTML = "";
+           document.getElementById("feedback").innerText = "";
+           document.getElementById("next-button").style.display = "none";
+           current.options.forEach(opt => {
+               const btn = document.createElement("button");
+               btn.innerText = opt;
+               btn.className = "option-btn";
+               btn.onclick = () => checkAnswer(opt);
+               optionsDiv.appendChild(btn);
+           });
+       }
 
-        function loadQuestion() {
-            const current = quizData[currentIdx];
-            document.getElementById("question-text").innerText = current.q;
-            const optionsDiv = document.getElementById("options");
-            optionsDiv.innerHTML = "";
-            document.getElementById("feedback").innerText = "";
-            document.getElementById("next-button").style.display = "none";
-            current.options.forEach(opt => {
-                const btn = document.createElement("button");
-                btn.innerText = opt;
-                btn.className = "option-btn";
-                btn.onclick = () => checkAnswer(opt);
-                optionsDiv.appendChild(btn);
-            });
-        }
+       function checkAnswer(selected) {
+           const current = quizData[currentIdx];
+           const feedback = document.getElementById("feedback");
+           const btns = document.querySelectorAll(".option-btn");
+           btns.forEach(b => b.disabled = true);
+           if (selected === current.a) {
+               feedback.innerText = "Splashtastic! Correct.";
+               feedback.className = "feedback correct";
+               score++;
+               userResults.push({ q: current.q, res: "Correct", class: "correct" });
+           } else {
+               feedback.innerText = "Glub! The correct answer was " + current.a;
+               feedback.className = "feedback wrong";
+               userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
+           }
+           document.getElementById("next-button").style.display = "block";
+       }
 
-        function checkAnswer(selected) {
-            const current = quizData[currentIdx];
-            const feedback = document.getElementById("feedback");
-            const btns = document.querySelectorAll(".option-btn");
-            btns.forEach(b => b.disabled = true);
-            if (selected === current.a) {
-                feedback.innerText = "Splashtastic! Correct.";
-                feedback.className = "feedback correct";
-                score++;
-                userResults.push({ q: current.q, res: "Correct", class: "correct" });
-            } else {
-                feedback.innerText = "Glub! The correct answer was " + current.a;
-                feedback.className = "feedback wrong";
-                userResults.push({ q: current.q, res: "Wrong (Answer: " + current.a + ")", class: "wrong" });
-            }
-            document.getElementById("next-button").style.display = "block";
-        }
+       function loadNextQuestion() {
+           currentIdx++;
+           if (currentIdx < quizData.length) { loadQuestion(); } else { showSummary(); }
+       }
 
-        function loadNextQuestion() {
-            currentIdx++;
-            if (currentIdx < quizData.length) { loadQuestion(); } 
-            else { showSummary(); }
-        }
-
-        function showSummary() {
-            document.getElementById("quiz-box").classList.add("hidden");
-            const summaryBox = document.getElementById("summary-box");
-            summaryBox.classList.remove("hidden");
-            ensureTryAgainButton();
-            
-            const list = document.getElementById("results-list");
-            list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
-            
-            userResults.forEach(item => {
-                const div = document.createElement("div");
-                div.className = "summary-item";
-                div.innerHTML = `<strong>${item.q}</strong> - <span class="${item.class}">${item.res}</span>`;
-                list.appendChild(div);
-            });
-        }
-
-        // Start the quiz
-        initializeQuiz();
-    </script>
+       function showSummary() {
+           document.getElementById("quiz-box").classList.add("hidden");
+           document.getElementById("summary-box").classList.remove("hidden");
+           const list = document.getElementById("results-list");
+           list.innerHTML = `<h3>Final Score: ${score}/${quizData.length}</h3>`;
+           userResults.forEach(item => {
+               const div = document.createElement("div");
+               div.className = "summary-item";
+               div.innerHTML = `<strong>${item.q}</strong> - <span class="${item.class}">${item.res}</span>`;
+               list.appendChild(div);
+           });
+       }
+       initializeQuiz();
+   </script>
 </body>
 </html>
